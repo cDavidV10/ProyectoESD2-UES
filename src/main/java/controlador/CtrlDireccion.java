@@ -6,10 +6,11 @@ import dao.MunicipioDAO;
 import interfaz.IDireccionDAO;
 import interfaz.IDistritoDAO;
 import interfaz.IMunicipioDAO;
+import arboles.ArbolBinarioAVL;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,14 +19,14 @@ import modelo.Distrito;
 import modelo.Municipio;
 import vista.Vista;
 
-public class DireccionControlador {
+public class CtrlDireccion {
 
     private Vista vista;
     private IMunicipioDAO municipioDAO;
     private IDistritoDAO distritoDAO;
     private IDireccionDAO direccionDAO;
 
-    public DireccionControlador(Vista vista) {
+    public CtrlDireccion(Vista vista) {
         this.vista = vista;
         this.municipioDAO = new MunicipioDAO();
         this.distritoDAO = new DistritoDAO();
@@ -35,32 +36,36 @@ public class DireccionControlador {
         events();
     }
 
-    public void iniciar() { // Para probar si se muestra
+    public void iniciar() {
         JFrame ventana = new javax.swing.JFrame("Gestion de Direcciones");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setSize(500, 300);
         ventana.setLocationRelativeTo(null);
-
         ventana.add(this.vista);
-
         ventana.setVisible(true);
     }
 
     private void cargarMunicipios() {
         try {
-            List<Municipio> lista = municipioDAO.listar();
+            ArbolBinarioAVL arbolMunicipios = municipioDAO.listar();
             vista.getCbMunicipio().removeAllItems();
 
             Municipio vacio = new Municipio();
             vacio.setNombre("Seleccione...");
             vista.getCbMunicipio().addItem(vacio);
 
-            for (Municipio m : lista) {
-                vista.getCbMunicipio().addItem(m);
+            if (arbolMunicipios != null) {
+                ArrayList lista = arbolMunicipios.IND();
+
+                if (lista != null) {
+                    for (Object obj : lista) {
+                        Municipio m = (Municipio) obj;
+                        vista.getCbMunicipio().addItem(m);
+                    }
+                }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(),
-                    "Error BD", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -92,16 +97,22 @@ public class DireccionControlador {
         vacio.setNombre("Seleccione...");
         vista.getCbDistrito().addItem(vacio);
 
-        if (municipioSeleccionado != null && municipioSeleccionado.getId() != 0) { // Si no son el vacio
+        if (municipioSeleccionado != null && municipioSeleccionado.getId() != 0) {
             try {
-                List<Distrito> lista = distritoDAO.listarPorMunicipio(municipioSeleccionado.getId());
-                for (Distrito d : lista) {
-                    vista.getCbDistrito().addItem(d);
+                ArbolBinarioAVL arbolDistritos = distritoDAO.listarPorMunicipio(municipioSeleccionado.getId());
+
+                if (arbolDistritos != null) {
+                    ArrayList lista = arbolDistritos.IND();
+
+                    if (lista != null) {
+                        for (Object obj : lista) {
+                            Distrito d = (Distrito) obj;
+                            vista.getCbDistrito().addItem(d);
+                        }
+                    }
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(vista,
-                        "[ERROR] No se han podido cargar los distritos.\n" + ex.getMessage(), "Error BD",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los distritos.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -112,40 +123,33 @@ public class DireccionControlador {
         Distrito distritoSeleccionado = (Distrito) vista.getCbDistrito().getSelectedItem();
         Municipio municipioSeleccionado = (Municipio) vista.getCbMunicipio().getSelectedItem();
 
-        if (municipioSeleccionado == null || municipioSeleccionado.getId() == 0 || distritoSeleccionado == null
-                || distritoSeleccionado.getId() == 0) { // Si no son el vacio
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione un municipio y un distrito válidos.",
-                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+        if (municipioSeleccionado == null || municipioSeleccionado.getId() == 0 || distritoSeleccionado == null || distritoSeleccionado.getId() == 0) {
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione un municipio y un distrito válidos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (zonaTxt.isEmpty() || numCasaTxt.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Complete todos los campos de la dirección.",
-                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Complete todos los campos de la dirección.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (zonaTxt.length() > 50) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: La zona no puede tener más de 50 caracteres.", "Mucho texto",
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: La zona no puede tener más de 50 caracteres.", "Mucho texto", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (numCasaTxt.length() > 20) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: El N° de casa no puede tener más de 20 caracteres.",
-                    "Mucho texto", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: El N° de casa no puede tener más de 20 caracteres.", "Mucho texto", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!zonaTxt.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,\\- ]+$")) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en la zona.",
-                    "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en la zona.", "Caracteres invalidos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!numCasaTxt.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,\\-#/ ]+$")) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en el número de casa.",
-                    "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en el número de casa.", "Caracteres invalidos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -157,8 +161,7 @@ public class DireccionControlador {
         try {
             direccionDAO.insertar(d);
 
-            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Dirección creada exitosamente.", "Creación exitosa",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creación exitosa", JOptionPane.INFORMATION_MESSAGE);
             limpiar();
 
         } catch (Exception e) {
