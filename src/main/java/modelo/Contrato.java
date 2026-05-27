@@ -1,0 +1,95 @@
+package modelo;
+
+import java.time.LocalDate;
+
+public class Contrato {
+    private int id;
+    private double tarifa;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private String estado;
+    // ? Clases Relacionadas
+    private Cliente cliente;
+    private Medidor medidor;
+
+    public Contrato() {
+    }
+
+    public Contrato(int id, double tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
+        this.id = id;
+        this.tarifa = tarifa;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+    }
+
+    public Contrato(int id, double tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado, Cliente cliente, Medidor medidor) {
+        this.id = id;
+        this.tarifa = tarifa;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.cliente = cliente;
+        this.medidor = medidor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(double tarifa) {
+        this.tarifa = tarifa;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Medidor getMedidor() {
+        return medidor;
+    }
+
+    public void setMedidor(Medidor medidor) {
+        this.medidor = medidor;
+    }
+    
+    
+    
+    
+}
