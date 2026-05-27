@@ -48,7 +48,7 @@ public class CtrlLogin {
 
                 Registro registroView = new Registro();
 
-                CtrlRegistro ctrlRegistro = new CtrlRegistro(registroView);
+                CtrlRegistro ctrlRegistro = new CtrlRegistro(registroView, loginView);
 
                 registroView.setVisible(true);
                 registroView.setLocationRelativeTo(null);

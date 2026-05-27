@@ -23,16 +23,16 @@ import vista.Login;
  * @author cdavi
  */
 public class CtrlAdmin {
-    AdminView adminView;
-    Usuario usuario;
-    Login loginView;
+    private AdminView adminView;
+    private Usuario usuario;
+    private Login loginView;
 
     public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
         this.loginView = loginView;
 
-        adminView.addWindowListener(new WindowAdapter() {
+        this.adminView.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 new UsuarioActivo().cambiarLabelUsuario(adminView.getTxtUser(), usuario);
