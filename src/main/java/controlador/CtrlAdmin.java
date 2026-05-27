@@ -23,6 +23,7 @@ import dao.VerClientesDAO;
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
+import vista.AgregarEmpleadoView;
 import vista.Login;
 import vista.ViewVerClientes;
 
@@ -46,6 +47,13 @@ public class CtrlAdmin {
                 new UsuarioActivo().cambiarLabelUsuario(adminView.getTxtUser(), usuario);
             }
 
+        });
+
+        this.adminView.getBtnEmpleado().addActionListener(e -> {
+            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
+
+            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
+            new Paneles().insertarPaneles(agregarEmpleadoView, this.adminView.getBgPanel());
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
