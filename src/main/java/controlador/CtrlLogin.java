@@ -19,12 +19,14 @@ import javax.swing.JOptionPane;
 
 import vista.AdminView;
 import vista.Login;
+import vista.Registro;
 
 /**
  *
  * @author cdavi
  */
 public class CtrlLogin {
+
     private Login loginView;
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
@@ -40,6 +42,20 @@ public class CtrlLogin {
 
         });
 
+        this.loginView.getBtnRegistro().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Registro registroView = new Registro();
+
+                CtrlRegistro ctrlRegistro = new CtrlRegistro(registroView);
+
+                registroView.setVisible(true);
+                registroView.setLocationRelativeTo(null);
+
+                loginView.dispose();
+            }
+        });
         this.loginView.getTxtUser().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -75,7 +91,7 @@ public class CtrlLogin {
 
     private void acceder() {
 
-        String username = this.loginView.getTxtUser().getText().toUpperCase();
+        String username = this.loginView.getTxtUser().getText();
         String password = String.valueOf(this.loginView.getTxtPassword().getPassword());
 
         try {

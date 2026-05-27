@@ -223,6 +223,7 @@ public class AdminView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AdminView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
         // </editor-fold>
         // </editor-fold>
 
@@ -244,6 +245,10 @@ public class AdminView extends javax.swing.JFrame {
 
     public JPanel getBgPanel() {
         return bgPanel;
+    }
+    
+    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
