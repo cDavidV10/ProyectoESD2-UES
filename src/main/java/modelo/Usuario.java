@@ -1,14 +1,17 @@
 package modelo;
 
 public class Usuario {
+
     private int id;
-    private String username;
+    private String username;//correo
     private String password;
     private String tipo;
     // ? Clases Relacionadas
     private Administrador administrador;
     private Cliente cliente;
     private Empleado empleado;
+
+    private String codigoMedidor;
 
     public Usuario() {
     }
@@ -75,6 +78,12 @@ public class Usuario {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
-    
-    
+
+    public String getCodigoMedidor() {
+        return codigoMedidor;
+    }
+
+    public void setCodigoMedidor(String codigoMedidor) {
+        this.codigoMedidor = codigoMedidor;
+    }
 }
