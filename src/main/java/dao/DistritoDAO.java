@@ -1,4 +1,4 @@
-package dao.implementacion;
+package dao;
 
 import conexion.Conexion;
 import interfaz.IDistritoDAO;
@@ -18,18 +18,18 @@ public class DistritoDAO implements IDistritoDAO {
         List<Distrito> lista = new ArrayList<>();
         Connection conn = Conexion.getConexion();
         PreparedStatement ps = conn.prepareStatement(SELECT_BY_MUNICIPIO);
-        
-        ps.setInt(1, idMunicipio); 
+
+        ps.setInt(1, idMunicipio);
         ResultSet rs = ps.executeQuery();
-        
-        while(rs.next()){
+
+        while (rs.next()) {
             Distrito d = new Distrito();
-            d.setIdDistrito(rs.getInt("id_distrito"));
+            d.setId(rs.getInt("id_distrito"));
             d.setNombre(rs.getString("nombre"));
-            
+
             lista.add(d);
         }
-        
+
         conn.close();
         return lista;
     }

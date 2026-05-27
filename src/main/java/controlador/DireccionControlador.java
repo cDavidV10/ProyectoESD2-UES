@@ -1,8 +1,8 @@
 package controlador;
 
-import dao.implementacion.DireccionDAO;
-import dao.implementacion.DistritoDAO;
-import dao.implementacion.MunicipioDAO;
+import dao.DireccionDAO;
+import dao.DistritoDAO;
+import dao.MunicipioDAO;
 import interfaz.IDireccionDAO;
 import interfaz.IDistritoDAO;
 import interfaz.IMunicipioDAO;
@@ -32,20 +32,20 @@ public class DireccionControlador {
         this.direccionDAO = new DireccionDAO();
 
         cargarMunicipios();
-        events();        
+        events();
     }
 
     public void iniciar() { // Para probar si se muestra
         JFrame ventana = new javax.swing.JFrame("Gestion de Direcciones");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setSize(500, 300);
-        ventana.setLocationRelativeTo(null); 
+        ventana.setLocationRelativeTo(null);
 
         ventana.add(this.vista);
 
         ventana.setVisible(true);
     }
-    
+
     private void cargarMunicipios() {
         try {
             List<Municipio> lista = municipioDAO.listar();
@@ -54,12 +54,13 @@ public class DireccionControlador {
             Municipio vacio = new Municipio();
             vacio.setNombre("Seleccione...");
             vista.getCbMunicipio().addItem(vacio);
-            
+
             for (Municipio m : lista) {
                 vista.getCbMunicipio().addItem(m);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(),
+                    "Error BD", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -78,11 +79,11 @@ public class DireccionControlador {
             }
         });
     }
-    
+
     private void cargarDistritos() {
-        if (vista.getCbMunicipio().getSelectedItem() == null){
+        if (vista.getCbMunicipio().getSelectedItem() == null) {
             return;
-        } 
+        }
 
         Municipio municipioSeleccionado = (Municipio) vista.getCbMunicipio().getSelectedItem();
         vista.getCbDistrito().removeAllItems();
@@ -91,14 +92,16 @@ public class DireccionControlador {
         vacio.setNombre("Seleccione...");
         vista.getCbDistrito().addItem(vacio);
 
-        if (municipioSeleccionado != null && municipioSeleccionado.getIdMunicipio() != 0) { // Si no son el vacio
+        if (municipioSeleccionado != null && municipioSeleccionado.getId() != 0) { // Si no son el vacio
             try {
-                List<Distrito> lista = distritoDAO.listarPorMunicipio(municipioSeleccionado.getIdMunicipio());
+                List<Distrito> lista = distritoDAO.listarPorMunicipio(municipioSeleccionado.getId());
                 for (Distrito d : lista) {
                     vista.getCbDistrito().addItem(d);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los distritos.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista,
+                        "[ERROR] No se han podido cargar los distritos.\n" + ex.getMessage(), "Error BD",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -109,52 +112,63 @@ public class DireccionControlador {
         Distrito distritoSeleccionado = (Distrito) vista.getCbDistrito().getSelectedItem();
         Municipio municipioSeleccionado = (Municipio) vista.getCbMunicipio().getSelectedItem();
 
-        if (municipioSeleccionado == null || municipioSeleccionado.getIdMunicipio() == 0 || distritoSeleccionado == null || distritoSeleccionado.getIdDistrito() == 0) { // Si no son el vacio
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione un municipio y un distrito válidos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+        if (municipioSeleccionado == null || municipioSeleccionado.getId() == 0 || distritoSeleccionado == null
+                || distritoSeleccionado.getId() == 0) { // Si no son el vacio
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione un municipio y un distrito válidos.",
+                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (zonaTxt.isEmpty() || numCasaTxt.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Complete todos los campos de la dirección.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Complete todos los campos de la dirección.",
+                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         if (zonaTxt.length() > 50) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: La zona no puede tener más de 50 caracteres.", "Mucho texto", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: La zona no puede tener más de 50 caracteres.", "Mucho texto",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         if (numCasaTxt.length() > 20) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: El N° de casa no puede tener más de 20 caracteres.", "Mucho texto", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: El N° de casa no puede tener más de 20 caracteres.",
+                    "Mucho texto", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!zonaTxt.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,\\- ]+$")) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en la zona.", "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en la zona.",
+                    "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!numCasaTxt.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ.,\\-#/ ]+$")) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en el número de casa.", "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Ingrese solo caracteres válidos en el número de casa.",
+                    "Caracteres inválidos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Direccion d = new Direccion();
         d.setZona(zonaTxt);
-        d.setNumCasa(numCasaTxt);
+        d.setNumeroCasa(numCasaTxt);
         d.setDistrito(distritoSeleccionado);
 
         try {
             direccionDAO.insertar(d);
-            
-            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Dirección creada exitosamente.", "Creación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            limpiar(); 
-            
+
+            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Dirección creada exitosamente.", "Creación exitosa",
+                    JOptionPane.INFORMATION_MESSAGE);
+            limpiar();
+
         } catch (Exception e) {
-            if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) { 
-                JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.", "Dirección duplicada", JOptionPane.WARNING_MESSAGE);
+            if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) {
+                JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.",
+                        "Dirección duplicada", JOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(vista, "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(), "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista,
+                        "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(),
+                        "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
