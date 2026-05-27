@@ -1,10 +1,9 @@
 package modelo;
 
-public class Direccion {
+public class Direccion implements Comparable<Direccion> {
     private int id;
     private String zona;
     private String numeroCasa;
-    // ? Clase Relacionada
     private Distrito distrito;
 
     public Direccion() {
@@ -47,6 +46,9 @@ public class Direccion {
     public void setDistrito(Distrito distrito) {
         this.distrito = distrito;
     }
-    
-    
+
+    @Override
+    public int compareTo(Direccion dir) {
+        return Integer.compare(this.id, dir.id);
+    }
 }

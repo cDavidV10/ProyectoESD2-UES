@@ -1,12 +1,8 @@
 package modelo;
 
-import java.util.ArrayList;
-
-public class Municipio {
+public class Municipio implements Comparable<Municipio> {
     private int id;
     private String nombre;
-    // ? Clases Relacionada
-    private ArrayList<Distrito> distritos;
 
     public Municipio() {
     }
@@ -32,13 +28,13 @@ public class Municipio {
         this.nombre = nombre;
     }
 
-    public ArrayList<Distrito> getDistritos() {
-        return distritos;
+    @Override
+    public String toString() {
+        return nombre;
     }
 
-    public void setDistritos(ArrayList<Distrito> distritos) {
-        this.distritos = distritos;
+    @Override
+    public int compareTo(Municipio m) {
+        return Integer.compare(this.id, m.id);
     }
-    
-    
 }
