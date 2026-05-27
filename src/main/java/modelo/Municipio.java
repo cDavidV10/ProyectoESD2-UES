@@ -1,23 +1,27 @@
 package modelo;
 
-public class Municipio {
-    private int idMunicipio;
-    private String nombre;
+import java.util.ArrayList;
 
-    public Municipio(int idMunicipio, String nombre) {
-        this.idMunicipio = idMunicipio;
-        this.nombre = nombre;
-    }
+public class Municipio {
+    private int id;
+    private String nombre;
+    // ? Clases Relacionada
+    private ArrayList<Distrito> distritos;
 
     public Municipio() {
     }
 
-    public int getIdMunicipio() {
-        return idMunicipio;
+    public Municipio(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
     }
 
-    public void setIdMunicipio(int idMunicipio) {
-        this.idMunicipio = idMunicipio;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -28,8 +32,13 @@ public class Municipio {
         this.nombre = nombre;
     }
 
-    @Override
-    public String toString() {
-        return nombre;
+    public ArrayList<Distrito> getDistritos() {
+        return distritos;
     }
+
+    public void setDistritos(ArrayList<Distrito> distritos) {
+        this.distritos = distritos;
+    }
+    
+    
 }

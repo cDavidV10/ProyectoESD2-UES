@@ -1,28 +1,27 @@
 package modelo;
 
 public class Direccion {
-
-    private int idDireccion;
+    private int id;
     private String zona;
-    private String numCasa;
+    private String numeroCasa;
+    // ? Clase Relacionada
     private Distrito distrito;
-
-    public Direccion(int idDireccion, String zona, String numCasa, Distrito distrito) {
-        this.idDireccion = idDireccion;
-        this.zona = zona;
-        this.numCasa = numCasa;
-        this.distrito = distrito;
-    }
 
     public Direccion() {
     }
-    
-    public int getIdDireccion() {
-        return idDireccion;
+
+    public Direccion(int id, String zona, String numeroCasa) {
+        this.id = id;
+        this.zona = zona;
+        this.numeroCasa = numeroCasa;
     }
 
-    public void setIdDireccion(int idDireccion) {
-        this.idDireccion = idDireccion;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getZona() {
@@ -33,12 +32,12 @@ public class Direccion {
         this.zona = zona;
     }
 
-    public String getNumCasa() {
-        return numCasa;
+    public String getNumeroCasa() {
+        return numeroCasa;
     }
 
-    public void setNumCasa(String numCasa) {
-        this.numCasa = numCasa;
+    public void setNumeroCasa(String numeroCasa) {
+        this.numeroCasa = numeroCasa;
     }
 
     public Distrito getDistrito() {
@@ -48,4 +47,6 @@ public class Direccion {
     public void setDistrito(Distrito distrito) {
         this.distrito = distrito;
     }
+    
+    
 }

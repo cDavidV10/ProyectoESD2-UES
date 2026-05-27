@@ -1,25 +1,28 @@
 package modelo;
 
-public class Distrito {
-    private int idDistrito;
-    private String nombre;
-    private Municipio municipio;
+import java.util.ArrayList;
 
-    public Distrito(int idDistrito, String nombre, Municipio municipio) {
-        this.idDistrito = idDistrito;
-        this.nombre = nombre;
-        this.municipio = municipio;
-    }
+public class Distrito {
+    private int id;
+    private String nombre;
+    // ? Clases Relacionadas
+    private Municipio municipio;
+    private ArrayList<Direccion> direcciones;
 
     public Distrito() {
     }
 
-    public int getIdDistrito() {
-        return idDistrito;
+    public Distrito(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
     }
 
-    public void setIdDistrito(int idDistrito) {
-        this.idDistrito = idDistrito;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -38,8 +41,13 @@ public class Distrito {
         this.municipio = municipio;
     }
 
-    @Override
-    public String toString() {
-        return nombre;
+    public ArrayList<Direccion> getDirecciones() {
+        return direcciones;
     }
+
+    public void setDirecciones(ArrayList<Direccion> direcciones) {
+        this.direcciones = direcciones;
+    }
+    
+    
 }
