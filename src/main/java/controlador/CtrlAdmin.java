@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
+import vista.Login;
 
 /**
  *
@@ -24,10 +25,12 @@ import vista.AdminView;
 public class CtrlAdmin {
     AdminView adminView;
     Usuario usuario;
+    Login loginView;
 
-    public CtrlAdmin(AdminView adminView, Usuario usuario) {
+    public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
+        this.loginView = loginView;
 
         adminView.addWindowListener(new WindowAdapter() {
             @Override
@@ -35,6 +38,13 @@ public class CtrlAdmin {
                 new UsuarioActivo().cambiarLabelUsuario(adminView.getTxtUser(), usuario);
             }
 
+        });
+
+        this.adminView.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                loginView.setVisible(true);
+            }
         });
 
     }

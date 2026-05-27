@@ -84,8 +84,9 @@ public class CtrlLogin {
 
             if (result.equalsIgnoreCase("Administrador")) {
                 AdminView adminView = new AdminView();
-                CtrlAdmin ctrlAdmin = new CtrlAdmin(adminView, usuario);
+                CtrlAdmin ctrlAdmin = new CtrlAdmin(adminView, usuario, loginView);
                 adminView.setVisible(true);
+                this.loginView.dispose();
             }
 
             if (result.equalsIgnoreCase("No")) {
