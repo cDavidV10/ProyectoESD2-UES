@@ -148,8 +148,6 @@ public class ArbolBinarioAVL extends ArbolBinario {
         return rama;
     }
 
-   
-
     public <T extends Comparable> void eliminar(T dato) {
         super.setRaiz(eliminar(dato, super.getRaiz()));
     }
@@ -236,26 +234,26 @@ public class ArbolBinarioAVL extends ArbolBinario {
         ArrayList a = new ArrayList<>();
         return padres(super.getRaiz(), a);
     }
-    
+
     public ArrayList padreDosHijos() {
         ArrayList a = new ArrayList<>();
         return padreDosHijos(super.getRaiz(), a);
     }
-    
-    public int peso(){
+
+    public int peso() {
         int a = 0;
-        
+
         return peso(super.getRaiz(), a);
-        
+
     }
-    
-    public int mayor(){
-        
+
+    public int mayor() {
+
         return mayor(super.getRaiz());
     }
-    
-    public int sumatoriaHojas(){
-    
+
+    public int sumatoriaHojas() {
+
         return sumatoriaHojas(super.getRaiz(), 0);
     }
 }

@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
@@ -16,11 +17,28 @@ public class VerClientesDAO implements IVerClientesDAO {
     public ArbolBinarioAVL listar() throws Exception {
         ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
         Connection conexion = new Conexion().getConexion();
+        conexion.setAutoCommit(false);
         PreparedStatement ps = conexion.prepareStatement(SELECT_CLIENTE);
         ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Cliente
+        try {
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
+                cliente.setCorreo(rs.getString("correo"));
+                cliente.setTelefono(rs.getString("telefono"));
+
+                aBinarioAVL.insertar(cliente);
+            }
+
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
         }
 
         return aBinarioAVL;
