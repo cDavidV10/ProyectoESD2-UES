@@ -307,16 +307,8 @@ public class AdminView extends javax.swing.JFrame {
         });
     }
 
-    public JLabel getTxtUser() {
-        return txtUser;
-    }
-
     public JPanel getBgPanel() {
         return bgPanel;
-    }
-    
-    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {
-
     }
 
     public JButton getBtnCredenciales() {
@@ -334,6 +326,14 @@ public class AdminView extends javax.swing.JFrame {
     public JButton getBtnVerEmpleado() {
         return btnVerEmpleado;
     }
+
+    public JLabel getTxtUser() {
+        return txtUser;
+    }
+
+    
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
