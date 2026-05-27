@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Lectura {
     private int id;
-    private double consumo;
+    private int consumo;
     private LocalDate fechaInicial;
     private LocalDate fechaFinal;
     // ? Clases Relacionadas
@@ -15,7 +15,7 @@ public class Lectura {
     public Lectura() {
     }
 
-    public Lectura(int id, double consumo, LocalDate fechaInicial, LocalDate fechaFinal) {
+    public Lectura(int id, int consumo, LocalDate fechaInicial, LocalDate fechaFinal) {
         this.id = id;
         this.consumo = consumo;
         this.fechaInicial = fechaInicial;
@@ -30,11 +30,11 @@ public class Lectura {
         this.id = id;
     }
 
-    public double getConsumo() {
+    public int getConsumo() {
         return consumo;
     }
 
-    public void setConsumo(double consumo) {
+    public void setConsumo(int consumo) {
         this.consumo = consumo;
     }
 
@@ -69,7 +69,5 @@ public class Lectura {
     public void setFacturas(ArrayList<Factura> facturas) {
         this.facturas = facturas;
     }
-    
-    
 
 }

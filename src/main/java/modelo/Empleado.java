@@ -1,5 +1,6 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class Empleado {
     private String apellido;
     private LocalDate fechaNacimiento;
     private LocalDate fechaContrato;
-    private double sueldo;
+    private BigDecimal sueldo;
     private String genero;
     private String correo;
     private String telefono;
@@ -21,7 +22,8 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int id, String dui, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaContrato, double sueldo, String genero, String correo, String telefono, String estado) {
+    public Empleado(int id, String dui, String nombre, String apellido, LocalDate fechaNacimiento,
+            LocalDate fechaContrato, BigDecimal sueldo, String genero, String correo, String telefono, String estado) {
         this.id = id;
         this.dui = dui;
         this.nombre = nombre;
@@ -83,11 +85,11 @@ public class Empleado {
         this.fechaContrato = fechaContrato;
     }
 
-    public double getSueldo() {
+    public BigDecimal getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(double sueldo) {
+    public void setSueldo(BigDecimal sueldo) {
         this.sueldo = sueldo;
     }
 
@@ -130,7 +132,5 @@ public class Empleado {
     public void setFacturas(ArrayList<Factura> facturas) {
         this.facturas = facturas;
     }
-    
-    
 
 }
