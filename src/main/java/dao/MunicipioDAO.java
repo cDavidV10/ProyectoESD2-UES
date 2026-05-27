@@ -1,4 +1,4 @@
-package dao.implementacion;
+package dao;
 
 import conexion.Conexion;
 import interfaz.IMunicipioDAO;
@@ -19,15 +19,15 @@ public class MunicipioDAO implements IMunicipioDAO {
         Connection conn = Conexion.getConexion();
         PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
         ResultSet rs = ps.executeQuery();
-        
-        while(rs.next()){
+
+        while (rs.next()) {
             Municipio m = new Municipio();
-            m.setIdMunicipio(rs.getInt("id_municipio"));
+            m.setId(rs.getInt("id_municipio"));
             m.setNombre(rs.getString("nombre"));
-            
+
             lista.add(m);
         }
-        
+
         conn.close();
         return lista;
     }

@@ -82,21 +82,11 @@ public class AdminView extends javax.swing.JFrame {
         btnEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnEmpleado.setText("Agregar empleado");
         btnEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
 
         btnCredenciales.setBackground(new java.awt.Color(0, 153, 255));
         btnCredenciales.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCredenciales.setForeground(new java.awt.Color(255, 255, 255));
         btnCredenciales.setText("Credenciales");
-        btnCredenciales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
 
         jSeparator6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -295,7 +285,7 @@ public class AdminView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AdminView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         // </editor-fold>
         // </editor-fold>
 
@@ -330,10 +320,6 @@ public class AdminView extends javax.swing.JFrame {
     public JLabel getTxtUser() {
         return txtUser;
     }
-
-    
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
