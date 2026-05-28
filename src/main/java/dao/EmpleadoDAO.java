@@ -3,9 +3,12 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
+import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IEmpleadoDAO;
+import modelo.Cliente;
 import modelo.Empleado;
 
 public class EmpleadoDAO implements IEmpleadoDAO {
@@ -106,6 +109,42 @@ public class EmpleadoDAO implements IEmpleadoDAO {
         } finally {
             conexion.close();
         }
+    }
+
+    @Override
+    public ArbolBinarioAVL listar() throws Exception {
+        String selectEmpleado = "select * from empleado";
+        ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
+        Connection conexion = Conexion.getConexion();
+        conexion.setAutoCommit(false);
+        PreparedStatement ps = conexion.prepareStatement(selectEmpleado);
+        ResultSet rs = ps.executeQuery();
+
+        try {
+            while (rs.next()) {
+                Empleado empleado = new Empleado();
+                empleado.setId(rs.getInt("id_empleado"));
+                empleado.setDui(rs.getString("dui"));
+                empleado.setNombre(rs.getString("nombre"));
+                empleado.setApellido(rs.getString("apellido"));
+                empleado.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
+                empleado.setFechaContrato(rs.getObject("fecha_contrato", LocalDate.class));
+                empleado.setSueldo(rs.getBigDecimal("sueldo"));
+                empleado.setGenero(rs.getString("genero"));
+                empleado.setCorreo(rs.getString("correo"));
+                empleado.setTelefono(rs.getString("telefono"));
+                empleado.setEstado(rs.getString("estado"));
+
+                aBinarioAVL.insertar(empleado);
+            }
+
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
+        }
+
+        return aBinarioAVL;
     }
 
 }

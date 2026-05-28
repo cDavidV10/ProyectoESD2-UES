@@ -16,7 +16,7 @@ public class VerClientesDAO implements IVerClientesDAO {
     @Override
     public ArbolBinarioAVL listar() throws Exception {
         ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
-        Connection conexion = new Conexion().getConexion();
+        Connection conexion = Conexion.getConexion();
         conexion.setAutoCommit(false);
         PreparedStatement ps = conexion.prepareStatement(SELECT_CLIENTE);
         ResultSet rs = ps.executeQuery();
