@@ -91,21 +91,11 @@ public class AdminView extends javax.swing.JFrame {
         btnEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnEmpleado.setText("Agregar empleado");
         btnEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmpleadoActionPerformed(evt);
-            }
-        });
 
         btnCredenciales.setBackground(new java.awt.Color(0, 153, 255));
         btnCredenciales.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCredenciales.setForeground(new java.awt.Color(255, 255, 255));
         btnCredenciales.setText("Credenciales");
-        btnCredenciales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCredencialesActionPerformed(evt);
-            }
-        });
 
         jSeparator6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -122,22 +112,12 @@ public class AdminView extends javax.swing.JFrame {
         btnVerCliente.setForeground(new java.awt.Color(255, 255, 255));
         btnVerCliente.setText("Ver Clientes");
         btnVerCliente.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnVerCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerClienteActionPerformed(evt);
-            }
-        });
 
         btnVerEmpleado.setBackground(new java.awt.Color(0, 153, 255));
         btnVerEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnVerEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnVerEmpleado.setText("Ver Empleados");
         btnVerEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnVerEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerEmpleadoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -230,40 +210,6 @@ public class AdminView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    protected void btnEmpleadoActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnEmpleadoActionPerformed'");
-    }
-
-    protected void btnCredencialesActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnCredencialesActionPerformed'");
-    }
-
-    private void btnVerClienteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnVerClienteActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnVerClienteActionPerformed
-
-    private void btnVerEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnVerEmpleadoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnVerEmpleadoActionPerformed
-
-    private void btnDocenteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDocenteActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnDocenteActionPerformed
-
-    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCursoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnCursoActionPerformed
-
-    private void btnInscripcionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInscripcionActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnInscripcionActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
