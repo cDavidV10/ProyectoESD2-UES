@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controlador.CtrlAgregarEmpleado;
 import funciones.Paneles;
 
 /**
@@ -25,7 +26,9 @@ public class AdminView extends javax.swing.JFrame {
     public AdminView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        new Paneles().insertarPaneles(new AgregarEmpleadoView(), bgPanel);
+        AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
+        CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
+        new Paneles().insertarPaneles(agregarEmpleadoView, bgPanel);
 
     }
 
