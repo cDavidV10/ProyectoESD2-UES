@@ -10,12 +10,12 @@ import javax.swing.JTable;
  *
  * @author cdavi
  */
-public class ViewVerClientes extends javax.swing.JPanel {
+public class ViewClientes extends javax.swing.JPanel {
 
     /**
      * Creates new form ViewVerClientes
      */
-    public ViewVerClientes() {
+    public ViewClientes() {
         initComponents();
     }
 
