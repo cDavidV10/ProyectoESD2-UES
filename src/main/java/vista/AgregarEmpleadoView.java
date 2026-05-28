@@ -150,7 +150,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         btnEnviar.setBackground(new java.awt.Color(0, 153, 255));
         btnEnviar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar.setText("Guardar Docente");
+        btnEnviar.setText("Guardar Empleado");
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N

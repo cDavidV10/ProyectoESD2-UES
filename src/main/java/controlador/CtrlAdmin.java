@@ -25,7 +25,7 @@ import modelo.Usuario;
 import vista.AdminView;
 import vista.AgregarEmpleadoView;
 import vista.Login;
-import vista.ViewVerClientes;
+import vista.ViewClientes;
 
 /**
  *
@@ -57,7 +57,7 @@ public class CtrlAdmin {
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
-            ViewVerClientes verClientesView = new ViewVerClientes();
+            ViewClientes verClientesView = new ViewClientes();
             CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
             new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
 

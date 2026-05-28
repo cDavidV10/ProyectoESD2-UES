@@ -8,14 +8,14 @@ import javax.swing.table.DefaultTableModel;
 import arboles.ArbolBinarioAVL;
 import dao.VerClientesDAO;
 import modelo.Cliente;
-import vista.ViewVerClientes;
+import vista.ViewClientes;
 
 public class CtrlVerClientes {
-    private ViewVerClientes verClientesView;
+    private ViewClientes verClientesView;
     private ArbolBinarioAVL datos;
     private VerClientesDAO verClientesDAO = new VerClientesDAO();
 
-    public CtrlVerClientes(ViewVerClientes verClientesView) {
+    public CtrlVerClientes(ViewClientes verClientesView) {
         this.verClientesView = verClientesView;
 
         verDatos();
