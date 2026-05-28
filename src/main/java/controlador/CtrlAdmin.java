@@ -26,6 +26,7 @@ import vista.AdminView;
 import vista.AgregarEmpleadoView;
 import vista.Login;
 import vista.ViewClientes;
+import vista.ViewEmpleados;
 
 /**
  *
@@ -54,6 +55,12 @@ public class CtrlAdmin {
 
             CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
             new Paneles().insertarPaneles(agregarEmpleadoView, this.adminView.getBgPanel());
+        });
+
+        this.adminView.getBtnVerEmpleado().addActionListener(e -> {
+            ViewEmpleados viewEmpleados = new ViewEmpleados();
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados);
+            new Paneles().insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
