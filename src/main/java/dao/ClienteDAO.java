@@ -12,7 +12,11 @@ import interfaz.IClienteDAO;
 
 public class ClienteDAO implements IClienteDAO {
     private static final String SELECT_CLIENTE = "select * from cliente";
-    private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = """
+                INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono)
+                VALUES (?, ?, ?, ?, ?, ?)";
+            """;
+
     private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
 
     @Override
@@ -48,12 +52,12 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public void insertar(Cliente cliente) throws Exception {
-                Connection conn = Conexion.getConexion();// Metodo getConexion() que tengo en mi clase conexion
+        Connection conn = Conexion.getConexion();// Metodo getConexion() que tengo en mi clase conexion
 
         try {
             // INSERCION
             conn.setAutoCommit(false); // permite la insercion a la bd
-            PreparedStatement ps = conn.prepareStatement(INSERT); 
+            PreparedStatement ps = conn.prepareStatement(INSERT);
             ps.setString(1, cliente.getDui());
             ps.setString(2, cliente.getNombre());
             ps.setString(3, cliente.getApellido());
@@ -75,8 +79,8 @@ public class ClienteDAO implements IClienteDAO {
     public void eliminar(String dui) throws Exception {
         Connection conn = Conexion.getConexion();
         PreparedStatement ps = conn.prepareStatement(DELETE_REGISTRO);
-        ps.setString(1, dui); 
-        ps.executeUpdate(); //Para ejecutar importante
+        ps.setString(1, dui);
+        ps.executeUpdate(); // Para ejecutar importante
         conn.close();
     }
 
