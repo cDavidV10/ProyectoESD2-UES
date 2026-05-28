@@ -37,6 +37,20 @@ public class Empleado {
         this.estado = estado;
     }
 
+    public Empleado(String dui, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaContrato, BigDecimal sueldo, String genero, String correo, String telefono) {
+        this.dui = dui;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.fechaContrato = fechaContrato;
+        this.sueldo = sueldo;
+        this.genero = genero;
+        this.correo = correo;
+        this.telefono = telefono;
+    }
+    
+    
+
     public int getId() {
         return id;
     }
