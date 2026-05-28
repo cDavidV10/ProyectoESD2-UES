@@ -188,9 +188,6 @@
                   <Dimension value="[200, 25]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClienteActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnModificar">
               <Properties>
@@ -205,9 +202,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Datos"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator6">
               <Properties>
@@ -254,9 +248,6 @@
                   <Dimension value="[200, 25]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnContratoActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnMedidor">
               <Properties>
@@ -274,9 +265,6 @@
                   <Dimension value="[200, 25]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMedidorActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

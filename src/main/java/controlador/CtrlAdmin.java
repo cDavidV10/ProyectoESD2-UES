@@ -18,14 +18,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 
 import arboles.ArbolBinarioAVL;
-import dao.VerClientesDAO;
+import dao.ClienteDAO;
 
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
 import vista.AgregarEmpleadoView;
 import vista.Login;
-import vista.ViewVerClientes;
+import vista.ViewClientes;
 
 /**
  *
@@ -57,10 +57,10 @@ public class CtrlAdmin {
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
-            ViewVerClientes verClientesView = new ViewVerClientes();
-            CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
+            ViewClientes verClientesView = new ViewClientes();
+            ClienteDAO dao = new ClienteDAO();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView);
             new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
-
         });
 
         this.adminView.addWindowListener(new WindowAdapter() {
