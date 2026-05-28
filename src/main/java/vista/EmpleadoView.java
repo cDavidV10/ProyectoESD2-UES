@@ -265,6 +265,12 @@ public class EmpleadoView extends javax.swing.JFrame {
         return btnModificar;
     }
 
+    public JLabel getTxtUser() {
+        return txtUser;
+    }
+    
+    
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
