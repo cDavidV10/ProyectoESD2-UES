@@ -18,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 
 import arboles.ArbolBinarioAVL;
-import dao.VerClientesDAO;
+import dao.ClienteDAO;
 
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
+import vista.AgregarEmpleadoView;
 import vista.Login;
-import vista.ViewVerClientes;
+import vista.ViewClientes;
+import vista.ViewEmpleados;
 
 /**
  *
@@ -48,11 +50,24 @@ public class CtrlAdmin {
 
         });
 
-        this.adminView.getBtnVerCliente().addActionListener(e -> {
-            ViewVerClientes verClientesView = new ViewVerClientes();
-            CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
-            new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
+        this.adminView.getBtnEmpleado().addActionListener(e -> {
+            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
 
+            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
+            new Paneles().insertarPaneles(agregarEmpleadoView, this.adminView.getBgPanel());
+        });
+
+        this.adminView.getBtnVerEmpleado().addActionListener(e -> {
+            ViewEmpleados viewEmpleados = new ViewEmpleados();
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados);
+            new Paneles().insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
+        });
+
+        this.adminView.getBtnVerCliente().addActionListener(e -> {
+            ViewClientes verClientesView = new ViewClientes();
+            ClienteDAO dao = new ClienteDAO();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView);
+            new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
         });
 
         this.adminView.addWindowListener(new WindowAdapter() {

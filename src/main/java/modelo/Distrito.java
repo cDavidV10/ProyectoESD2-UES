@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Distrito {
+public class Distrito implements Comparable<Distrito>{
     private int id;
     private String nombre;
     // ? Clases Relacionadas
@@ -48,6 +48,14 @@ public class Distrito {
     public void setDirecciones(ArrayList<Direccion> direcciones) {
         this.direcciones = direcciones;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    @Override
+    public int compareTo(Distrito d) {
+        return Integer.compare(this.id, d.id);
+    }
 }

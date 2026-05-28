@@ -4,25 +4,42 @@
  */
 package controlador;
 
-
 import funciones.Paneles;
 import vista.EmpleadoView;
 import vista.Vista;
+import dao.ClienteDAO;
+import funciones.Paneles;
+import vista.EmpleadoView;
+import vista.FormCliente;
+import vista.ViewClientes;
 
 /**
  *
- * @author danie
+ * @author Yonathan
  */
 public class CtrlEmpleadoView {
-    private EmpleadoView view;
-    private Vista viewDirec;    
+    private EmpleadoView empleadoView;
+    private ClienteDAO dao = new ClienteDAO();
+    private Vista viewDirec;
 
-    public CtrlEmpleadoView(EmpleadoView vieew) {
-        this.view = vieew;
-        this.view.getBtnMedidor().addActionListener(e ->{
+    public CtrlEmpleadoView(EmpleadoView empleadoView) {
+        this.empleadoView = empleadoView;
+
+        onClickVerClientes();
+
+        this.empleadoView.getBtnMedidor().addActionListener(e -> {
             this.viewDirec = new Vista();
-            new Paneles().insertarPaneles(viewDirec, view.getBgPanel());
-            new DireccionControlador(viewDirec);
+            new Paneles().insertarPaneles(viewDirec, empleadoView.getBgPanel());
+            new CtrlDireccion(viewDirec);
         });
     }
+
+    public void onClickVerClientes() {
+        empleadoView.getBtnCliente().addActionListener(e -> {
+            ViewClientes clientesView = new ViewClientes();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView);
+            new Paneles().insertarPaneles(clientesView, this.empleadoView.getBgPanel());
+        });
+    }
+
 }

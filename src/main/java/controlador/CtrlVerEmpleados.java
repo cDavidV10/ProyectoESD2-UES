@@ -6,16 +6,16 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import arboles.ArbolBinarioAVL;
-import dao.VerClientesDAO;
-import modelo.Cliente;
-import vista.ViewVerClientes;
+import dao.EmpleadoDAO;
+import modelo.Empleado;
+import vista.ViewEmpleados;
 
-public class CtrlVerClientes {
-    private ViewVerClientes verClientesView;
+public class CtrlVerEmpleados {
+    private ViewEmpleados verClientesView;
     private ArbolBinarioAVL datos;
-    private VerClientesDAO verClientesDAO = new VerClientesDAO();
+    private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-    public CtrlVerClientes(ViewVerClientes verClientesView) {
+    public CtrlVerEmpleados(ViewEmpleados verClientesView) {
         this.verClientesView = verClientesView;
 
         verDatos();
@@ -25,14 +25,15 @@ public class CtrlVerClientes {
     private void verDatos() {
 
         try {
-            datos = verClientesDAO.listar();
+            datos = empleadoDAO.listar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No hay datos Para mostrar");
         }
 
-        ArrayList<Cliente> datoList = datos.IND();
+        ArrayList<Empleado> datoList = datos.IND();
         DefaultTableModel modeloTabla = new DefaultTableModel();
-        String[] title = { "DUI", "Nombre", "Apellido", "Edad", "Telefono", "Correo" };
+        String[] title = { "DUI", "Nombre", "Apellido", "Edad", "Contratacion", "Telefono", "Correo", "Sueldo",
+                "Estado" };
         modeloTabla.setColumnIdentifiers(title);
 
         datoList.forEach(dato -> {
@@ -41,8 +42,12 @@ public class CtrlVerClientes {
                     dato.getNombre(),
                     dato.getApellido(),
                     dato.CalcularEdad(),
+                    dato.getFechaContrato(),
                     dato.getTelefono(),
-                    dato.getCorreo()
+                    dato.getCorreo(),
+                    dato.getSueldo(),
+                    dato.getEstado()
+
             };
 
             modeloTabla.addRow(obj);

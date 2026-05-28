@@ -1,8 +1,7 @@
 package interfaz;
 
-import modelo.Distrito;
-import java.util.List;
+import arboles.ArbolBinarioAVL;
 
 public interface IDistritoDAO {
-    List<Distrito> listarPorMunicipio(int idMunicipio) throws Exception;
+    ArbolBinarioAVL listarPorMunicipio(int idMunicipio) throws Exception;
 }

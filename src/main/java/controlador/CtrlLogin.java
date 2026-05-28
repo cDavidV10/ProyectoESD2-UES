@@ -57,6 +57,7 @@ public class CtrlLogin {
                 loginView.dispose();
             }
         });
+
         this.loginView.getTxtUser().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -110,6 +111,13 @@ public class CtrlLogin {
                 CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView);
                 empleadoView.setVisible(true);
                 this.loginView.dispose();
+            }
+
+            if (result.equalsIgnoreCase("Empleado")) {
+                EmpleadoView empleadoView = new EmpleadoView();
+                CtrlEmpleadoView ctrlEmpleado = new CtrlEmpleadoView(empleadoView);
+                empleadoView.setLocationRelativeTo(null);
+                empleadoView.setVisible(true);
             }
 
             if (result.equalsIgnoreCase("No")) {
