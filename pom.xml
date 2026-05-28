@@ -39,5 +39,12 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
+        <!--    Dependencia del Resend  -->
+        <dependency>
+            <groupId>com.resend</groupId>
+            <artifactId>resend-java</artifactId>
+            <version>4.13.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
