@@ -106,6 +106,12 @@ public class CtrlLogin {
                 adminView.setVisible(true);
                 this.loginView.dispose();
             }
+            if (result.equalsIgnoreCase("Empleado")) {
+                EmpleadoView empleadoView = new EmpleadoView();
+                CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView);
+                empleadoView.setVisible(true);
+                this.loginView.dispose();
+            }
 
             if (result.equalsIgnoreCase("Empleado")) {
                 EmpleadoView empleadoView = new EmpleadoView();
