@@ -12,11 +12,7 @@ import interfaz.IClienteDAO;
 
 public class ClienteDAO implements IClienteDAO {
     private static final String SELECT_CLIENTE = "select * from cliente";
-    private static final String INSERT = """
-                INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono)
-                VALUES (?, ?, ?, ?, ?, ?)";
-            """;
-
+    private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
 
     @Override
