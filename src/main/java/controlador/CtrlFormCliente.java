@@ -6,6 +6,7 @@ package controlador;
 
 import arboles.ArbolBinarioAVL;
 import dao.ClienteDAO;
+import funciones.Validaciones;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -53,19 +54,69 @@ public class CtrlFormCliente {
 
                 Cliente cliente = new Cliente(0, dui, nombre, apellido, fechaNacimiento, correo, telefono);
 
-                // Validar y guardar
-                //validar(docente);
                 
+                  if (!new Validaciones().validarDui(cliente.getDui())) {
+                      String mensaje = """
+                    DUI Invalido
+                    Ingrese un Dui valido
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
+                  if (!new Validaciones().validarNombres(cliente.getNombre())) {
+                      String mensaje = """
+                    Nombre Invalido
+                    El nombre no puede contener numeros ni estar vacio
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
+                  if (!new Validaciones().validarNombres(cliente.getApellido())) {
+                      String mensaje = """
+                    Apellido Invalido
+                    El apellido no puede contener numeros ni estar vacio
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
+                  if (!new Validaciones().validarCorreo(cliente.getCorreo())) {
+                      String mensaje = """
+                    Correo Invalido
+                    Digite un correo valido
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
+                  if (!new Validaciones().validarTelefono(cliente.getTelefono())) {
+                      String mensaje = """
+                    Telefono Invalido
+                    Digite un telefono valido
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
+                  if (!new Validaciones().validarFechas(fechaNacimiento)) {
+                      String mensaje = """
+                    Fecha Invalida
+                    La fecha de nacimiento no puede ser nula ni tampoco puede ser superior al dia de hoy
+                    """;
+                      JOptionPane.showMessageDialog(null, mensaje);
+                      return;
+                  }
+
                 if (dao.existeDui(cliente.getDui())) {
-                    JOptionPane.showMessageDialog(null, "El DUI ya está registrado.");
-                    return;
+                      JOptionPane.showMessageDialog(null, "El DUI ya está registrado.");
+                      return;
                 }
 
                 dao.insertar(cliente); 
                 JOptionPane.showMessageDialog(null, "Docente guardado correctamente");
 
-                // Refrescar tabla en la vista principal
-                //CtrlEmpleadoVerClientes.verDatos();
 
                 // Cerrar formulario
                 formCliente.dispose();
