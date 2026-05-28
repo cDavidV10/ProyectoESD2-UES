@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -9,6 +10,8 @@ import javax.swing.JOptionPane;
 import dao.EmpleadoDAO;
 import funciones.Credenciales;
 import funciones.Validaciones;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import modelo.Empleado;
 import vista.AgregarEmpleadoView;
 
@@ -23,6 +26,224 @@ public class CtrlAgregarEmpleado {
         this.agregarEmpleadoView.getBtnEnviar().addActionListener(e -> {
             enviarDatos();
         });
+
+        // ? PlaceHolder
+        this.agregarEmpleadoView.getTxtDui().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtDui().getText().equals("12345678-9")) {
+                    agregarEmpleadoView.getTxtDui().setText("");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtNombre().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtNombre().setText("Juan Antonio");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtApellido().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtApellido().setText("Perez Martinez");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtTelefono().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtTelefono().setText("1234-5678");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtCorreo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtCorreo().setText("correo@dominio.com");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtSueldo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtSueldo().setText("2000.00");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
+        this.agregarEmpleadoView.getTxtNombre().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtNombre().getText().equals("Juan Antonio")) {
+                    agregarEmpleadoView.getTxtNombre().setText("");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtDui().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtDui().setText("12345678-9");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtApellido().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtApellido().setText("Perez Martinez");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtTelefono().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtTelefono().setText("1234-5678");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtCorreo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtCorreo().setText("correo@dominio.com");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtSueldo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtSueldo().setText("2000.00");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
+        this.agregarEmpleadoView.getTxtApellido().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtApellido().getText().equals("Perez Martinez")) {
+                    agregarEmpleadoView.getTxtApellido().setText("");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtNombre().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtNombre().setText("Juan Antonio");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtDui().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtDui().setText("12345678-9");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtTelefono().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtTelefono().setText("1234-5678");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtCorreo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtCorreo().setText("correo@dominio.com");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtSueldo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtSueldo().setText("2000.00");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
+        this.agregarEmpleadoView.getTxtTelefono().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtTelefono().getText().equals("1234-5678")) {
+                    agregarEmpleadoView.getTxtTelefono().setText("");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtNombre().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtNombre().setText("Juan Antonio");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtApellido().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtApellido().setText("Perez Martinez");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtDui().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtDui().setText("12345678-9");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtCorreo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtCorreo().setText("correo@dominio.com");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtSueldo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtSueldo().setText("2000.00");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
+        this.agregarEmpleadoView.getTxtCorreo().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtCorreo().getText().equals("correo@dominio.com")) {
+                    agregarEmpleadoView.getTxtCorreo().setText("");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtNombre().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtNombre().setText("Juan Antonio");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtApellido().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtApellido().setText("Perez Martinez");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtTelefono().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtTelefono().setText("1234-5678");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtDui().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtDui().setText("12345678-9");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtSueldo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtSueldo().setText("2000.00");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
+        this.agregarEmpleadoView.getTxtSueldo().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (agregarEmpleadoView.getTxtSueldo().getText().equals("2000.00")) {
+                    agregarEmpleadoView.getTxtSueldo().setText("");
+                    agregarEmpleadoView.getTxtSueldo().setForeground(new Color(0, 0, 0));
+                }
+
+                if (agregarEmpleadoView.getTxtNombre().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtNombre().setText("Juan Antonio");
+                    agregarEmpleadoView.getTxtNombre().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtApellido().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtApellido().setText("Perez Martinez");
+                    agregarEmpleadoView.getTxtApellido().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtTelefono().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtTelefono().setText("1234-5678");
+                    agregarEmpleadoView.getTxtTelefono().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtCorreo().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtCorreo().setText("correo@dominio.com");
+                    agregarEmpleadoView.getTxtCorreo().setForeground(new Color(170, 170, 170));
+                }
+
+                if (agregarEmpleadoView.getTxtDui().getText().isEmpty()) {
+                    agregarEmpleadoView.getTxtDui().setText("12345678-9");
+                    agregarEmpleadoView.getTxtDui().setForeground(new Color(170, 170, 170));
+                }
+            }
+
+        });
+
     }
 
     private void enviarDatos() {

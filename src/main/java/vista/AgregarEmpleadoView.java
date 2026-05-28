@@ -21,6 +21,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
      */
     public AgregarEmpleadoView() {
         initComponents();
+        jLabel1.requestFocusInWindow();
     }
 
     /**
@@ -69,7 +70,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtDui.setBackground(new java.awt.Color(255, 255, 255));
         txtDui.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtDui.setForeground(new java.awt.Color(0, 0, 0));
+        txtDui.setForeground(new java.awt.Color(170, 170, 170));
         txtDui.setText("12345678-9");
         txtDui.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -80,7 +81,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombre.setForeground(new java.awt.Color(170, 170, 170));
         txtNombre.setText("Juan Antonio");
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +96,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtApellido.setForeground(new java.awt.Color(0, 0, 0));
+        txtApellido.setForeground(new java.awt.Color(170, 170, 170));
         txtApellido.setText("Perez Martinez");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -117,6 +118,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         btnGroupGenero.add(rbMasculino);
         rbMasculino.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rbMasculino.setForeground(new java.awt.Color(0, 0, 0));
+        rbMasculino.setSelected(true);
         rbMasculino.setText("Masculino");
 
         rbFemenino.setBackground(new java.awt.Color(255, 255, 255));
@@ -132,7 +134,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtTelefono.setForeground(new java.awt.Color(0, 0, 0));
+        txtTelefono.setForeground(new java.awt.Color(170, 170, 170));
         txtTelefono.setText("1234-5678");
         txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -143,7 +145,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
+        txtCorreo.setForeground(new java.awt.Color(170, 170, 170));
         txtCorreo.setText("correo@dominio.com");
         txtCorreo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -159,7 +161,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
 
         txtSueldo.setBackground(new java.awt.Color(255, 255, 255));
         txtSueldo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txtSueldo.setForeground(new java.awt.Color(0, 0, 0));
+        txtSueldo.setForeground(new java.awt.Color(170, 170, 170));
         txtSueldo.setText("2000.00");
         txtSueldo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -188,8 +190,8 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
                         .addGap(49, 49, 49)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
