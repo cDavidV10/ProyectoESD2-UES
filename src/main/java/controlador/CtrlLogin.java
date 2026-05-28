@@ -57,6 +57,7 @@ public class CtrlLogin {
                 loginView.dispose();
             }
         });
+
         this.loginView.getTxtUser().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
