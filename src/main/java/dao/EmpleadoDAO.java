@@ -53,7 +53,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
         Connection conexion = Conexion.getConexion();
 
         PreparedStatement ps = conexion.prepareStatement(buscar);
-        ps.setString(1, buscar);
+        ps.setString(1, dui);
 
         ResultSet rs = ps.executeQuery();
 
