@@ -367,7 +367,8 @@ public class CtrlAgregarEmpleado {
         }
 
         try {
-            if (!empleadoDAO.buscar(empleado.getDui())) {
+            if (empleadoDAO.buscar(empleado.getDui())) {
+                System.out.println("entra aqui");
 
                 JOptionPane.showMessageDialog(null, "Empleado ya se encuentra almacenado");
                 return;
