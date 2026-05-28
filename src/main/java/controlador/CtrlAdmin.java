@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 
 import arboles.ArbolBinarioAVL;
-import dao.VerClientesDAO;
+import dao.ClienteDAO;
 
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
@@ -65,9 +65,9 @@ public class CtrlAdmin {
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
             ViewClientes verClientesView = new ViewClientes();
-            CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
+            ClienteDAO dao = new ClienteDAO();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView);
             new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
-
         });
 
         this.adminView.addWindowListener(new WindowAdapter() {
