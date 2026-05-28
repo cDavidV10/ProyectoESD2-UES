@@ -144,7 +144,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
-        txtCorreo.setText("correo@dominio");
+        txtCorreo.setText("correo@dominio.com");
         txtCorreo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnEnviar.setBackground(new java.awt.Color(0, 153, 255));
