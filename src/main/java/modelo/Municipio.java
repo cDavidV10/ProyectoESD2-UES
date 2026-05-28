@@ -39,6 +39,11 @@ public class Municipio {
     public void setDistritos(ArrayList<Distrito> distritos) {
         this.distritos = distritos;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
     
 }

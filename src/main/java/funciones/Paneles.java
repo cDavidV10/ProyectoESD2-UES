@@ -21,4 +21,13 @@ public class Paneles {
         contenedor.revalidate();
         contenedor.repaint();
     }
+    
+    public void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h) {
+        panel.setSize(w, h);
+
+        contenedor.removeAll();
+        contenedor.add(panel, BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
+    }
 }

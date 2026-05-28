@@ -23,7 +23,6 @@ public class EmpleadoView extends javax.swing.JFrame {
     public EmpleadoView() {
         initComponents();
         this.setLocationRelativeTo(null);
-
     }
 
     /**

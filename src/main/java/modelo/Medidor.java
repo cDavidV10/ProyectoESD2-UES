@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Medidor {
     private int id;
+    private String codigo;
     private String diametroNomila;
     private String unidadMedida;
     // ? Clases Relacionadas
@@ -57,6 +58,14 @@ public class Medidor {
 
     public void setLecturas(ArrayList<Lectura> lecturas) {
         this.lecturas = lecturas;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     

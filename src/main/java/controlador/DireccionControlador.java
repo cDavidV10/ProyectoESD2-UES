@@ -2,6 +2,7 @@ package controlador;
 
 import dao.DireccionDAO;
 import dao.DistritoDAO;
+import dao.MedidorDAO;
 import dao.MunicipioDAO;
 import interfaz.IDireccionDAO;
 import interfaz.IDistritoDAO;
@@ -9,12 +10,14 @@ import interfaz.IMunicipioDAO;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import modelo.Direccion;
 import modelo.Distrito;
+import modelo.Medidor;
 import modelo.Municipio;
 import vista.Vista;
 
@@ -24,26 +27,21 @@ public class DireccionControlador {
     private IMunicipioDAO municipioDAO;
     private IDistritoDAO distritoDAO;
     private IDireccionDAO direccionDAO;
+    
+    private String zonaTxt;
+    private String numCasaTxt;
+    private Distrito distritoSeleccionado;
+    private Municipio municipioSeleccionado;
+    private Direccion  d;
 
     public DireccionControlador(Vista vista) {
         this.vista = vista;
         this.municipioDAO = new MunicipioDAO();
         this.distritoDAO = new DistritoDAO();
         this.direccionDAO = new DireccionDAO();
-
+        cargarCombosMed();
         cargarMunicipios();
         events();
-    }
-
-    public void iniciar() { // Para probar si se muestra
-        JFrame ventana = new javax.swing.JFrame("Gestion de Direcciones");
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(500, 300);
-        ventana.setLocationRelativeTo(null);
-
-        ventana.add(this.vista);
-
-        ventana.setVisible(true);
     }
 
     private void cargarMunicipios() {
@@ -69,6 +67,7 @@ public class DireccionControlador {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardar();
+                guardarDatos();
             }
         });
 
@@ -76,6 +75,7 @@ public class DireccionControlador {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cargarDistritos();
+                
             }
         });
     }
@@ -107,10 +107,10 @@ public class DireccionControlador {
     }
 
     private void guardar() {
-        String zonaTxt = vista.getTxtZona().getText().trim();
-        String numCasaTxt = vista.getTxtNumCasa().getText().trim();
-        Distrito distritoSeleccionado = (Distrito) vista.getCbDistrito().getSelectedItem();
-        Municipio municipioSeleccionado = (Municipio) vista.getCbMunicipio().getSelectedItem();
+        zonaTxt = vista.getTxtZona().getText().trim();
+        numCasaTxt = vista.getTxtNumCasa().getText().trim();
+        distritoSeleccionado = (Distrito) vista.getCbDistrito().getSelectedItem();
+        municipioSeleccionado = (Municipio) vista.getCbMunicipio().getSelectedItem();
 
         if (municipioSeleccionado == null || municipioSeleccionado.getId() == 0 || distritoSeleccionado == null
                 || distritoSeleccionado.getId() == 0) { // Si no son el vacio
@@ -149,7 +149,7 @@ public class DireccionControlador {
             return;
         }
 
-        Direccion d = new Direccion();
+        d = new Direccion();
         d.setZona(zonaTxt);
         d.setNumeroCasa(numCasaTxt);
         d.setDistrito(distritoSeleccionado);
@@ -170,6 +170,42 @@ public class DireccionControlador {
                         "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(),
                         "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    
+    private void cargarCombosMed(){
+        vista.getCmbDiametroNomnal().removeAllItems();
+        vista.getCmbDiametroNomnal().addItem("Diametro nominal");
+        vista.getCmbDiametroNomnal().addItem("1/2 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("3/4 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("1 Pulgada");
+        
+        vista.getCmbUnidadMedida().removeAllItems();
+        vista.getCmbUnidadMedida().addItem("metro cubico");
+        vista.getCmbUnidadMedida().addItem("pie cubico");
+    }
+    
+    public void guardarDatos(){
+        try{
+            Medidor medidor = new Medidor();
+            medidor.setCodigo(vista.getTxtCodigo().getText());
+            medidor.setDiametroNomila(vista.getCmbDiametroNomnal().getSelectedItem().toString());
+            medidor.setUnidadMedida(vista.getCmbUnidadMedida().getSelectedItem().toString());
+            
+            
+            Distrito distrito = new Distrito();
+            distrito.setId(distritoSeleccionado.getId());
+            distrito.setNombre(distritoSeleccionado.getNombre());
+            distrito.setMunicipio(municipioSeleccionado);
+            
+            medidor.setDireccion(d);
+            medidor.setLecturas(new ArrayList());
+            
+            new MedidorDAO().crearRegistro(medidor);
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se guardo el registro medidor");
+            e.printStackTrace();
         }
     }
 
