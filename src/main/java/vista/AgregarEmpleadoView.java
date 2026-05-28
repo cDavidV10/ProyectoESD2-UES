@@ -4,6 +4,12 @@
  */
 package vista;
 
+import com.toedter.calendar.JDateChooser;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
 /**
  *
  * @author cdavi
@@ -45,7 +51,9 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         txtTelefono = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnEnviar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtSueldo = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,18 +147,38 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         txtCorreo.setText("correo@dominio");
         txtCorreo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Guardar Docente");
+        btnEnviar.setBackground(new java.awt.Color(0, 153, 255));
+        btnEnviar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setText("Guardar Docente");
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("Sueldo");
+
+        txtSueldo.setBackground(new java.awt.Color(255, 255, 255));
+        txtSueldo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtSueldo.setForeground(new java.awt.Color(0, 0, 0));
+        txtSueldo.setText("2000.00");
+        txtSueldo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(429, 429, 429)
+                .addComponent(btnEnviar)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSueldo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
@@ -195,10 +223,6 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(100, 100, 100))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,9 +255,13 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtSueldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77)
+                .addComponent(btnEnviar)
+                .addContainerGap(263, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,11 +269,61 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    public JButton getBtnEnviar() {
+        return btnEnviar;
+    }
+
+    public ButtonGroup getBtnGroupGenero() {
+        return btnGroupGenero;
+    }
+
+    public JDateChooser getJcContrato() {
+        return jcContrato;
+    }
+
+    public JDateChooser getJcNacimiento() {
+        return jcNacimiento;
+    }
+
+    public JRadioButton getRbFemenino() {
+        return rbFemenino;
+    }
+
+    public JRadioButton getRbMasculino() {
+        return rbMasculino;
+    }
+
+    public JTextField getTxtApellido() {
+        return txtApellido;
+    }
+
+    public JTextField getTxtCorreo() {
+        return txtCorreo;
+    }
+
+    public JTextField getTxtDui() {
+        return txtDui;
+    }
+
+    public JTextField getTxtNombre() {
+        return txtNombre;
+    }
+
+    public JTextField getTxtTelefono() {
+        return txtTelefono;
+    }
+
+    public JTextField getTxtSueldo() {
+        return txtSueldo;
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEnviar;
     private javax.swing.ButtonGroup btnGroupGenero;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -262,6 +340,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDui;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSueldo;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
