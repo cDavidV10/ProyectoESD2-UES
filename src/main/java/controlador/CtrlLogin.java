@@ -108,16 +108,9 @@ public class CtrlLogin {
             }
             if (result.equalsIgnoreCase("Empleado")) {
                 EmpleadoView empleadoView = new EmpleadoView();
-                CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView);
+                CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView, usuario, loginView);
                 empleadoView.setVisible(true);
                 this.loginView.dispose();
-            }
-
-            if (result.equalsIgnoreCase("Empleado")) {
-                EmpleadoView empleadoView = new EmpleadoView();
-                CtrlEmpleadoView ctrlEmpleado = new CtrlEmpleadoView(empleadoView);
-                empleadoView.setLocationRelativeTo(null);
-                empleadoView.setVisible(true);
             }
 
             if (result.equalsIgnoreCase("No")) {
