@@ -6,6 +6,7 @@ package controlador;
 
 import arboles.ArbolBinarioAVL;
 import dao.ClienteDAO;
+import funciones.Paneles;
 import funciones.Validaciones;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
@@ -13,9 +14,11 @@ import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import modelo.Cliente;
 import vista.FormCliente;
+import vista.ViewClientes;
 
 /**
  *
@@ -24,102 +27,108 @@ import vista.FormCliente;
 public class CtrlFormCliente {
     private FormCliente formCliente;
     private ClienteDAO dao = new ClienteDAO();
+    private JPanel bgContent;
+    private JPanel viewClientes;
 
-    public CtrlFormCliente(FormCliente formCliente) {
+    public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, JPanel viewClientes) {
         this.formCliente = formCliente;
         this.dao = dao;
-        
+        this.bgContent = bgContent;
+        this.viewClientes = viewClientes;
+
         aplicarPlaceholder(formCliente.getTxtDuiCliente(), "00000000-0");
         aplicarPlaceholder(formCliente.getTxtNombreCliente(), "Ej. Carlos Bladimir");
         aplicarPlaceholder(formCliente.getTxtApellidoCliente(), "Ej. Acevedo Aleman");
         aplicarPlaceholder(formCliente.getTxtCorreoCliente(), "nombre@ejemplo.com");
         aplicarPlaceholder(formCliente.getTxtTelefonoCliente(), "0000-0000");
-        
+
         onClickGuardar();
-        onClickCancelar();
+
+        this.formCliente.getBtnCancelarCliente().addActionListener(e -> {
+            new Paneles().insertarPaneles(viewClientes, bgContent);
+        });
     }
-    
+
     private void onClickGuardar() {
         formCliente.getBtnGuardarCliente().addActionListener(e -> {
-              try {
+            try {
                 String dui = formCliente.getTxtDuiCliente().getText().trim();
                 String nombre = formCliente.getTxtNombreCliente().getText().trim();
                 String apellido = formCliente.getTxtApellidoCliente().getText().trim();
                 String correo = formCliente.getTxtCorreoCliente().getText().trim();
-                String telefono = formCliente.getTxtTelefonoCliente().getText().trim(); 
-                
+                String telefono = formCliente.getTxtTelefonoCliente().getText().trim();
+
                 // Capturar fecha desde JDateChooser
                 java.util.Date fechaSeleccionada = formCliente.getJdcFechaNacimientoCliente().getDate();
-                LocalDate fechaNacimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); //Por si se usa LOCal
+                LocalDate fechaNacimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Por
+                                                                                                                        // si
+                                                                                                                        // se
+                                                                                                                        // usa
+                                                                                                                        // LOCal
 
                 Cliente cliente = new Cliente(0, dui, nombre, apellido, fechaNacimiento, correo, telefono);
 
-                
-                  if (!new Validaciones().validarDui(cliente.getDui())) {
-                      String mensaje = """
-                    DUI Invalido
-                    Ingrese un Dui valido
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                  if (!new Validaciones().validarNombres(cliente.getNombre())) {
-                      String mensaje = """
-                    Nombre Invalido
-                    El nombre no puede contener numeros ni estar vacio
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                  if (!new Validaciones().validarNombres(cliente.getApellido())) {
-                      String mensaje = """
-                    Apellido Invalido
-                    El apellido no puede contener numeros ni estar vacio
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                  if (!new Validaciones().validarCorreo(cliente.getCorreo())) {
-                      String mensaje = """
-                    Correo Invalido
-                    Digite un correo valido
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                  if (!new Validaciones().validarTelefono(cliente.getTelefono())) {
-                      String mensaje = """
-                    Telefono Invalido
-                    Digite un telefono valido
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                  if (!new Validaciones().validarFechas(fechaNacimiento)) {
-                      String mensaje = """
-                    Fecha Invalida
-                    La fecha de nacimiento no puede ser nula ni tampoco puede ser superior al dia de hoy
-                    """;
-                      JOptionPane.showMessageDialog(null, mensaje);
-                      return;
-                  }
-
-                if (dao.existeDui(cliente.getDui())) {
-                      JOptionPane.showMessageDialog(null, "El DUI ya está registrado.");
-                      return;
+                if (!new Validaciones().validarDui(cliente.getDui())) {
+                    String mensaje = """
+                            DUI Invalido
+                            Ingrese un Dui valido
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
                 }
 
-                dao.insertar(cliente); 
+                if (!new Validaciones().validarNombres(cliente.getNombre())) {
+                    String mensaje = """
+                            Nombre Invalido
+                            El nombre no puede contener numeros ni estar vacio
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+
+                if (!new Validaciones().validarNombres(cliente.getApellido())) {
+                    String mensaje = """
+                            Apellido Invalido
+                            El apellido no puede contener numeros ni estar vacio
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+
+                if (!new Validaciones().validarCorreo(cliente.getCorreo())) {
+                    String mensaje = """
+                            Correo Invalido
+                            Digite un correo valido
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+
+                if (!new Validaciones().validarTelefono(cliente.getTelefono())) {
+                    String mensaje = """
+                            Telefono Invalido
+                            Digite un telefono valido
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+
+                if (!new Validaciones().validarFechas(fechaNacimiento)) {
+                    String mensaje = """
+                            Fecha Invalida
+                            La fecha de nacimiento no puede ser nula ni tampoco puede ser superior al dia de hoy
+                            """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+
+                if (dao.existeDui(cliente.getDui())) {
+                    JOptionPane.showMessageDialog(null, "El DUI ya está registrado.");
+                    return;
+                }
+
+                dao.insertar(cliente);
                 JOptionPane.showMessageDialog(null, "Docente guardado correctamente");
-
-
-                // Cerrar formulario
-                formCliente.dispose();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -127,10 +136,6 @@ public class CtrlFormCliente {
         });
     }
 
-    private void onClickCancelar(){
-        formCliente.getBtnCancelarCliente().addActionListener(e -> formCliente.dispose());
-    }
-   
     private void aplicarPlaceholder(JTextField campo, String placeholder) {
         campo.setText(placeholder);
         campo.setForeground(Color.GRAY);

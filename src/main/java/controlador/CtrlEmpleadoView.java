@@ -61,7 +61,9 @@ public class CtrlEmpleadoView {
     public void onClickVerClientes() {
         empleadoView.getBtnCliente().addActionListener(e -> {
             ViewClientes clientesView = new ViewClientes();
-            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView);
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView,
+                    empleadoView.getBgPanel());
+
             new Paneles().insertarPaneles(clientesView, this.empleadoView.getBgPanel());
         });
     }
