@@ -66,7 +66,8 @@ public class CtrlAdmin {
         this.adminView.getBtnVerCliente().addActionListener(e -> {
             ViewClientes verClientesView = new ViewClientes();
             ClienteDAO dao = new ClienteDAO();
-            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView);
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView,
+                    this.adminView.getBgPanel());
             new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
         });
 
