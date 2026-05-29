@@ -112,7 +112,7 @@ public class Cliente implements Comparable<Cliente> {
 
     @Override
     public int compareTo(Cliente c) {
-        return this.nombre.compareTo(c.nombre);
+        return Integer.compare(this.id, c.id);
     }
 
 }

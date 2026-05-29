@@ -28,9 +28,9 @@ public class CtrlFormCliente {
     private FormCliente formCliente;
     private ClienteDAO dao = new ClienteDAO();
     private JPanel bgContent;
-    private JPanel viewClientes;
+    private ViewClientes viewClientes;
 
-    public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, JPanel viewClientes) {
+    public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, ViewClientes viewClientes) {
         this.formCliente = formCliente;
         this.dao = dao;
         this.bgContent = bgContent;
@@ -46,6 +46,7 @@ public class CtrlFormCliente {
 
         this.formCliente.getBtnCancelarCliente().addActionListener(e -> {
             new Paneles().insertarPaneles(viewClientes, bgContent);
+            CtrlEmpleadoVerClientes ctrlEmpleadoVerClientes = new CtrlEmpleadoVerClientes(viewClientes, bgContent);
         });
     }
 
