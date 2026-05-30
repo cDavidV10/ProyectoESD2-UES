@@ -46,7 +46,6 @@ public class CtrlFormCliente {
 
         this.formCliente.getBtnCancelarCliente().addActionListener(e -> {
             new Paneles().insertarPaneles(viewClientes, bgContent);
-            CtrlEmpleadoVerClientes ctrlEmpleadoVerClientes = new CtrlEmpleadoVerClientes(viewClientes, bgContent);
         });
     }
 
