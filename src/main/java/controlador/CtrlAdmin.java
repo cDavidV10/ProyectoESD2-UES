@@ -37,12 +37,18 @@ public class CtrlAdmin {
     private Usuario usuario;
     private Login loginView;
     private Paneles paneles;
+    private ViewEmpleados viewEmpleados;
+    private CtrlVerEmpleados ctrlVerEmpleados;
 
     public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
         this.loginView = loginView;
         this.paneles = new Paneles();
+        this.viewEmpleados = new ViewEmpleados();
+        this.ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
+
+        paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
 
         this.adminView.addWindowListener(new WindowAdapter() {
             @Override
@@ -53,8 +59,7 @@ public class CtrlAdmin {
         });
 
         this.adminView.getBtnVerEmpleado().addActionListener(e -> {
-            ViewEmpleados viewEmpleados = new ViewEmpleados();
-            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
+            ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
             paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
         });
 
