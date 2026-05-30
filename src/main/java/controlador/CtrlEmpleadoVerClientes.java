@@ -57,8 +57,8 @@ public class CtrlEmpleadoVerClientes {
         verClientesView.getBtnAgregarCliente().addActionListener(e -> {
 
             FormCliente formCliente = new FormCliente();
-            new Paneles().insertarPaneles(formCliente, bgContent);
             CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView);
+            new Paneles().insertarPaneles(formCliente, bgContent);
         });
     }
 }

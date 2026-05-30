@@ -4,6 +4,7 @@
  */
 package vista;
 
+import javax.swing.JButton;
 import javax.swing.JTable;
 
 /**
@@ -31,6 +32,7 @@ public class ViewEmpleados extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtEmpleados = new javax.swing.JTable();
+        btnAgregarEmpleado = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -52,25 +54,30 @@ public class ViewEmpleados extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jtEmpleados);
 
+        btnAgregarEmpleado.setText("Agregar Empleado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 979, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(373, 373, 373)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 979, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(373, 373, 373)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregarEmpleado)
+                .addGap(138, 138, 138))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarEmpleado))
                 .addGap(105, 105, 105)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(109, Short.MAX_VALUE))
@@ -81,8 +88,15 @@ public class ViewEmpleados extends javax.swing.JPanel {
         return jtEmpleados;
     }
 
+    public JButton getBtnAgregarEmpleado() {
+        return btnAgregarEmpleado;
+    }
+    
+    
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarEmpleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtEmpleados;

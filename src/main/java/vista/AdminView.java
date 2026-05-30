@@ -26,9 +26,6 @@ public class AdminView extends javax.swing.JFrame {
     public AdminView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
-        CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
-        new Paneles().insertarPaneles(agregarEmpleadoView, bgPanel);
 
     }
 
@@ -48,6 +45,7 @@ public class AdminView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -56,7 +54,6 @@ public class AdminView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnEmpleado = new javax.swing.JButton();
         btnCredenciales = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
@@ -86,12 +83,6 @@ public class AdminView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Administrador");
 
-        btnEmpleado.setBackground(new java.awt.Color(0, 153, 255));
-        btnEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnEmpleado.setText("Agregar empleado");
-        btnEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-
         btnCredenciales.setBackground(new java.awt.Color(0, 153, 255));
         btnCredenciales.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCredenciales.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,7 +107,7 @@ public class AdminView extends javax.swing.JFrame {
         btnVerEmpleado.setBackground(new java.awt.Color(0, 153, 255));
         btnVerEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnVerEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerEmpleado.setText("Ver Empleados");
+        btnVerEmpleado.setText("Empleados");
         btnVerEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -125,6 +116,7 @@ public class AdminView extends javax.swing.JFrame {
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE,
                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator6)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -133,10 +125,6 @@ public class AdminView extends javax.swing.JFrame {
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGap(46, 46, 46)
                                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
@@ -152,16 +140,13 @@ public class AdminView extends javax.swing.JFrame {
                                                                 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addGroup(jPanel2Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnVerCliente,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnVerEmpleado,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jSeparator6));
+                                                .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -172,19 +157,16 @@ public class AdminView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
+                                .addGap(40, 40, 40)
                                 .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(103, 103, 103)
+                                .addGap(41, 41, 41)
                                 .addComponent(btnCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(87, 87, 87)
+                                .addGap(238, 238, 238)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -265,10 +247,6 @@ public class AdminView extends javax.swing.JFrame {
         return btnCredenciales;
     }
 
-    public JButton getBtnEmpleado() {
-        return btnEmpleado;
-    }
-
     public JButton getBtnVerCliente() {
         return btnVerCliente;
     }
@@ -284,7 +262,6 @@ public class AdminView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JButton btnCredenciales;
-    private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnVerCliente;
     private javax.swing.JButton btnVerEmpleado;
     private javax.swing.JLabel jLabel1;

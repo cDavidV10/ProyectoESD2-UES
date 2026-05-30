@@ -36,11 +36,13 @@ public class CtrlAdmin {
     private AdminView adminView;
     private Usuario usuario;
     private Login loginView;
+    private Paneles paneles;
 
     public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
         this.loginView = loginView;
+        this.paneles = new Paneles();
 
         this.adminView.addWindowListener(new WindowAdapter() {
             @Override
@@ -50,25 +52,17 @@ public class CtrlAdmin {
 
         });
 
-        this.adminView.getBtnEmpleado().addActionListener(e -> {
-            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
-
-            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
-            new Paneles().insertarPaneles(agregarEmpleadoView, this.adminView.getBgPanel());
-        });
-
         this.adminView.getBtnVerEmpleado().addActionListener(e -> {
             ViewEmpleados viewEmpleados = new ViewEmpleados();
-            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados);
-            new Paneles().insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
+            paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
             ViewClientes verClientesView = new ViewClientes();
-            ClienteDAO dao = new ClienteDAO();
             CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView,
                     this.adminView.getBgPanel());
-            new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
+            paneles.insertarPaneles(verClientesView, this.adminView.getBgPanel());
         });
 
         this.adminView.addWindowListener(new WindowAdapter() {

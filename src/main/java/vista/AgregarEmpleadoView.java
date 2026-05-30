@@ -60,6 +60,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,7 +172,7 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         btnEnviar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
         btnEnviar.setText("Guardar Empleado");
-        add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 570, -1, -1));
+        add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 570, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -239,6 +240,12 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("CONTACTO Y DATOS ADICIONALES");
         add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
+
+        btnRegresar.setBackground(new java.awt.Color(0, 153, 255));
+        btnRegresar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Regresar");
+        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 570, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -293,11 +300,16 @@ public class AgregarEmpleadoView extends javax.swing.JPanel {
         return txtSueldo;
     }
 
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
     private javax.swing.ButtonGroup btnGroupGenero;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
