@@ -52,22 +52,14 @@ public class CtrlAdmin {
 
         });
 
-        this.adminView.getBtnEmpleado().addActionListener(e -> {
-            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
-
-            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView);
-            paneles.insertarPaneles(agregarEmpleadoView, this.adminView.getBgPanel());
-        });
-
         this.adminView.getBtnVerEmpleado().addActionListener(e -> {
             ViewEmpleados viewEmpleados = new ViewEmpleados();
-            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados);
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
             paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
         });
 
         this.adminView.getBtnVerCliente().addActionListener(e -> {
             ViewClientes verClientesView = new ViewClientes();
-            ClienteDAO dao = new ClienteDAO();
             CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView,
                     this.adminView.getBgPanel());
             paneles.insertarPaneles(verClientesView, this.adminView.getBgPanel());

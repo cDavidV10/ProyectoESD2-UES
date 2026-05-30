@@ -3,22 +3,34 @@ package controlador;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import arboles.ArbolBinarioAVL;
 import dao.EmpleadoDAO;
+import funciones.Paneles;
 import modelo.Empleado;
+import vista.AgregarEmpleadoView;
 import vista.ViewEmpleados;
 
 public class CtrlVerEmpleados {
     private ViewEmpleados verClientesView;
     private ArbolBinarioAVL datos;
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+    private JPanel bgContent;
 
-    public CtrlVerEmpleados(ViewEmpleados verClientesView) {
+    public CtrlVerEmpleados(ViewEmpleados verClientesView, JPanel bgContent) {
         this.verClientesView = verClientesView;
+        this.bgContent = bgContent;
 
         verDatos();
+
+        this.verClientesView.getBtnAgregarEmpleado().addActionListener(e -> {
+            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
+            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView, verClientesView,
+                    bgContent);
+            new Paneles().insertarPaneles(agregarEmpleadoView, bgContent);
+        });
 
     }
 

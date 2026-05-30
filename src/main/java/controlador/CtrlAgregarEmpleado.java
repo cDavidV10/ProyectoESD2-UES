@@ -6,25 +6,37 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import dao.EmpleadoDAO;
 import funciones.Credenciales;
+import funciones.Paneles;
 import funciones.Validaciones;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import modelo.Empleado;
 import vista.AgregarEmpleadoView;
+import vista.ViewEmpleados;
 
 public class CtrlAgregarEmpleado {
     private AgregarEmpleadoView agregarEmpleadoView;
+    private ViewEmpleados viewEmpleados;
+    private JPanel bgContent;
 
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-    public CtrlAgregarEmpleado(AgregarEmpleadoView agregarEmpleadoView) {
+    public CtrlAgregarEmpleado(AgregarEmpleadoView agregarEmpleadoView, ViewEmpleados viewEmpleados,
+            JPanel bgContent) {
         this.agregarEmpleadoView = agregarEmpleadoView;
+        this.viewEmpleados = viewEmpleados;
+        this.bgContent = bgContent;
 
         this.agregarEmpleadoView.getBtnEnviar().addActionListener(e -> {
             enviarDatos();
+        });
+
+        this.agregarEmpleadoView.getBtnRegresar().addActionListener(e -> {
+            new Paneles().insertarPaneles(viewEmpleados, bgContent);
         });
 
         // ? PlaceHolder
