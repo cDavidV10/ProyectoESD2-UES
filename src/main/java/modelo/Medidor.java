@@ -9,6 +9,9 @@ public class Medidor {
     // ? Clases Relacionadas
     private Direccion direccion;
     private ArrayList<Lectura> lecturas;
+    // Correcciones
+    private String codigo;
+    private Contrato contrato;
 
     public Medidor() {
     }
@@ -58,7 +61,20 @@ public class Medidor {
     public void setLecturas(ArrayList<Lectura> lecturas) {
         this.lecturas = lecturas;
     }
-    
-    
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
 }

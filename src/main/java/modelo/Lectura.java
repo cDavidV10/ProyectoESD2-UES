@@ -3,7 +3,8 @@ package modelo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Lectura {
+public class Lectura implements Comparable<Lectura> {
+
     private int id;
     private double consumo;
     private LocalDate fechaInicial;
@@ -69,7 +70,19 @@ public class Lectura {
     public void setFacturas(ArrayList<Factura> facturas) {
         this.facturas = facturas;
     }
-    
-    
 
+    @Override
+    public String toString() {
+        // Para la lectura vacia
+        if (this.medidor == null) {
+            return "Seleccione...";
+        }
+        
+        return "Lectura N° " + this.id + " [" + this.medidor.getCodigo() + "]";
+    }
+
+    @Override
+    public int compareTo(Lectura otra) {
+        return Integer.compare(this.id, otra.getId());
+    }
 }
