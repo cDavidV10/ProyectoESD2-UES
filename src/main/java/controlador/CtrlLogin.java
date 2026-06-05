@@ -48,7 +48,7 @@ public class CtrlLogin {
 
                 Registro registroView = new Registro();
 
-                CtrlRegistro ctrlRegistro = new CtrlRegistro(registroView);
+                CtrlRegistro ctrlRegistro = new CtrlRegistro(registroView, loginView);
 
                 registroView.setVisible(true);
                 registroView.setLocationRelativeTo(null);
@@ -100,8 +100,9 @@ public class CtrlLogin {
 
             if (result.equalsIgnoreCase("Administrador")) {
                 AdminView adminView = new AdminView();
-                CtrlAdmin ctrlAdmin = new CtrlAdmin(adminView, usuario);
+                CtrlAdmin ctrlAdmin = new CtrlAdmin(adminView, usuario, loginView);
                 adminView.setVisible(true);
+                this.loginView.dispose();
             }
 
             if (result.equalsIgnoreCase("No")) {

@@ -4,7 +4,10 @@
  */
 package controlador;
 
+import funciones.Paneles;
 import funciones.UsuarioActivo;
+
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,29 +15,51 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.View;
+
+import arboles.ArbolBinarioAVL;
+import dao.VerClientesDAO;
 
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
+import vista.Login;
+import vista.ViewVerClientes;
 
 /**
  *
  * @author cdavi
  */
 public class CtrlAdmin {
-    AdminView adminView;
-    Usuario usuario;
+    private AdminView adminView;
+    private Usuario usuario;
+    private Login loginView;
 
-    public CtrlAdmin(AdminView adminView, Usuario usuario) {
+    public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
+        this.loginView = loginView;
 
-        adminView.addWindowListener(new WindowAdapter() {
+        this.adminView.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 new UsuarioActivo().cambiarLabelUsuario(adminView.getTxtUser(), usuario);
             }
 
+        });
+
+        this.adminView.getBtnVerCliente().addActionListener(e -> {
+            ViewVerClientes verClientesView = new ViewVerClientes();
+            CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
+            new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
+
+        });
+
+        this.adminView.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                loginView.setVisible(true);
+            }
         });
 
     }
