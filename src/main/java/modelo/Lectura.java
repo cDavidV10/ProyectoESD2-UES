@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Lectura implements Comparable<Lectura> {
 
     private int id;
-    private double consumo;
+    private int consumo;
     private LocalDate fechaInicial;
     private LocalDate fechaFinal;
     // ? Clases Relacionadas
@@ -16,7 +16,7 @@ public class Lectura implements Comparable<Lectura> {
     public Lectura() {
     }
 
-    public Lectura(int id, double consumo, LocalDate fechaInicial, LocalDate fechaFinal) {
+    public Lectura(int id, int consumo, LocalDate fechaInicial, LocalDate fechaFinal) {
         this.id = id;
         this.consumo = consumo;
         this.fechaInicial = fechaInicial;
@@ -31,11 +31,11 @@ public class Lectura implements Comparable<Lectura> {
         this.id = id;
     }
 
-    public double getConsumo() {
+    public int getConsumo() {
         return consumo;
     }
 
-    public void setConsumo(double consumo) {
+    public void setConsumo(int consumo) {
         this.consumo = consumo;
     }
 

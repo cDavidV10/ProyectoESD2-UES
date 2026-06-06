@@ -5,10 +5,14 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import controlador.CtrlAgregarEmpleado;
+import funciones.Paneles;
 
 /**
  *
@@ -39,6 +43,10 @@ public class AdminView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -47,7 +55,6 @@ public class AdminView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnEmpleado = new javax.swing.JButton();
         btnCredenciales = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
@@ -66,7 +73,7 @@ public class AdminView extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 51, 102));
         jPanel2.setPreferredSize(new java.awt.Dimension(250, 720));
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setBackground(new java.awt.Color(0, 153, 255));
         jSeparator1.setPreferredSize(new java.awt.Dimension(250, 10));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -77,16 +84,15 @@ public class AdminView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Administrador");
 
-        btnEmpleado.setBackground(new java.awt.Color(0, 153, 255));
-        btnEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnEmpleado.setText("Agregar empleado");
-        btnEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-
         btnCredenciales.setBackground(new java.awt.Color(0, 153, 255));
         btnCredenciales.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCredenciales.setForeground(new java.awt.Color(255, 255, 255));
         btnCredenciales.setText("Credenciales");
+        btnCredenciales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCredencialesActionPerformed(evt);
+            }
+        });
 
         jSeparator6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -101,7 +107,7 @@ public class AdminView extends javax.swing.JFrame {
         btnVerCliente.setBackground(new java.awt.Color(0, 153, 255));
         btnVerCliente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnVerCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerCliente.setText("Ver Clientes");
+        btnVerCliente.setText("Clientes");
         btnVerCliente.setPreferredSize(new java.awt.Dimension(200, 25));
         btnVerCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +118,7 @@ public class AdminView extends javax.swing.JFrame {
         btnVerEmpleado.setBackground(new java.awt.Color(0, 153, 255));
         btnVerEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnVerEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerEmpleado.setText("Ver Empleados");
+        btnVerEmpleado.setText("Empleados");
         btnVerEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
         btnVerEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,57 +132,36 @@ public class AdminView extends javax.swing.JFrame {
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE,
                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator6)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGap(24, 24, 24)
-                                                                .addComponent(jLabel1))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGap(46, 46, 46)
-                                                                .addComponent(jLabel2,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 111,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(btnEmpleado,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(btnCredenciales,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                .addGap(24, 24, 24)
+                                                .addComponent(jLabel1))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(46, 46, 46)
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
+                                                .addComponent(btnCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
                                                 .addGroup(jPanel2Layout
                                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jSeparator6,
-                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGap(6, 6, 6)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(txtUser,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                200,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(jLabel3,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                200,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(0, 0, Short.MAX_VALUE)))))
-                                .addContainerGap())
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,19 +173,16 @@ public class AdminView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
+                                .addGap(40, 40, 40)
                                 .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(103, 103, 103)
+                                .addGap(41, 41, 41)
                                 .addComponent(btnCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(87, 87, 87)
+                                .addGap(238, 238, 238)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,29 +209,20 @@ public class AdminView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerClienteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnVerClienteActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnVerClienteActionPerformed
+    protected void btnCredencialesActionPerformed(ActionEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'btnCredencialesActionPerformed'");
+    }
 
-    private void btnVerEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnVerEmpleadoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnVerEmpleadoActionPerformed
+    protected void btnVerClienteActionPerformed(ActionEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'btnVerClienteActionPerformed'");
+    }
 
-    private void btnDocenteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDocenteActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnDocenteActionPerformed
-
-    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCursoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnCursoActionPerformed
-
-    private void btnInscripcionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInscripcionActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnInscripcionActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton1ActionPerformed
+    protected void btnVerEmpleadoActionPerformed(ActionEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'btnVerEmpleadoActionPerformed'");
+    }
 
     /**
      * @param args the command line arguments
@@ -305,10 +278,6 @@ public class AdminView extends javax.swing.JFrame {
         return btnCredenciales;
     }
 
-    public JButton getBtnEmpleado() {
-        return btnEmpleado;
-    }
-
     public JButton getBtnVerCliente() {
         return btnVerCliente;
     }
@@ -324,7 +293,6 @@ public class AdminView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JButton btnCredenciales;
-    private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnVerCliente;
     private javax.swing.JButton btnVerEmpleado;
     private javax.swing.JLabel jLabel1;

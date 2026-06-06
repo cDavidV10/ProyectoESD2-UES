@@ -4,7 +4,6 @@
 
 package com.mycompany.proyectoestd;
 
-import conexion.Conexion;
 import controlador.CtrlLogin;
 import vista.Login;
 
