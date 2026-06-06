@@ -5,6 +5,7 @@
 package controlador;
 
 import dao.RegistroDAO;
+import funciones.Validaciones;
 import modelo.Usuario;
 
 import java.awt.Color;
@@ -127,13 +128,6 @@ public class CtrlRegistro {
         });
     }
 
-    private boolean esCorreoValido(String correo) {
-        String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(correo);
-        return matcher.matches();
-    }
-
     private void registrarUsuario() {
 
         String emailInput = this.registroView.getTxtUser().getText().trim();
@@ -158,7 +152,7 @@ public class CtrlRegistro {
             return;
         }
 
-        if (!esCorreoValido(emailInput)) {
+        if (new Validaciones().validarCorreo(emailInput)) {
             JOptionPane.showMessageDialog(registroView,
                     "El usuario debe ser un correo electrónico válido.",
                     "Formato Inválido",

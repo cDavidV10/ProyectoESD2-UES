@@ -18,12 +18,12 @@ import funciones.Paneles;
  *
  * @author cdavi
  */
-public class AdminView extends javax.swing.JFrame {
+public class ClienteView extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminView
      */
-    public AdminView() {
+    public ClienteView() {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -47,6 +47,7 @@ public class AdminView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -55,12 +56,12 @@ public class AdminView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnCredenciales = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         txtUser = new javax.swing.JLabel();
-        btnVerCliente = new javax.swing.JButton();
-        btnVerEmpleado = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
+        btnPagar = new javax.swing.JButton();
         bgPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -82,15 +83,15 @@ public class AdminView extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Administrador");
+        jLabel2.setText("CLIENTE");
 
-        btnCredenciales.setBackground(new java.awt.Color(0, 153, 255));
-        btnCredenciales.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnCredenciales.setForeground(new java.awt.Color(255, 255, 255));
-        btnCredenciales.setText("Credenciales");
-        btnCredenciales.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorial.setBackground(new java.awt.Color(0, 153, 255));
+        btnHistorial.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistorial.setText("Historial de Pagos");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCredencialesActionPerformed(evt);
+                btnHistorialActionPerformed(evt);
             }
         });
 
@@ -104,25 +105,25 @@ public class AdminView extends javax.swing.JFrame {
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
         txtUser.setText("Cambiar");
 
-        btnVerCliente.setBackground(new java.awt.Color(0, 153, 255));
-        btnVerCliente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnVerCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerCliente.setText("Clientes");
-        btnVerCliente.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnVerCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnFactura.setBackground(new java.awt.Color(0, 153, 255));
+        btnFactura.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnFactura.setForeground(new java.awt.Color(255, 255, 255));
+        btnFactura.setText("Facturas");
+        btnFactura.setPreferredSize(new java.awt.Dimension(200, 25));
+        btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerClienteActionPerformed(evt);
+                btnCredencialesActionPerformed(evt);
             }
         });
 
-        btnVerEmpleado.setBackground(new java.awt.Color(0, 153, 255));
-        btnVerEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnVerEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerEmpleado.setText("Empleados");
-        btnVerEmpleado.setPreferredSize(new java.awt.Dimension(200, 25));
-        btnVerEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        btnPagar.setBackground(new java.awt.Color(0, 153, 255));
+        btnPagar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnPagar.setForeground(new java.awt.Color(255, 255, 255));
+        btnPagar.setText("Pagar Factura");
+        btnPagar.setPreferredSize(new java.awt.Dimension(200, 25));
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerEmpleadoActionPerformed(evt);
+                btnHistorialActionPerformed(evt);
             }
         });
 
@@ -144,8 +145,8 @@ public class AdminView extends javax.swing.JFrame {
                                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(btnCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGap(12, 12, 12)
                                                 .addGroup(jPanel2Layout
@@ -156,12 +157,12 @@ public class AdminView extends javax.swing.JFrame {
                                                                 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 225,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,13 +175,13 @@ public class AdminView extends javax.swing.JFrame {
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnVerEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+                                .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
-                                .addComponent(btnVerCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+                                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)
-                                .addComponent(btnCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+                                .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(238, 238, 238)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12,
@@ -208,6 +209,11 @@ public class AdminView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    protected void btnHistorialActionPerformed(ActionEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'btnHistorialActionPerformed'");
+    }
 
     protected void btnCredencialesActionPerformed(ActionEvent evt) {
         // TODO Auto-generated method stub
@@ -246,16 +252,16 @@ public class AdminView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminView.class.getName())
+            java.util.logging.Logger.getLogger(ClienteView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminView.class.getName())
+            java.util.logging.Logger.getLogger(ClienteView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminView.class.getName())
+            java.util.logging.Logger.getLogger(ClienteView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminView.class.getName())
+            java.util.logging.Logger.getLogger(ClienteView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         }
 
@@ -265,7 +271,7 @@ public class AdminView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminView().setVisible(true);
+                new ClienteView().setVisible(true);
             }
         });
     }
@@ -274,16 +280,16 @@ public class AdminView extends javax.swing.JFrame {
         return bgPanel;
     }
 
-    public JButton getBtnCredenciales() {
-        return btnCredenciales;
+    public JButton getBtnFactura() {
+        return btnFactura;
     }
 
-    public JButton getBtnVerCliente() {
-        return btnVerCliente;
+    public JButton getBtnHistorial() {
+        return btnHistorial;
     }
 
-    public JButton getBtnVerEmpleado() {
-        return btnVerEmpleado;
+    public JButton getBtnPagar() {
+        return btnPagar;
     }
 
     public JLabel getTxtUser() {
@@ -292,9 +298,9 @@ public class AdminView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
-    private javax.swing.JButton btnCredenciales;
-    private javax.swing.JButton btnVerCliente;
-    private javax.swing.JButton btnVerEmpleado;
+    private javax.swing.JButton btnFactura;
+    private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnPagar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

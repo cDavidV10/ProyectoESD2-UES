@@ -1,16 +1,18 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
-public class Empleado {
+public class Empleado implements Comparable<Empleado> {
     private int id;
     private String dui;
     private String nombre;
     private String apellido;
     private LocalDate fechaNacimiento;
     private LocalDate fechaContrato;
-    private double sueldo;
+    private BigDecimal sueldo;
     private String genero;
     private String correo;
     private String telefono;
@@ -21,7 +23,8 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int id, String dui, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaContrato, double sueldo, String genero, String correo, String telefono, String estado) {
+    public Empleado(int id, String dui, String nombre, String apellido, LocalDate fechaNacimiento,
+            LocalDate fechaContrato, BigDecimal sueldo, String genero, String correo, String telefono, String estado) {
         this.id = id;
         this.dui = dui;
         this.nombre = nombre;
@@ -33,6 +36,19 @@ public class Empleado {
         this.correo = correo;
         this.telefono = telefono;
         this.estado = estado;
+    }
+
+    public Empleado(String dui, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaContrato,
+            BigDecimal sueldo, String genero, String correo, String telefono) {
+        this.dui = dui;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.fechaContrato = fechaContrato;
+        this.sueldo = sueldo;
+        this.genero = genero;
+        this.correo = correo;
+        this.telefono = telefono;
     }
 
     public int getId() {
@@ -83,11 +99,11 @@ public class Empleado {
         this.fechaContrato = fechaContrato;
     }
 
-    public double getSueldo() {
+    public BigDecimal getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(double sueldo) {
+    public void setSueldo(BigDecimal sueldo) {
         this.sueldo = sueldo;
     }
 
@@ -130,7 +146,18 @@ public class Empleado {
     public void setFacturas(ArrayList<Factura> facturas) {
         this.facturas = facturas;
     }
-    
-    
+
+    public int CalcularEdad() {
+        if (fechaNacimiento == null) {
+            throw new IllegalArgumentException("La fecha de nacimiento no puede ser null");
+        }
+
+        return Period.between(fechaNacimiento, LocalDate.now()).getYears();
+    }
+
+    @Override
+    public int compareTo(Empleado emp) {
+        return Integer.compare(this.id, emp.id);
+    }
 
 }

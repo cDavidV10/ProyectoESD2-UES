@@ -1,15 +1,16 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Factura {
     private int id;
     private LocalDate fechaLimite;
-    private double mora;
-    private double montoConsumo;
-    private double montoServicio;
-    private double montoNeto;
-    private double montoTotal;
+    private BigDecimal mora;
+    private BigDecimal montoConsumo;
+    private BigDecimal montoServicio;
+    private BigDecimal montoNeto;
+    private BigDecimal montoTotal;
     // ? Clases Relacionadas
     private Empleado empleado;
     private Pago pago;
@@ -19,7 +20,8 @@ public class Factura {
     public Factura() {
     }
 
-    public Factura(int id, LocalDate fechaLimite, double mora, double montoConsumo, double montoServicio, double montoNeto, double montoTotal) {
+    public Factura(int id, LocalDate fechaLimite, BigDecimal mora, BigDecimal montoConsumo, BigDecimal montoServicio,
+            BigDecimal montoNeto, BigDecimal montoTotal) {
         this.id = id;
         this.fechaLimite = fechaLimite;
         this.mora = mora;
@@ -45,43 +47,43 @@ public class Factura {
         this.fechaLimite = fechaLimite;
     }
 
-    public double getMora() {
+    public BigDecimal getMora() {
         return mora;
     }
 
-    public void setMora(double mora) {
+    public void setMora(BigDecimal mora) {
         this.mora = mora;
     }
 
-    public double getMontoConsumo() {
+    public BigDecimal getMontoConsumo() {
         return montoConsumo;
     }
 
-    public void setMontoConsumo(double montoConsumo) {
+    public void setMontoConsumo(BigDecimal montoConsumo) {
         this.montoConsumo = montoConsumo;
     }
 
-    public double getMontoServicio() {
+    public BigDecimal getMontoServicio() {
         return montoServicio;
     }
 
-    public void setMontoServicio(double montoServicio) {
+    public void setMontoServicio(BigDecimal montoServicio) {
         this.montoServicio = montoServicio;
     }
 
-    public double getMontoNeto() {
+    public BigDecimal getMontoNeto() {
         return montoNeto;
     }
 
-    public void setMontoNeto(double montoNeto) {
+    public void setMontoNeto(BigDecimal montoNeto) {
         this.montoNeto = montoNeto;
     }
 
-    public double getMontoTotal() {
+    public BigDecimal getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(double montoTotal) {
+    public void setMontoTotal(BigDecimal montoTotal) {
         this.montoTotal = montoTotal;
     }
 

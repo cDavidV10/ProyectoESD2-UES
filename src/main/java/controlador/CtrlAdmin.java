@@ -18,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 
 import arboles.ArbolBinarioAVL;
-import dao.VerClientesDAO;
+import dao.ClienteDAO;
 
 import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
+import vista.AgregarEmpleadoView;
 import vista.Login;
-import vista.ViewVerClientes;
+import vista.ViewClientes;
+import vista.ViewEmpleados;
 
 /**
  *
@@ -34,11 +36,19 @@ public class CtrlAdmin {
     private AdminView adminView;
     private Usuario usuario;
     private Login loginView;
+    private Paneles paneles;
+    private ViewEmpleados viewEmpleados;
+    private CtrlVerEmpleados ctrlVerEmpleados;
 
     public CtrlAdmin(AdminView adminView, Usuario usuario, Login loginView) {
         this.adminView = adminView;
         this.usuario = usuario;
         this.loginView = loginView;
+        this.paneles = new Paneles();
+        this.viewEmpleados = new ViewEmpleados();
+        this.ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
+
+        paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
 
         this.adminView.addWindowListener(new WindowAdapter() {
             @Override
@@ -48,11 +58,16 @@ public class CtrlAdmin {
 
         });
 
-        this.adminView.getBtnVerCliente().addActionListener(e -> {
-            ViewVerClientes verClientesView = new ViewVerClientes();
-            CtrlVerClientes ctrlVerClientes = new CtrlVerClientes(verClientesView);
-            new Paneles().insertarPaneles(verClientesView, this.adminView.getBgPanel());
+        this.adminView.getBtnVerEmpleado().addActionListener(e -> {
+            ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, this.adminView.getBgPanel());
+            paneles.insertarPaneles(viewEmpleados, this.adminView.getBgPanel());
+        });
 
+        this.adminView.getBtnVerCliente().addActionListener(e -> {
+            ViewClientes verClientesView = new ViewClientes();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView,
+                    this.adminView.getBgPanel());
+            paneles.insertarPaneles(verClientesView, this.adminView.getBgPanel());
         });
 
         this.adminView.addWindowListener(new WindowAdapter() {

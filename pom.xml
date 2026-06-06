@@ -5,9 +5,23 @@
     <artifactId>ProyectoESTD</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.proyectoestd.ProyectoESTD</exec.mainClass>
     </properties>
     <dependencies>
@@ -34,5 +48,17 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE240</version>
         </dependency> 
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <!--    Dependencia del Resend  -->
+        <dependency>
+            <groupId>com.resend</groupId>
+            <artifactId>resend-java</artifactId>
+            <version>4.13.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
