@@ -30,7 +30,9 @@ public class LecturaDAO implements ILecturaDAO {
     public ArbolBinarioAVL listarLecturasPendientes() throws Exception {
         ArbolBinarioAVL arbol = new ArbolBinarioAVL();
 
-        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(lectura); ResultSet rs = ps.executeQuery()) {
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(lectura);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
@@ -52,7 +54,7 @@ public class LecturaDAO implements ILecturaDAO {
 
                 Lectura lectura = new Lectura();
                 lectura.setId(rs.getInt("id_lectura"));
-                lectura.setConsumo(rs.getDouble("consumo"));
+                lectura.setConsumo(rs.getInt("consumo"));
                 lectura.setFechaInicial(rs.getDate("fecha_inicio").toLocalDate());
                 lectura.setFechaFinal(rs.getDate("fecha_fin").toLocalDate());
                 lectura.setMedidor(medidor);
