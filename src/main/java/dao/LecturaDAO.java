@@ -14,7 +14,17 @@ import modelo.Medidor;
 
 public class LecturaDAO implements ILecturaDAO {
 
-    private static final String lectura = "SELECT l.id_lectura, l.consumo, l.fecha_inicio, l.fecha_fin, m.id_medidor, m.codigo, d.zona, d.num_casa, c.nombre, c.apellido FROM lectura l INNER JOIN medidor m ON l.id_medidor = m.id_medidor INNER JOIN direccion d ON m.id_direccion = d.id_direccion INNER JOIN contrato con ON con.id_medidor = m.id_medidor INNER JOIN cliente c ON con.id_cliente = c.id_cliente WHERE l.id_lectura NOT IN (SELECT id_lectura FROM factura);";
+    private static final String lectura = """
+                                SELECT l.id_lectura, l.consumo, l.fecha_inicio, l.fecha_fin, 
+                                    m.id_medidor, m.codigo, d.zona, d.num_casa, 
+                                    c.nombre, c.apellido 
+                                FROM lectura l
+                                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
+                                INNER JOIN direccion d ON m.id_direccion = d.id_direccion
+                                INNER JOIN contrato con ON con.id_medidor = m.id_medidor
+                                INNER JOIN cliente c ON con.id_cliente = c.id_cliente
+                                WHERE l.id_lectura NOT IN (SELECT id_lectura FROM factura);
+                                """;
 
     @Override
     public ArbolBinarioAVL listarLecturasPendientes() throws Exception {

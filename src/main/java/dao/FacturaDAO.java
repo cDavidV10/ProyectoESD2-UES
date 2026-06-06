@@ -9,7 +9,10 @@ import modelo.Factura;
 
 public class FacturaDAO implements IFacturaDAO {
 
-    private static final String INSERT = "INSERT INTO public.factura(fecha_limite, mora, monto_consumo, monto_servicio, monto_neto, monto_total, id_lectura, id_empleado) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String INSERT = """
+                                INSERT INTO public.factura(fecha_limite, mora, monto_consumo, monto_servicio, monto_neto, monto_total, id_lectura, id_empleado)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                """;
 
     @Override
     public boolean guardar(Factura factura) throws Exception {
