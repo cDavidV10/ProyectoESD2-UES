@@ -57,6 +57,7 @@ public class EmpleadoView extends javax.swing.JFrame {
         txtUser = new javax.swing.JLabel();
         btnContrato = new javax.swing.JButton();
         btnMedidor = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
         bgPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -113,6 +114,17 @@ public class EmpleadoView extends javax.swing.JFrame {
         btnMedidor.setText("Agregar Medidor");
         btnMedidor.setPreferredSize(new java.awt.Dimension(200, 25));
 
+        btnFactura.setBackground(new java.awt.Color(0, 153, 255));
+        btnFactura.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnFactura.setForeground(new java.awt.Color(255, 255, 255));
+        btnFactura.setText("Generar Factura");
+        btnFactura.setPreferredSize(new java.awt.Dimension(200, 25));
+        btnFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -150,7 +162,8 @@ public class EmpleadoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMedidor, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMedidor, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -168,9 +181,11 @@ public class EmpleadoView extends javax.swing.JFrame {
                 .addComponent(btnMedidor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(btnContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
+                .addGap(42, 42, 42)
+                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
+                .addGap(50, 50, 50)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -198,6 +213,10 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFacturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,6 +287,10 @@ public class EmpleadoView extends javax.swing.JFrame {
     public JLabel getTxtUser() {
         return txtUser;
     }
+
+    public JButton getBtnFactura() {
+        return btnFactura;
+    }
     
     
 
@@ -277,6 +300,7 @@ public class EmpleadoView extends javax.swing.JFrame {
     private javax.swing.JPanel bgPanel;
     private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnContrato;
+    private javax.swing.JButton btnFactura;
     private javax.swing.JButton btnMedidor;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
