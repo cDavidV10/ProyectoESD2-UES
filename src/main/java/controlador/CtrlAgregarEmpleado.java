@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.postgresql.translation.messages_nl;
 
 import dao.EmpleadoDAO;
 import funciones.Credenciales;
@@ -276,6 +279,16 @@ public class CtrlAgregarEmpleado {
             return;
         }
         BigDecimal sueldo = new BigDecimal(sueldoTxt);
+
+        if (sueldo.compareTo(BigDecimal.valueOf(350.00)) < 0) {
+            String mensaje = """
+                    Sueldo invalido
+                    El sueldo debe ser mayor a $350
+                    """;
+
+            JOptionPane.showMessageDialog(null, mensaje);
+            return;
+        }
         String genero = "";
         LocalDate fechaNacimiento = null;
         LocalDate fechaContrato = null;
@@ -373,6 +386,15 @@ public class CtrlAgregarEmpleado {
             String mensaje = """
                     Fecha Invalida
                     La fecha de contrato no puede ser nula ni tampoco puede ser superior al dia de hoy
+                    """;
+            JOptionPane.showMessageDialog(null, mensaje);
+            return;
+        }
+
+        if (ChronoUnit.YEARS.between(fechaNacimiento, fechaContrato) < 18) {
+            String mensaje = """
+                    Menor de edad
+                    Lo sentimos pero no puedes contratar a una persona menor de 18 años
                     """;
             JOptionPane.showMessageDialog(null, mensaje);
             return;
