@@ -18,6 +18,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JOptionPane;
 
 import vista.AdminView;
+import vista.ClienteView;
 import vista.EmpleadoView;
 import vista.Login;
 import vista.Registro;
@@ -106,10 +107,18 @@ public class CtrlLogin {
                 adminView.setVisible(true);
                 this.loginView.dispose();
             }
+
             if (result.equalsIgnoreCase("Empleado")) {
                 EmpleadoView empleadoView = new EmpleadoView();
                 CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView, usuario, loginView);
                 empleadoView.setVisible(true);
+                this.loginView.dispose();
+            }
+
+            if (result.equalsIgnoreCase("Empleado")) {
+                ClienteView clienteView = new ClienteView();
+
+                clienteView.setVisible(true);
                 this.loginView.dispose();
             }
 
