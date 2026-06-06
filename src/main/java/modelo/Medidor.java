@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Medidor {
     private int id;
+    private String codigo;
     private String diametroNomila;
     private String unidadMedida;
     // ? Clases Relacionadas
     private Direccion direccion;
     private ArrayList<Lectura> lecturas;
     // Correcciones
-    private String codigo;
     private Contrato contrato;
 
     public Medidor() {

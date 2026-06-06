@@ -29,12 +29,13 @@ public class Municipio implements Comparable<Municipio> {
     }
 
     @Override
+    public int compareTo(Municipio m) {
+        return Integer.compare(this.id, m.id);
+    }
+
+    @Override
     public String toString() {
         return nombre;
     }
 
-    @Override
-    public int compareTo(Municipio m) {
-        return Integer.compare(this.id, m.id);
-    }
 }

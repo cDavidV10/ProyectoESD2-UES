@@ -18,6 +18,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JOptionPane;
 
 import vista.AdminView;
+import vista.EmpleadoView;
 import vista.Login;
 import vista.Registro;
 
@@ -56,6 +57,7 @@ public class CtrlLogin {
                 loginView.dispose();
             }
         });
+
         this.loginView.getTxtUser().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -102,6 +104,12 @@ public class CtrlLogin {
                 AdminView adminView = new AdminView();
                 CtrlAdmin ctrlAdmin = new CtrlAdmin(adminView, usuario, loginView);
                 adminView.setVisible(true);
+                this.loginView.dispose();
+            }
+            if (result.equalsIgnoreCase("Empleado")) {
+                EmpleadoView empleadoView = new EmpleadoView();
+                CtrlEmpleadoView ctrlAdmin = new CtrlEmpleadoView(empleadoView, usuario, loginView);
+                empleadoView.setVisible(true);
                 this.loginView.dispose();
             }
 

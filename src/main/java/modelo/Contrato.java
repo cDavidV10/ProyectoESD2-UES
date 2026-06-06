@@ -1,10 +1,11 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Contrato {
     private int id;
-    private double tarifa;
+    private BigDecimal tarifa;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
@@ -15,7 +16,7 @@ public class Contrato {
     public Contrato() {
     }
 
-    public Contrato(int id, double tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
+    public Contrato(int id, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
         this.id = id;
         this.tarifa = tarifa;
         this.fechaInicio = fechaInicio;
@@ -23,7 +24,8 @@ public class Contrato {
         this.estado = estado;
     }
 
-    public Contrato(int id, double tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado, Cliente cliente, Medidor medidor) {
+    public Contrato(int id, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado,
+            Cliente cliente, Medidor medidor) {
         this.id = id;
         this.tarifa = tarifa;
         this.fechaInicio = fechaInicio;
@@ -41,11 +43,11 @@ public class Contrato {
         this.id = id;
     }
 
-    public double getTarifa() {
+    public BigDecimal getTarifa() {
         return tarifa;
     }
 
-    public void setTarifa(double tarifa) {
+    public void setTarifa(BigDecimal tarifa) {
         this.tarifa = tarifa;
     }
 
@@ -88,8 +90,5 @@ public class Contrato {
     public void setMedidor(Medidor medidor) {
         this.medidor = medidor;
     }
-    
-    
-    
-    
+
 }
