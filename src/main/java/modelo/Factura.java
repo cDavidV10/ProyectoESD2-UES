@@ -14,6 +14,8 @@ public class Factura {
     // ? Clases Relacionadas
     private Empleado empleado;
     private Pago pago;
+    // Correcciones
+    private Lectura lectura;
 
     public Factura() {
     }
@@ -101,4 +103,11 @@ public class Factura {
         this.pago = pago;
     }
 
+    public Lectura getLectura() {
+        return lectura;
+    }
+
+    public void setLectura(Lectura lectura) {
+        this.lectura = lectura;
+    }
 }
