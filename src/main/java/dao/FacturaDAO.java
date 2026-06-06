@@ -21,11 +21,11 @@ public class FacturaDAO implements IFacturaDAO {
             PreparedStatement ps = conn.prepareStatement(INSERT);
 
             ps.setDate(1, Date.valueOf(factura.getFechaLimite()));
-            ps.setDouble(2, factura.getMora());
-            ps.setDouble(3, factura.getMontoConsumo());
-            ps.setDouble(4, factura.getMontoServicio());
-            ps.setDouble(5, factura.getMontoNeto());
-            ps.setDouble(6, factura.getMontoTotal());
+            ps.setBigDecimal(2, factura.getMora());
+            ps.setBigDecimal(3, factura.getMontoConsumo());
+            ps.setBigDecimal(4, factura.getMontoServicio());
+            ps.setBigDecimal(5, factura.getMontoNeto());
+            ps.setBigDecimal(6, factura.getMontoTotal());
             ps.setInt(7, factura.getLectura().getId());
             ps.setInt(8, factura.getEmpleado().getId());
 
@@ -33,7 +33,7 @@ public class FacturaDAO implements IFacturaDAO {
             if (filasAfectadas > 0) {
                 guardado = true;
             }
-            
+
             conn.commit();
 
         } catch (Exception ex) {
@@ -46,7 +46,7 @@ public class FacturaDAO implements IFacturaDAO {
                 conn.close();
             }
         }
-        
+
         return guardado;
     }
 }
