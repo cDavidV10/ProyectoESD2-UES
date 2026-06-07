@@ -20,17 +20,19 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargarDatosCliente(int idCliente) {
-        // Instanciamos el DAO de facturas
-        FacturaDAO dao = new FacturaDAO();
+   public void cargarDatosCliente(int idCliente) {
 
-        // Obtenemos el modelo de datos con el Query que probamos
-        DefaultTableModel modelo = dao.obtenerFacturasCliente(idCliente);
+    System.out.println("ID CLIENTE: " + idCliente);
 
-        // Le asignamos el modelo a nuestra tabla
-        tablaFacturas.setModel(modelo);
-    }
+    FacturaDAO dao = new FacturaDAO();
 
+    DefaultTableModel modelo =
+            dao.obtenerFacturasCliente(idCliente);
+
+    System.out.println("FILAS: " + modelo.getRowCount());
+
+    tablaFacturas.setModel(modelo);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

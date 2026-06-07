@@ -25,11 +25,13 @@ public class ClienteView extends javax.swing.JFrame {
     /**
      * Creates new form AdminView
      */
-    public ClienteView(int idLogueado) {
+    public ClienteView(int idCliente) {
+
         initComponents();
+
         this.setLocationRelativeTo(null);
 
-        this.idClienteActivo = idLogueado;
+        this.idClienteActivo = idCliente;
     }
 
     /**
@@ -221,7 +223,6 @@ public class ClienteView extends javax.swing.JFrame {
     protected void btnCredencialesActionPerformed(ActionEvent evt) {
         PanelFacturasCliente vistaFacturas = new PanelFacturasCliente();
 
-            
         vistaFacturas.cargarDatosCliente(this.idClienteActivo);
 
         vistaFacturas.setSize(bgPanel.getWidth(), bgPanel.getHeight());
@@ -284,7 +285,7 @@ public class ClienteView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 new ClienteView(999).setVisible(true);
             }
         });
