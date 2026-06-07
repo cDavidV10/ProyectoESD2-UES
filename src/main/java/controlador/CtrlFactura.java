@@ -26,9 +26,9 @@ public class CtrlFactura {
     private IFacturaDAO facturaDAO;
     private ArbolBinarioAVL arbolLecturas;
 
-    private double montoConsumoCalc = 0.0;
-    private final double cargoServicioCalc = 2.50;
-    private double totalCalc = 0.0;
+    private BigDecimal montoConsumoCalc = new BigDecimal("0.0");
+    private final BigDecimal cargoServicioCalc = new BigDecimal("2.50");
+    private BigDecimal totalCalc = new BigDecimal("0.0");
 
     public CtrlFactura(VistaFactura vista) {
         this.vista = vista;
@@ -140,11 +140,11 @@ public class CtrlFactura {
             return;
         }
 
-        double cuota = 0.86;
-        double consumoM3 = lecturaSeleccionada.getConsumo();
+        BigDecimal cuota = new BigDecimal("0.86");
+        int consumoM3 = lecturaSeleccionada.getConsumo();
 
-        montoConsumoCalc = consumoM3 * cuota;
-        totalCalc = montoConsumoCalc + cargoServicioCalc;
+        montoConsumoCalc = cuota.multiply(BigDecimal.valueOf(consumoM3));
+        totalCalc = montoConsumoCalc.add(cargoServicioCalc);
 
         vista.getTxtConsumo().setText(consumoM3 + " m³");
         vista.getTxtMontoConsumo().setText("$" + String.format("%.2f", montoConsumoCalc));
@@ -161,18 +161,18 @@ public class CtrlFactura {
             return;
         }
 
-        if (totalCalc == 0.0 || vista.getTxtTotalPagar().getText().trim().isEmpty()) {
+        if (totalCalc.compareTo(BigDecimal.valueOf(0.0)) == 0 || vista.getTxtTotalPagar().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vista, "[ERROR]: Debe procesar los calculos antes de guardar la factura.",
                     "Falta Calcular", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         Factura f = new Factura();
-        f.setMontoConsumo(BigDecimal.valueOf(montoConsumoCalc));
-        f.setMontoServicio(BigDecimal.valueOf(cargoServicioCalc));
-        f.setMontoNeto(BigDecimal.valueOf(montoConsumoCalc + cargoServicioCalc));
+        f.setMontoConsumo(montoConsumoCalc);
+        f.setMontoServicio(cargoServicioCalc);
+        f.setMontoNeto(montoConsumoCalc.add(cargoServicioCalc));
         f.setMora(BigDecimal.ZERO);
-        f.setMontoTotal(BigDecimal.valueOf(totalCalc));
+        f.setMontoTotal(totalCalc);
 
         // Los 15 dias posteriores al fin del periodo. Cambiar a otro dia si es
         // necesario, no me acuerdo cuantos eran xd
@@ -222,8 +222,8 @@ public class CtrlFactura {
         vista.getTxtMontoConsumo().setText("");
         vista.getTxtMontoServicio().setText("");
         vista.getTxtTotalPagar().setText("");
-        montoConsumoCalc = 0.0;
-        totalCalc = 0.0;
+        montoConsumoCalc = new BigDecimal("0.0");
+        totalCalc = new BigDecimal("0.0");
     }
 
     private void limpiarTodo() {
