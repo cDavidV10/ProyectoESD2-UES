@@ -20,13 +20,18 @@ import funciones.Paneles;
  */
 public class ClienteView extends javax.swing.JFrame {
 
+    private int idClienteActivo;
+
     /**
      * Creates new form AdminView
      */
-    public ClienteView() {
+    public ClienteView(int idCliente) {
+
         initComponents();
+
         this.setLocationRelativeTo(null);
 
+        this.idClienteActivo = idCliente;
     }
 
     /**
@@ -216,8 +221,17 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     protected void btnCredencialesActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnCredencialesActionPerformed'");
+        PanelFacturasCliente vistaFacturas = new PanelFacturasCliente();
+
+        vistaFacturas.cargarDatosCliente(this.idClienteActivo);
+
+        vistaFacturas.setSize(bgPanel.getWidth(), bgPanel.getHeight());
+        vistaFacturas.setLocation(0, 0);
+
+        bgPanel.removeAll();
+        bgPanel.add(vistaFacturas, java.awt.BorderLayout.CENTER);
+        bgPanel.revalidate();
+        bgPanel.repaint();
     }
 
     protected void btnVerClienteActionPerformed(ActionEvent evt) {
@@ -271,7 +285,8 @@ public class ClienteView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteView().setVisible(true);
+
+                new ClienteView(999).setVisible(true);
             }
         });
     }

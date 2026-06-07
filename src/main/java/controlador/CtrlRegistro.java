@@ -60,7 +60,7 @@ public class CtrlRegistro {
                 if (registroView.getTxtUser().getText().equals("Ingrese nuevo usuario")) {
                     registroView.getTxtUser().setText("");
                     registroView.getTxtUser().setForeground(new Color(0, 0, 0));
-                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.BOLD, 16)); // Pone Negrita
+                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.BOLD, 16)); 
                 }
 
                 if (String.valueOf(registroView.getTxtPassword().getPassword()).isEmpty()) {
