@@ -55,7 +55,7 @@ public class CtrlDireccion {
             vista.getCbMunicipio().addItem(vacio);
 
             if (arbolMunicipios != null) {
-                ArrayList lista = arbolMunicipios.IND();
+                ArrayList lista = arbolMunicipios.IND(); // in orden
 
                 if (lista != null) {
                     for (Object obj : lista) {
@@ -173,7 +173,7 @@ public class CtrlDireccion {
         try {
             direccionDAO.insertar(d);
 
-            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creación exitosa",
+            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creacion exitosa",
                     JOptionPane.INFORMATION_MESSAGE);
             limpiar();
 
