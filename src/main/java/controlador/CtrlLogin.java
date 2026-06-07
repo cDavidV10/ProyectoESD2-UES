@@ -115,7 +115,7 @@ public class CtrlLogin {
                 this.loginView.dispose();
             }
 
-            if (result.equalsIgnoreCase("Empleado")) {
+            if (result.equalsIgnoreCase("Cliente")) {
                 ClienteView clienteView = new ClienteView();
 
                 clienteView.setVisible(true);
