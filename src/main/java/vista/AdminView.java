@@ -211,17 +211,16 @@ public class AdminView extends javax.swing.JFrame {
 
     protected void btnCredencialesActionPerformed(ActionEvent evt) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnCredencialesActionPerformed'");
+        
     }
 
     protected void btnVerClienteActionPerformed(ActionEvent evt) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnVerClienteActionPerformed'");
+
     }
 
     protected void btnVerEmpleadoActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnVerEmpleadoActionPerformed'");
+        // TODO Auto-generated method stu
     }
 
     /**
