@@ -29,11 +29,10 @@ public class CtrlClienteFactura {
 
         DefaultTableModel modelo = new DefaultTableModel();
 
-        String[] titulos = { "Fecha Límite", "Monto Consumo", "Monto Servicio", "Monto Total" };
+        String[] titulos = { "Fecha Límite", "Monto Consumo", "Monto Servicio", "Total a Pagar" };
 
         modelo.setColumnIdentifiers(titulos);
 
-        System.out.println(usuario.getCliente().getId());
 
         try {
 
