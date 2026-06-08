@@ -3,7 +3,7 @@ package modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Factura {
+public class Factura implements Comparable<Factura> {
     private int id;
     private LocalDate fechaLimite;
     private BigDecimal mora;
@@ -109,5 +109,10 @@ public class Factura {
 
     public void setLectura(Lectura lectura) {
         this.lectura = lectura;
+    }
+
+    @Override
+    public int compareTo(Factura o) {
+        return Integer.compare(this.id, o.id);
     }
 }
