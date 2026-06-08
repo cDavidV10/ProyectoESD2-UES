@@ -3,20 +3,24 @@ package controlador;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import funciones.Paneles;
 import funciones.UsuarioActivo;
 import modelo.Usuario;
 import vista.ClienteView;
 import vista.Login;
+import vista.PanelFacturasCliente;
 
 public class CtrlClienteView {
     private ClienteView clienteView;
     private Usuario usuario;
     private Login login;
+    private Paneles paneles;
 
     public CtrlClienteView(ClienteView clienteView, Usuario usuario, Login login) {
         this.clienteView = clienteView;
         this.usuario = usuario;
         this.login = login;
+        paneles = new Paneles();
 
         this.clienteView.addWindowListener(new WindowAdapter() {
             @Override
@@ -24,6 +28,14 @@ public class CtrlClienteView {
                 new UsuarioActivo().cambiarLabelUsuario(clienteView.getTxtUser(), usuario);
             }
 
+        });
+
+        this.clienteView.getBtnFactura().addActionListener(e -> {
+            PanelFacturasCliente vistaFacturas = new PanelFacturasCliente();
+
+            CtrlClienteFactura ctrlClienteFactura = new CtrlClienteFactura(vistaFacturas, usuario);
+
+            paneles.insertarPaneles(vistaFacturas, this.clienteView.getBgPanel());
         });
 
         this.clienteView.addWindowListener(new WindowAdapter() {
