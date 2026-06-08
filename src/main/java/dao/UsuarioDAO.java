@@ -41,12 +41,12 @@ public class UsuarioDAO implements IUsuarioDAO {
             usuario.setPassword(rs.getString(3));
             usuario.setTipo(rs.getString(4));
 
-            Cliente cliente = new Cliente();
-
-            cliente.setId(rs.getInt("id_cliente"));
-
-            usuario.setCliente(cliente);
-
+            if (usuario.getTipo().equals("Cliente")){
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                usuario.setCliente(cliente);
+            }
+            
             existe = true;
         }
 
