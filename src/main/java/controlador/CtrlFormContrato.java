@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 import modelo.Cliente;
 import modelo.Contrato;
 import modelo.Medidor;
-import vista.ClienteView;
-import vista.EmpleadoView;
 import vista.FormCliente;
 import vista.FormContrato;
 import vista.ViewClientes;
@@ -43,7 +41,9 @@ public class CtrlFormContrato {
         onClickGuardarContrato();
 
         this.formContrato.getBtnRegresar().addActionListener(e -> {
-            new Paneles().insertarPaneles(new FormCliente(), bgContent);
+            ViewClientes clientesView = new ViewClientes();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, bgContent);
+            new Paneles().insertarPaneles(clientesView, bgContent);
         });
     }
 
@@ -82,11 +82,10 @@ public class CtrlFormContrato {
                 contratoDAO.insertar(contrato);
                 JOptionPane.showMessageDialog(null, "Contrato guardado correctamente");
                 
-                EmpleadoView empleadoView = new EmpleadoView();
                 ViewClientes clientesView = new ViewClientes();
-                CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, empleadoView.getBgPanel());
+                CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, bgContent);
+                new Paneles().insertarPaneles(clientesView, bgContent);
 
-                new Paneles().insertarPaneles(clientesView, empleadoView.getBgPanel());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al guardar contrato: " + ex.getMessage());
             }

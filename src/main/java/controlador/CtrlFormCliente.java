@@ -4,7 +4,6 @@
  */
 package controlador;
 
-import arboles.ArbolBinarioAVL;
 import dao.ClienteDAO;
 import funciones.Paneles;
 import funciones.Validaciones;
@@ -17,8 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import modelo.Cliente;
+import vista.EmpleadoView;
 import vista.FormCliente;
-import vista.FormContrato;
 import vista.ViewClientes;
 
 /**
@@ -30,6 +29,7 @@ public class CtrlFormCliente {
     private ClienteDAO dao = new ClienteDAO();
     private JPanel bgContent;
     private ViewClientes viewClientes;
+    private EmpleadoView empleadoView;
 
     public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, ViewClientes viewClientes) {
         this.formCliente = formCliente;
@@ -130,14 +130,10 @@ public class CtrlFormCliente {
 
                 dao.insertar(cliente);
                 JOptionPane.showMessageDialog(null, "Cliente guardado correctamente");
-
-                //hay que recuperar al cliente con su idAsignado
-                //Cliente clienteGuardado = dao.buscarPorId(cliente.getId());
                 
-                //Siguiendo el flujo a registrar contrato
-                FormContrato formContrato = new FormContrato();
-                CtrlFormContrato ctrlContrato = new CtrlFormContrato(formContrato, bgContent, cliente);
-                new Paneles().insertarPaneles(formContrato, bgContent);
+                ViewClientes clientesView = new ViewClientes();
+                CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, bgContent);
+                new Paneles().insertarPaneles(clientesView, bgContent);
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());

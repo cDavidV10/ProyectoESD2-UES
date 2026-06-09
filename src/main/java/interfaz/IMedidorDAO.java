@@ -17,6 +17,5 @@ public interface IMedidorDAO {
     public boolean modificarRegistro(Medidor m) throws Exception;
     List<Medidor> listarDisponibles() throws Exception;
     Medidor buscarPorCodigo(String codigo) throws Exception;
-    //int obtenerIdPorCodigo(String codigo) throws Exception;
     
 }
