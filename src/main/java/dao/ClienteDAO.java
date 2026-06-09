@@ -15,6 +15,7 @@ public class ClienteDAO implements IClienteDAO {
     private static final String SELECT_CLIENTE = "select * from cliente";
     private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
+    private static final String BUSCAR_POR_DUI =  "SELECT * FROM cliente WHERE dui=?";
 
     @Override
     public ArbolBinarioAVL listar() throws Exception {
@@ -98,4 +99,27 @@ public class ClienteDAO implements IClienteDAO {
         return existe;
     }
 
+    @Override
+    public Cliente buscarPorDui(String dui) throws Exception {
+      
+        Connection conn = Conexion.getConexion();
+        
+        try (PreparedStatement ps = conn.prepareStatement(BUSCAR_POR_DUI)) {
+            ps.setString(1, dui);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Cliente c = new Cliente();
+                    c.setId(rs.getInt("id_cliente"));
+                    c.setDui(rs.getString("dui"));
+                    c.setNombre(rs.getString("nombre"));
+                    c.setApellido(rs.getString("apellido"));
+                    c.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                    c.setCorreo(rs.getString("correo"));
+                    c.setTelefono(rs.getString("telefono"));
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
 }
