@@ -9,6 +9,7 @@ import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import modelo.Cliente;
 import interfaz.IClienteDAO;
+import java.sql.Statement;
 
 public class ClienteDAO implements IClienteDAO {
     private static final String SELECT_CLIENTE = "select * from cliente";
@@ -48,21 +49,25 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public void insertar(Cliente cliente) throws Exception {
-        Connection conn = Conexion.getConexion();// Metodo getConexion() que tengo en mi clase conexion
-
+        Connection conn = Conexion.getConexion();
         try {
-            // INSERCION
-            conn.setAutoCommit(false); // permite la insercion a la bd
-            PreparedStatement ps = conn.prepareStatement(INSERT);
+            conn.setAutoCommit(false);
+            PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, cliente.getDui());
             ps.setString(2, cliente.getNombre());
             ps.setString(3, cliente.getApellido());
-            ps.setDate(4, java.sql.Date.valueOf(cliente.getFechaNacimiento())); // si usas LocalDate
+            ps.setDate(4, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
             ps.setString(5, cliente.getCorreo());
             ps.setString(6, cliente.getTelefono());
             ps.executeUpdate();
-            conn.commit();
 
+            try (ResultSet rs = ps.getGeneratedKeys()) {//Recuperando el ID generado
+                if (rs.next()) {
+                    cliente.setId(rs.getInt(1)); // asigna el ID al objeto
+                }
+            }
+
+            conn.commit();
         } catch (Exception ex) {
             conn.rollback();
             throw ex;

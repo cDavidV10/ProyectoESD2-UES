@@ -9,6 +9,10 @@ public class Direccion implements Comparable<Direccion> {
     public Direccion() {
     }
 
+    public Direccion(int id) {
+        this.id = id;
+    }
+    
     public Direccion(int id, String zona, String numeroCasa) {
         this.id = id;
         this.zona = zona;
