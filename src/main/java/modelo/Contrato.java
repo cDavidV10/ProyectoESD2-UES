@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class Contrato {
     private int id;
     private BigDecimal tarifa;
+    private String tipo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
@@ -24,13 +25,13 @@ public class Contrato {
         this.estado = estado;
     }
 
-    public Contrato(int id, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado,
+    public Contrato(int id,  String tipo, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin,
             Cliente cliente, Medidor medidor) {
         this.id = id;
+        this.tipo = tipo;
         this.tarifa = tarifa;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.estado = estado;
         this.cliente = cliente;
         this.medidor = medidor;
     }
@@ -91,4 +92,13 @@ public class Contrato {
         this.medidor = medidor;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    
 }
