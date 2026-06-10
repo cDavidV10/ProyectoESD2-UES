@@ -8,6 +8,7 @@ import arboles.ArbolBinarioAVL;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -108,7 +109,7 @@ public class CtrlFactura {
         }
 
         try {
-            String nombreCompleto = lecturaSeleccionada.getMedidor().getContrato().getCliente().getNombre() + " " + lecturaSeleccionada.getMedidor().getContrato().getCliente().getApellido(); 
+            String nombreCompleto = lecturaSeleccionada.getMedidor().getContrato().getCliente().getNombre() + " " + lecturaSeleccionada.getMedidor().getContrato().getCliente().getApellido();
             String direccionCompleta = "Zona: " + lecturaSeleccionada.getMedidor().getDireccion().getZona() + ", Casa #" + lecturaSeleccionada.getMedidor().getDireccion().getNumeroCasa();
             String periodo = lecturaSeleccionada.getFechaInicial() + " al " + lecturaSeleccionada.getFechaFinal();
 
@@ -134,7 +135,7 @@ public class CtrlFactura {
 
         double cuota = 0.86;
         double consumoM3 = lecturaSeleccionada.getConsumo();
-        
+
         montoConsumoCalc = consumoM3 * cuota;
         totalCalc = montoConsumoCalc + cargoServicioCalc;
 
@@ -158,12 +159,12 @@ public class CtrlFactura {
         }
 
         Factura f = new Factura();
-        f.setMontoConsumo(montoConsumoCalc);
-        f.setMontoServicio(cargoServicioCalc);
-        f.setMontoNeto(montoConsumoCalc + cargoServicioCalc);
-        f.setMora(0.0);
-        f.setMontoTotal(totalCalc);
-        
+        f.setMontoConsumo(BigDecimal.valueOf(montoConsumoCalc));
+        f.setMontoServicio(BigDecimal.valueOf(cargoServicioCalc));
+        f.setMontoNeto(BigDecimal.valueOf(montoConsumoCalc + cargoServicioCalc));
+        f.setMora(BigDecimal.ZERO); // Para establecerlo a 0.0
+        f.setMontoTotal(BigDecimal.valueOf(totalCalc));
+
         // Los 15 dias posteriores al fin del periodo. Cambiar a otro dia si es necesario, no me acuerdo cuantos eran xd
         LocalDate fechaVencimiento = lecturaSeleccionada.getFechaFinal().plusDays(15);
         f.setFechaLimite(fechaVencimiento);

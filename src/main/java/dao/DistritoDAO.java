@@ -10,7 +10,7 @@ import modelo.Distrito;
 
 public class DistritoDAO implements IDistritoDAO {
 
-    private static final String SELECT_BY_MUNICIPIO = "SELECT id_distrito, nombre FROM public.distrito WHERE id_municipio = ?;";
+    private static final String SELECT_BY_MUNICIPIO = "SELECT id_distrito, nombre FROM distrito WHERE id_municipio = ?;"; // mas 
 
     @Override
     public ArbolBinarioAVL listarPorMunicipio(int idMunicipio) throws Exception {
