@@ -17,11 +17,11 @@ import javax.swing.JOptionPane;
 import modelo.Empleado;
 import modelo.Factura;
 import modelo.Lectura;
-import vista.VistaFactura;
+import vista.FacturaView;
 
 public class CtrlFactura {
 
-    private VistaFactura vista;
+    private FacturaView vista;
     private ILecturaDAO lecturaDAO;
     private IFacturaDAO facturaDAO;
     private ArbolBinarioAVL arbolLecturas;
@@ -30,7 +30,7 @@ public class CtrlFactura {
     private final double cargoServicioCalc = 2.50;
     private double totalCalc = 0.0;
 
-    public CtrlFactura(VistaFactura vista) {
+    public CtrlFactura(FacturaView vista) {
         this.vista = vista;
         this.lecturaDAO = new LecturaDAO();
         this.facturaDAO = new FacturaDAO();
@@ -109,8 +109,8 @@ public class CtrlFactura {
         }
 
         try {
-            String nombreCompleto = lecturaSeleccionada.getMedidor().getContrato().getCliente().getNombre() + " " + lecturaSeleccionada.getMedidor().getContrato().getCliente().getApellido();
-            String direccionCompleta = "Zona: " + lecturaSeleccionada.getMedidor().getDireccion().getZona() + ", Casa #" + lecturaSeleccionada.getMedidor().getDireccion().getNumeroCasa();
+            String nombreCompleto = lecturaSeleccionada.getMedidor().getContrato().getCliente().getNombre() + " "+ lecturaSeleccionada.getMedidor().getContrato().getCliente().getApellido();
+            String direccionCompleta = "Zona: " + lecturaSeleccionada.getMedidor().getDireccion().getZona() + ", Casa #"+ lecturaSeleccionada.getMedidor().getDireccion().getNumeroCasa();
             String periodo = lecturaSeleccionada.getFechaInicial() + " al " + lecturaSeleccionada.getFechaFinal();
 
             vista.getTxtNombreCliente().setText(nombreCompleto);
@@ -162,15 +162,13 @@ public class CtrlFactura {
         f.setMontoConsumo(BigDecimal.valueOf(montoConsumoCalc));
         f.setMontoServicio(BigDecimal.valueOf(cargoServicioCalc));
         f.setMontoNeto(BigDecimal.valueOf(montoConsumoCalc + cargoServicioCalc));
-        f.setMora(BigDecimal.ZERO); // Para establecerlo a 0.0
+        f.setMora(BigDecimal.ZERO);
         f.setMontoTotal(BigDecimal.valueOf(totalCalc));
 
-        // Los 15 dias posteriores al fin del periodo. Cambiar a otro dia si es necesario, no me acuerdo cuantos eran xd
         LocalDate fechaVencimiento = lecturaSeleccionada.getFechaFinal().plusDays(15);
         f.setFechaLimite(fechaVencimiento);
         f.setLectura(lecturaSeleccionada);
 
-        // 1 asumiendo que ese es el del empleado. Asumo que esto lo debe cambiar Edwin para registrar que empleado hizo la lectura
         Empleado emp = new Empleado();
         emp.setId(1);
         f.setEmpleado(emp);

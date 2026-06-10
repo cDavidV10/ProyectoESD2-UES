@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author enman
  */
-public class Vista extends javax.swing.JPanel {
+public class DireccionView extends javax.swing.JPanel {
 
     /**
      * Creates new form Vista
      */
-    public Vista() {
+    public DireccionView() {
         initComponents();
     }
     

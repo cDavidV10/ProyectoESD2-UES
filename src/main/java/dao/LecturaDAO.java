@@ -30,7 +30,9 @@ public class LecturaDAO implements ILecturaDAO {
     public ArbolBinarioAVL listarLecturasPendientes() throws Exception {
         ArbolBinarioAVL arbol = new ArbolBinarioAVL();
 
-        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(lectura); ResultSet rs = ps.executeQuery()) {
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(lectura);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();

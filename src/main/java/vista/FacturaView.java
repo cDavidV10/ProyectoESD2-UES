@@ -14,10 +14,10 @@ import modelo.Lectura;
  *
  * @author enman
  */
-public class VistaFactura extends javax.swing.JPanel {
+public class FacturaView extends javax.swing.JPanel {
 
     /** Creates new form VistaFactura */
-    public VistaFactura() {
+    public FacturaView() {
         initComponents();
     }
 

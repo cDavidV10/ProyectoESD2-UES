@@ -20,11 +20,11 @@ import modelo.Direccion;
 import modelo.Distrito;
 import modelo.Medidor;
 import modelo.Municipio;
-import vista.Vista;
+import vista.DireccionView;
 
 public class CtrlDireccion {
 
-    private Vista vista;
+    private DireccionView vista;
     private IMunicipioDAO municipioDAO;
     private IDistritoDAO distritoDAO;
     private IDireccionDAO direccionDAO;
@@ -35,7 +35,7 @@ public class CtrlDireccion {
     private Municipio municipioSeleccionado;
     private Direccion d;
 
-    public CtrlDireccion(Vista vista) {
+    public CtrlDireccion(DireccionView vista) {
         this.vista = vista;
         this.municipioDAO = new MunicipioDAO();
         this.distritoDAO = new DistritoDAO();
