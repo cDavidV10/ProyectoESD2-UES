@@ -16,9 +16,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JOptionPane;
 
 import vista.Login;
@@ -53,79 +50,6 @@ public class CtrlRegistro {
                 registrarUsuario();
             }
         });
-
-        this.registroView.getTxtUser().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (registroView.getTxtUser().getText().equals("Ingrese nuevo usuario")) {
-                    registroView.getTxtUser().setText("");
-                    registroView.getTxtUser().setForeground(new Color(0, 0, 0));
-                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.BOLD, 16)); // Pone Negrita
-                }
-
-                if (String.valueOf(registroView.getTxtPassword().getPassword()).isEmpty()) {
-                    registroView.getTxtPassword().setText("****");
-                    registroView.getTxtPassword().setForeground(new Color(170, 170, 170));
-                }
-
-                if (String.valueOf(registroView.getTxtCodigo().getPassword()).isEmpty()) {
-                    registroView.getTxtCodigo().setEchoChar((char) 0);
-                    registroView.getTxtCodigo().setText("Ingrese código de medidor");
-                    registroView.getTxtCodigo().setForeground(new Color(170, 170, 170));
-                }
-            }
-        });
-
-        this.registroView.getTxtPassword().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (String.valueOf(registroView.getTxtPassword().getPassword()).equals("****")) {
-                    registroView.getTxtPassword().setText("");
-                    registroView.getTxtPassword().setForeground(new Color(0, 0, 0));
-                }
-
-                if (registroView.getTxtUser().getText().isEmpty()) {
-                    registroView.getTxtUser().setText("Ingrese nuevo usuario");
-                    registroView.getTxtUser().setForeground(new Color(170, 170, 170));
-                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.PLAIN, 16));
-                }
-
-                if (String.valueOf(registroView.getTxtCodigo().getPassword()).isEmpty()) {
-                    registroView.getTxtCodigo().setEchoChar((char) 0);
-                    registroView.getTxtCodigo().setText("Ingrese código de medidor");
-                    registroView.getTxtCodigo().setForeground(new Color(170, 170, 170));
-                }
-            }
-        });
-
-        this.registroView.getTxtCodigo().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (String.valueOf(registroView.getTxtCodigo().getPassword()).equals("Ingrese código de medidor")) {
-                    registroView.getTxtCodigo().setText("");
-                    registroView.getTxtCodigo().setForeground(new Color(0, 0, 0));
-
-                }
-
-                if (registroView.getTxtUser().getText().isEmpty()) {
-                    registroView.getTxtUser().setText("Ingrese nuevo usuario");
-                    registroView.getTxtUser().setForeground(new Color(170, 170, 170));
-                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.PLAIN, 16));
-                }
-
-                if (String.valueOf(registroView.getTxtPassword().getPassword()).isEmpty()) {
-                    registroView.getTxtPassword().setText("****");
-                    registroView.getTxtPassword().setForeground(new Color(170, 170, 170));
-                }
-            }
-        });
-
-        this.registroView.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                loginView.setVisible(true);
-            }
-        });
     }
 
     private void registrarUsuario() {
@@ -152,24 +76,14 @@ public class CtrlRegistro {
             return;
         }
 
-        if (new Validaciones().validarCorreo(emailInput)) {
-            JOptionPane.showMessageDialog(registroView,
-                    "El usuario debe ser un correo electrónico válido.",
-                    "Formato Inválido",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
         try {
-
-            boolean existeCliente = registroDAO.validarClienteExistente(emailInput, codigoMedidorInput);
+            boolean existeCliente = registroDAO.validarClienteExistente(codigoMedidorInput);
 
             if (!existeCliente) {
                 JOptionPane.showMessageDialog(registroView,
                         "No se puede realizar el registro.\n\n"
-                                + "Verifique que:\n"
-                                + "- El número de medidor sea correcto.\n"
-                                + "- El correo coincida con el registrado físicamente en su contrato.",
+                        + "Verifique que:\n"
+                        + "- El número de medidor sea correcto.",
                         "Error de Verificación",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -184,9 +98,7 @@ public class CtrlRegistro {
 
             if (registrado) {
                 JOptionPane.showMessageDialog(registroView, "¡Usuario registrado con éxito! Ya puede iniciar sesión.");
-
                 loginView.setVisible(true);
-
                 registroView.dispose();
             } else {
                 JOptionPane.showMessageDialog(registroView, "No se pudo registrar el usuario. Inténtelo más tarde.",
@@ -194,8 +106,15 @@ public class CtrlRegistro {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(registroView, "Error al conectar con la Base de Datos: " + e.getMessage(),
-                    "Error SQL", JOptionPane.ERROR_MESSAGE);
+            if (e.getMessage() != null && e.getMessage().contains("unique")) {
+                JOptionPane.showMessageDialog(registroView,
+                        "Este medidor ya tiene una cuenta registrada.",
+                        "Registro Duplicado", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(registroView,
+                        "Error al conectar con la Base de Datos: " + e.getMessage(),
+                        "Error SQL", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

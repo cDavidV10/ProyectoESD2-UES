@@ -17,6 +17,14 @@ public class Medidor implements Comparable<Medidor> {
     public Medidor() {
     }
 
+    public Medidor(int id, String codigo, String diametroNomila, String unidadMedida, Direccion direccion) {
+        this.id = id;
+        this.codigo = codigo;
+        this.diametroNomila = diametroNomila;
+        this.unidadMedida = unidadMedida;
+        this.direccion = direccion;
+    }
+
     public Medidor(int id, String diametroNomila, String unidadMedida) {
         this.id = id;
         this.diametroNomila = diametroNomila;

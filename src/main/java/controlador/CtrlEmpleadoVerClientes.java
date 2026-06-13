@@ -11,6 +11,7 @@ import dao.ClienteDAO;
 import funciones.Paneles;
 import modelo.Cliente;
 import vista.FormCliente;
+import vista.FormContrato;
 import vista.ViewClientes;
 
 public class CtrlEmpleadoVerClientes {
@@ -25,11 +26,11 @@ public class CtrlEmpleadoVerClientes {
 
         verDatos();
         onClickAgregarCliente();
+        onClickAgregarContrato();
     }
 
     private void verDatos() {
         try {
-            // Aquí inicializas datos con lo que devuelve el DAO
             datos = dao.listar();
 
             if (datos == null) {
@@ -43,7 +44,12 @@ public class CtrlEmpleadoVerClientes {
             modelo.setColumnIdentifiers(new String[] { "DUI", "Nombre", "Apellido", "Edad", "Teléfono", "Correo" });
 
             lista.forEach(c -> modelo.addRow(new Object[] {
-                    c.getDui(), c.getNombre(), c.getApellido(), c.CalcularEdad(), c.getTelefono(), c.getCorreo()
+                c.getDui(), 
+                c.getNombre(), 
+                c.getApellido(), 
+                c.CalcularEdad(), 
+                c.getTelefono(), 
+                c.getCorreo()
             }));
 
             verClientesView.getJtClientes().setModel(modelo);
@@ -61,4 +67,26 @@ public class CtrlEmpleadoVerClientes {
             new Paneles().insertarPaneles(formCliente, bgContent);
         });
     }
+    
+    public void onClickAgregarContrato() {
+        verClientesView.getBtnAgregarContrato().addActionListener(e -> {
+            int fila = verClientesView.getJtClientes().getSelectedRow();
+            if (fila >= 0) {            
+                String dui = verClientesView.getJtClientes().getValueAt(fila, 0).toString();
+                try {
+                    Cliente clienteSeleccionado = dao.buscarPorDui(dui);
+
+                    FormContrato formContrato = new FormContrato();
+                    CtrlFormContrato ctrlContrato = new CtrlFormContrato(formContrato, bgContent, clienteSeleccionado);
+                    new Paneles().insertarPaneles(formContrato, bgContent);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al abrir contrato: " + ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un cliente primero.");
+            }
+        });
+    }
+    
+
 }
