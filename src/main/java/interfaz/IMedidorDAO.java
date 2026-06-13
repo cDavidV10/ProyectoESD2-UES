@@ -5,6 +5,7 @@
 package interfaz;
 
 import java.util.List;
+import modelo.Cliente;
 import modelo.Medidor;
 
 /**

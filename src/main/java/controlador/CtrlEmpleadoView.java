@@ -4,18 +4,16 @@
  */
 package controlador;
 
-import funciones.Paneles;
 import funciones.UsuarioActivo;
 import modelo.Usuario;
-import vista.EmpleadoView;
-import vista.DireccionView;
+import vista.ViewRegistroMedidor;
 import dao.ClienteDAO;
 import funciones.Paneles;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import vista.EmpleadoView;
-import vista.FormCliente;
 import vista.Login;
+import vista.ViewBotonesMedidor;
 import vista.ViewClientes;
 
 /**
@@ -25,7 +23,7 @@ import vista.ViewClientes;
 public class CtrlEmpleadoView {
     private EmpleadoView empleadoView;
     private ClienteDAO dao = new ClienteDAO();
-    private DireccionView viewDirec;
+    private ViewBotonesMedidor viewFuncMedidor;
     private Usuario usuario;
     private Login loginView;
 
@@ -45,9 +43,9 @@ public class CtrlEmpleadoView {
         onClickVerClientes();
 
         this.empleadoView.getBtnMedidor().addActionListener(e -> {
-            this.viewDirec = new DireccionView();
-            new Paneles().insertarPaneles(viewDirec, empleadoView.getBgPanel());
-            new CtrlDireccion(viewDirec);
+            this.viewFuncMedidor = new ViewBotonesMedidor();
+            new Paneles().insertarPaneles(viewFuncMedidor, empleadoView.getBgPanel());
+            new CtrlBotonesMedidor(viewFuncMedidor);
         });
 
         this.empleadoView.addWindowListener(new WindowAdapter() {
@@ -61,8 +59,7 @@ public class CtrlEmpleadoView {
     public void onClickVerClientes() {
         empleadoView.getBtnCliente().addActionListener(e -> {
             ViewClientes clientesView = new ViewClientes();
-            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView,
-                    empleadoView.getBgPanel());
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, empleadoView.getBgPanel());
 
             new Paneles().insertarPaneles(clientesView, this.empleadoView.getBgPanel());
         });

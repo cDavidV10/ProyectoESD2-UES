@@ -7,9 +7,8 @@ package interfaz;
 import modelo.Usuario;
 
 public interface IRegistroDAO {
-    
-    boolean validarClienteExistente(String correo, String medidor) throws Exception;
-    
-    
+
+    boolean validarClienteExistente(String medidor) throws Exception;
+
     boolean registrarNuevoUsuario(Usuario usr) throws Exception;
 }

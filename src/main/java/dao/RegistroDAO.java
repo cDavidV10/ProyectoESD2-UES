@@ -15,12 +15,11 @@ import modelo.Usuario;
 public class RegistroDAO implements IRegistroDAO {
 
     @Override
-    public boolean validarClienteExistente(String correo, String medidor) throws Exception {
+    public boolean validarClienteExistente(String medidor) throws Exception {
 
         String sql = "SELECT COUNT(*) FROM contrato c "
                 + "INNER JOIN medidor m ON c.id_medidor = m.id_medidor "
-                + "INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente "
-                + "WHERE cl.correo = ? AND m.codigo = ?";
+                + "WHERE m.codigo = ?";
 
         Connection conexion = null;
         PreparedStatement ps = null;
@@ -30,8 +29,7 @@ public class RegistroDAO implements IRegistroDAO {
         try {
             conexion = Conexion.getConexion();
             ps = conexion.prepareStatement(sql);
-            ps.setString(1, correo);
-            ps.setString(2, medidor);
+            ps.setString(1, medidor);
 
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -54,7 +52,9 @@ public class RegistroDAO implements IRegistroDAO {
     @Override
     public boolean registrarNuevoUsuario(Usuario usr) throws Exception {
 
-        String sqlBuscarCliente = "SELECT id_cliente FROM cliente WHERE correo = ?";
+        String sqlBuscarCliente = "SELECT c.id_cliente FROM contrato c "
+                + "INNER JOIN medidor m ON c.id_medidor = m.id_medidor "
+                + "WHERE m.codigo = ?";
 
         String sqlInsertarUsuario = "INSERT INTO usuario (username, password, tipo, id_cliente) "
                 + "VALUES (?, ?, ?::tipo_usuarios, ?)";
@@ -68,7 +68,8 @@ public class RegistroDAO implements IRegistroDAO {
             conexion = Conexion.getConexion();
 
             psBuscar = conexion.prepareStatement(sqlBuscarCliente);
-            psBuscar.setString(1, usr.getUsername());
+
+            psBuscar.setString(1, usr.getCodigoMedidor());
             rs = psBuscar.executeQuery();
 
             int idCliente = 0;

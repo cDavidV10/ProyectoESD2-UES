@@ -26,6 +26,16 @@ public class MedidorDAO implements IMedidorDAO {
 
     private String INSERT = "";
     private String LIST = "";
+    private String BUSCAR_POR_CODIGO = "SELECT * FROM medidor WHERE codigo = ?";
+    private String MEDIDORES_DISP = """
+        SELECT m.id_medidor, m.codigo, m.diametro_nominal, m.unidad_medida
+        FROM medidor m
+        WHERE m.id_medidor NOT IN (
+            SELECT c.id_medidor
+            FROM contrato c
+            WHERE c.estado = 'Activo'
+        )
+    """;
 
     @Override
     public void crearRegistro(Medidor m) throws Exception {
@@ -99,4 +109,24 @@ public class MedidorDAO implements IMedidorDAO {
         return lista;
     }
 
+    @Override
+    public Medidor buscarPorCodigo(String codigo) throws Exception {
+        Connection conexion = Conexion.getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_CODIGO)) {
+            ps.setString(1, codigo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Direccion direccion = new Direccion(rs.getInt("id_direccion"));
+                    return new Medidor(
+                        rs.getInt("id_medidor"),
+                        rs.getString("codigo"),
+                        rs.getString("diametro_nominal"),
+                        rs.getString("unidad_medida"),
+                        direccion
+                    );
+                }
+            }
+        }
+        return null;
+    }
 }

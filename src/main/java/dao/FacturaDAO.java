@@ -6,9 +6,19 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+<<<<<<< HEAD
 import java.sql.Statement;
 import java.time.LocalDate;
+=======
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+import javax.swing.table.DefaultTableModel;
+
+import arboles.ArbolBinarioBusqueda;
+>>>>>>> develop
 import modelo.Factura;
+import modelo.Usuario;
 
 public class FacturaDAO implements IFacturaDAO {
 
@@ -104,5 +114,45 @@ public class FacturaDAO implements IFacturaDAO {
             throw new Exception("Error al verificar las fechas: " + e.getMessage());
         }
         return false;
+    public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
+
+        String sql = """
+                SELECT f.id_factura, f.fecha_limite, f.monto_consumo, f.monto_servicio, f.monto_total
+                FROM factura f
+                INNER JOIN lectura l ON f.id_lectura = l.id_lectura
+                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
+                INNER JOIN contrato con ON con.id_medidor = m.id_medidor
+                INNER JOIN cliente c ON con.id_cliente = c.id_cliente
+                WHERE c.id_cliente = ?
+                ORDER BY f.id_factura DESC;
+                """;
+
+        Connection conn = Conexion.getConexion();
+        ArbolBinarioBusqueda aBusqueda = new ArbolBinarioBusqueda();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, usuario.getCliente().getId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Factura factura = new Factura();
+                factura.setId(rs.getInt("id_factura"));
+                factura.setFechaLimite(rs.getObject("fecha_limite", LocalDate.class));
+                factura.setMontoConsumo(rs.getBigDecimal("monto_consumo"));
+                factura.setMontoServicio(rs.getBigDecimal("monto_servicio"));
+                factura.setMontoTotal(rs.getBigDecimal("monto_total"));
+
+                aBusqueda.insertar(factura);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+
+        return aBusqueda;
     }
 }

@@ -13,12 +13,20 @@ import javax.swing.JTextField;
  *
  * @author enman
  */
+<<<<<<<< HEAD:src/main/java/vista/DireccionView.java
 public class DireccionView extends javax.swing.JPanel {
+========
+public class ViewRegistroMedidor extends javax.swing.JPanel {
+>>>>>>>> develop:src/main/java/vista/ViewRegistroMedidor.java
 
     /**
      * Creates new form Vista
      */
+<<<<<<<< HEAD:src/main/java/vista/DireccionView.java
     public DireccionView() {
+========
+    public ViewRegistroMedidor() {
+>>>>>>>> develop:src/main/java/vista/ViewRegistroMedidor.java
         initComponents();
     }
     

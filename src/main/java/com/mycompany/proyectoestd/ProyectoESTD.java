@@ -6,7 +6,7 @@ package com.mycompany.proyectoestd;
 
 import controlador.CtrlLogin;
 import vista.Login;
-
+    
 /**
  *
  * @author cdavi
