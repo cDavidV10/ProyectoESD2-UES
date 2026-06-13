@@ -50,6 +50,79 @@ public class CtrlRegistro {
                 registrarUsuario();
             }
         });
+
+         this.registroView.getTxtUser().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (registroView.getTxtUser().getText().equals("Ingrese nuevo usuario")) {
+                    registroView.getTxtUser().setText("");
+                    registroView.getTxtUser().setForeground(new Color(0, 0, 0));
+                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.BOLD, 16)); 
+                }
+
+                if (String.valueOf(registroView.getTxtPassword().getPassword()).isEmpty()) {
+                    registroView.getTxtPassword().setText("****");
+                    registroView.getTxtPassword().setForeground(new Color(170, 170, 170));
+                }
+
+                if (String.valueOf(registroView.getTxtCodigo().getPassword()).isEmpty()) {
+                    registroView.getTxtCodigo().setEchoChar((char) 0);
+                    registroView.getTxtCodigo().setText("Ingrese código de medidor");
+                    registroView.getTxtCodigo().setForeground(new Color(170, 170, 170));
+                }
+            }
+        });
+
+        this.registroView.getTxtPassword().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (String.valueOf(registroView.getTxtPassword().getPassword()).equals("****")) {
+                    registroView.getTxtPassword().setText("");
+                    registroView.getTxtPassword().setForeground(new Color(0, 0, 0));
+                }
+
+                if (registroView.getTxtUser().getText().isEmpty()) {
+                    registroView.getTxtUser().setText("Ingrese nuevo usuario");
+                    registroView.getTxtUser().setForeground(new Color(170, 170, 170));
+                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.PLAIN, 16));
+                }
+
+                if (String.valueOf(registroView.getTxtCodigo().getPassword()).isEmpty()) {
+                    registroView.getTxtCodigo().setEchoChar((char) 0);
+                    registroView.getTxtCodigo().setText("Ingrese código de medidor");
+                    registroView.getTxtCodigo().setForeground(new Color(170, 170, 170));
+                }
+            }
+        });
+
+        this.registroView.getTxtCodigo().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (String.valueOf(registroView.getTxtCodigo().getPassword()).equals("Ingrese código de medidor")) {
+                    registroView.getTxtCodigo().setText("");
+                    registroView.getTxtCodigo().setForeground(new Color(0, 0, 0));
+
+                }
+
+                if (registroView.getTxtUser().getText().isEmpty()) {
+                    registroView.getTxtUser().setText("Ingrese nuevo usuario");
+                    registroView.getTxtUser().setForeground(new Color(170, 170, 170));
+                    registroView.getTxtUser().setFont(new Font("Segoe UI", Font.PLAIN, 16));
+                }
+
+                if (String.valueOf(registroView.getTxtPassword().getPassword()).isEmpty()) {
+                    registroView.getTxtPassword().setText("****");
+                    registroView.getTxtPassword().setForeground(new Color(170, 170, 170));
+                }
+            }
+        });
+
+        this.registroView.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                loginView.setVisible(true);
+            }
+        });
     }
 
     private void registrarUsuario() {
