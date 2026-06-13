@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author enman
  */
-public class Vista extends javax.swing.JPanel {
+public class ViewRegistroMedidor extends javax.swing.JPanel {
 
     /**
      * Creates new form Vista
      */
-    public Vista() {
+    public ViewRegistroMedidor() {
         initComponents();
     }
     
@@ -81,6 +81,11 @@ public class Vista extends javax.swing.JPanel {
     public JComboBox<String> getCmbUnidadMedida() {
         return cmbUnidadMedida;
     }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,6 +108,7 @@ public class Vista extends javax.swing.JPanel {
         txtNumCasa = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         cmbDiametroNomnal = new javax.swing.JComboBox<>();
         txtCodigo = new javax.swing.JTextField();
         cmbUnidadMedida = new javax.swing.JComboBox<>();
@@ -135,20 +141,26 @@ public class Vista extends javax.swing.JPanel {
             }
         });
 
+        btnCancelar.setText("Cancelar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(85, 85, 85)
                 .addComponent(btnGuardar)
-                .addGap(424, 424, 424))
+                .addGap(358, 358, 358))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -168,7 +180,7 @@ public class Vista extends javax.swing.JPanel {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbDiametroNomnal, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -228,16 +240,14 @@ public class Vista extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 486, Short.MAX_VALUE))
+                .addContainerGap(434, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -250,6 +260,7 @@ public class Vista extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JComboBox cbDistrito;
     public javax.swing.JComboBox cbMunicipio;

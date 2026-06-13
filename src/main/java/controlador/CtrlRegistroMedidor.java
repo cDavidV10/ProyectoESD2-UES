@@ -20,11 +20,11 @@ import modelo.Direccion;
 import modelo.Distrito;
 import modelo.Medidor;
 import modelo.Municipio;
-import vista.Vista;
+import vista.ViewRegistroMedidor;
 
-public class CtrlDireccion {
+public class CtrlRegistroMedidor {
 
-    private Vista vista;
+    private ViewRegistroMedidor vista;
     private IMunicipioDAO municipioDAO;
     private IDistritoDAO distritoDAO;
     private IDireccionDAO direccionDAO;
@@ -35,7 +35,7 @@ public class CtrlDireccion {
     private Municipio municipioSeleccionado;
     private Direccion d;
 
-    public CtrlDireccion(Vista vista) {
+    public CtrlRegistroMedidor(ViewRegistroMedidor vista) {
         this.vista = vista;
         this.municipioDAO = new MunicipioDAO();
         this.distritoDAO = new DistritoDAO();
@@ -75,8 +75,11 @@ public class CtrlDireccion {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardar();
-                guardarDatos();
             }
+        });
+        
+        this.vista.getBtnCancelar().addActionListener(e ->{
+            vista.setVisible(false);
         });
 
         this.vista.getCbMunicipio().addActionListener(new ActionListener() {
@@ -176,7 +179,7 @@ public class CtrlDireccion {
             JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creacion exitosa",
                     JOptionPane.INFORMATION_MESSAGE);
             limpiar();
-
+            guardarDatos();
         } catch (Exception e) {
             if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) {
                 JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.",
