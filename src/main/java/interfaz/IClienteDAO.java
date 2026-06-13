@@ -9,4 +9,5 @@ public interface IClienteDAO {
     void insertar(Cliente cliente) throws Exception;
     void eliminar(String dui) throws Exception;
     Cliente buscarPorDui(String dui) throws Exception;
+    public Cliente buscarClienteId(int  id_cliente) throws Exception;
 }

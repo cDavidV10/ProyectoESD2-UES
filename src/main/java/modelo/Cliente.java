@@ -19,6 +19,11 @@ public class Cliente implements Comparable<Cliente> {
     public Cliente() {
     }
 
+    public Cliente(int id) {
+        this.id = id;
+    }
+    
+
     public Cliente(int id, String dui, String nombre, String apellido, LocalDate fechaNacimiento, String correo,
             String telefono) {
         this.id = id;
@@ -110,6 +115,11 @@ public class Cliente implements Comparable<Cliente> {
         return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
+    @Override
+    public String toString() {
+        return id + "," + dui + "," + nombre + "," + apellido + "," + fechaNacimiento + "," + correo + "," + telefono + "," + usuario + "," + contratos;
+    }
+    
     @Override
     public int compareTo(Cliente c) {
         return Integer.compare(this.id, c.id);

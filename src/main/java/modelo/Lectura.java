@@ -16,6 +16,11 @@ public class Lectura implements Comparable<Lectura> {
     public Lectura() {
     }
 
+    public Lectura(int id) {
+        this.id = id;
+    }
+    
+
     public Lectura(int id, int consumo, LocalDate fechaInicial, LocalDate fechaFinal) {
         this.id = id;
         this.consumo = consumo;

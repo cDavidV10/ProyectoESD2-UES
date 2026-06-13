@@ -1,5 +1,6 @@
 package dao;
 
+import arboles.ArbolB;
 import conexion.Conexion;
 import interfaz.IFacturaDAO;
 import java.sql.Connection;
@@ -13,7 +14,14 @@ import javax.swing.table.DefaultTableModel;
 
 import arboles.ArbolBinarioBusqueda;
 import java.sql.Statement;
+import java.util.ArrayList;
+import modelo.Cliente;
+import modelo.Contrato;
+import modelo.Direccion;
 import modelo.Factura;
+import modelo.Lectura;
+import modelo.Medidor;
+import modelo.Pago;
 import modelo.Usuario;
 
 public class FacturaDAO implements IFacturaDAO {
@@ -111,7 +119,7 @@ public class FacturaDAO implements IFacturaDAO {
         }
         return false;
     }
-    
+
     public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """
@@ -147,6 +155,75 @@ public class FacturaDAO implements IFacturaDAO {
 
         } catch (Exception ex) {
             System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+
+        return aBusqueda;
+    }
+
+    @Override
+    public ArbolB obtenerFacturasMedidor(Medidor medidor) throws Exception {
+        String sql = """
+                SELECT *
+                FROM factura f
+                INNER JOIN lectura l ON f.id_lectura = l.id_lectura
+                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
+                JOIN contrato c on c.id_medidor = m.id_medidor
+                JOIN cliente cl on cl.id_cliente = c.id_cliente
+                WHERE m.id_medidor = ?
+                ORDER BY f.id_factura DESC;
+                """;
+
+        Connection conn = Conexion.getConexion();
+        ArbolB aBusqueda = new ArbolB(2);
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, medidor.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Contrato contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setTipo(rs.getString("tipo"));
+
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                contrato.setCliente(cliente);
+                Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
+                
+                Medidor medid = new Medidor();
+                medid.setCodigo(rs.getString("codigo"));
+                medid.setDiametroNomila(rs.getString("diametro_nominal"));
+                medid.setDireccion(direccion);
+                medid.setUnidadMedida(rs.getString("unidad_medida"));
+                medid.setContrato(contrato);
+
+                Lectura lectura = new Lectura();
+                lectura.setId(rs.getInt("id_lectura"));
+                lectura.setConsumo((int) rs.getDouble("consumo"));
+                lectura.setFechaInicial(rs.getDate("fecha_inicio").toLocalDate());
+                lectura.setFechaFinal(rs.getDate("fecha_fin").toLocalDate());
+                lectura.setMedidor(medid);
+
+                Factura factura = new Factura();
+                factura.setId(rs.getInt("id_factura"));
+                factura.setFechaLimite(rs.getObject("fecha_limite", LocalDate.class));
+                factura.setMontoConsumo(rs.getBigDecimal("monto_consumo"));
+                factura.setMontoServicio(rs.getBigDecimal("monto_servicio"));
+                factura.setMontoTotal(rs.getBigDecimal("monto_total"));
+                factura.setLectura(lectura);
+
+                aBusqueda.insertar(factura);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage() + "Factura");
         } finally {
             conn.close();
         }
