@@ -6,13 +6,14 @@ package controlador;
 
 import funciones.UsuarioActivo;
 import modelo.Usuario;
-import vista.Vista;
+import vista.ViewRegistroMedidor;
 import dao.ClienteDAO;
 import funciones.Paneles;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import vista.EmpleadoView;
 import vista.Login;
+import vista.ViewBotonesMedidor;
 import vista.ViewClientes;
 
 /**
@@ -22,7 +23,7 @@ import vista.ViewClientes;
 public class CtrlEmpleadoView {
     private EmpleadoView empleadoView;
     private ClienteDAO dao = new ClienteDAO();
-    private Vista viewDirec;
+    private ViewBotonesMedidor viewFuncMedidor;
     private Usuario usuario;
     private Login loginView;
 
@@ -42,9 +43,9 @@ public class CtrlEmpleadoView {
         onClickVerClientes();
 
         this.empleadoView.getBtnMedidor().addActionListener(e -> {
-            this.viewDirec = new Vista();
-            new Paneles().insertarPaneles(viewDirec, empleadoView.getBgPanel());
-            new CtrlDireccion(viewDirec);
+            this.viewFuncMedidor = new ViewBotonesMedidor();
+            new Paneles().insertarPaneles(viewFuncMedidor, empleadoView.getBgPanel());
+            new CtrlBotonesMedidor(viewFuncMedidor);
         });
 
         this.empleadoView.addWindowListener(new WindowAdapter() {
