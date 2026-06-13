@@ -87,8 +87,11 @@ public class CtrlFactura {
             factura.setLectura(lectura);
             factura.setFechaLimite(LocalDate.now().plusDays(30));
             factura.setMora(BigDecimal.ZERO);
-            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText()));
-            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText()));
+
+            //Por si al calcular automaticamente lo arroja como comas
+            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText().replace(",", ".").trim()));
+            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText().replace(",", ".").trim()));
+
             factura.setMontoNeto(factura.getMontoConsumo().add(factura.getMontoServicio()));
             factura.setMontoTotal(factura.getMontoNeto());
 
@@ -165,7 +168,7 @@ public class CtrlFactura {
             long dias = diferencia / (1000 * 60 * 60 * 24);
 
             if (dias < 20) {
-                JOptionPane.showMessageDialog(vista, "[ERROR] El periodo es muy corto (" + dias + " días).\nDebe ser de al menos 20 dias.", "Error de Periodo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista, "[ERROR] El periodo es muy corto (" + dias + " dias).\nDebe ser de al menos 20 dias.", "Error de Periodo", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
