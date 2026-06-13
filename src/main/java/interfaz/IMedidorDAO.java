@@ -15,5 +15,7 @@ import modelo.Medidor;
 public interface IMedidorDAO {
     public void crearRegistro(Medidor m) throws Exception;
     public boolean modificarRegistro(Medidor m) throws Exception;
+    List<Medidor> listarDisponibles() throws Exception;
     public List<Medidor> listarMedidores() throws Exception; // para que funcione lo de factura
+    Medidor buscarPorCodigo(String codigo) throws Exception;
 }

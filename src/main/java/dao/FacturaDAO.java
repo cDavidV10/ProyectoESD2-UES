@@ -6,17 +6,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
-import java.sql.Statement;
-import java.time.LocalDate;
-=======
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.table.DefaultTableModel;
 
 import arboles.ArbolBinarioBusqueda;
->>>>>>> develop
+import java.sql.Statement;
 import modelo.Factura;
 import modelo.Usuario;
 
@@ -114,6 +110,8 @@ public class FacturaDAO implements IFacturaDAO {
             throw new Exception("Error al verificar las fechas: " + e.getMessage());
         }
         return false;
+    }
+    
     public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """

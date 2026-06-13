@@ -109,6 +109,26 @@ public class MedidorDAO implements IMedidorDAO {
         return lista;
     }
 
+
+     @Override
+    public List<Medidor> listarDisponibles() throws Exception {
+        List<Medidor> lista = new ArrayList<>();
+
+        Connection conexion = Conexion.getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP);
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Medidor m = new Medidor();
+                m.setId(rs.getInt("id_medidor"));
+                m.setCodigo(rs.getString("codigo"));
+                m.setDiametroNomila(rs.getString("diametro_nominal"));
+                m.setUnidadMedida(rs.getString("unidad_medida"));
+                lista.add(m);
+            }
+        }
+        return lista;
+    }
+
     @Override
     public Medidor buscarPorCodigo(String codigo) throws Exception {
         Connection conexion = Conexion.getConexion();
