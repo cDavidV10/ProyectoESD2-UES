@@ -152,7 +152,7 @@ public class CtrlRegistro {
             return;
         }
 
-        if (new Validaciones().validarCorreo(emailInput)) {
+        if (!new Validaciones().validarCorreo(emailInput)) {
             JOptionPane.showMessageDialog(registroView,
                     "El usuario debe ser un correo electrónico válido.",
                     "Formato Inválido",
