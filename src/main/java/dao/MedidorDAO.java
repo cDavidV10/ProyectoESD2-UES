@@ -79,8 +79,8 @@ public class MedidorDAO implements IMedidorDAO {
                  """;
 
         try {
-            Connection con = Conexion.getConexion(); 
-            PreparedStatement ps = con.prepareStatement(LIST); 
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(LIST);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -109,14 +109,12 @@ public class MedidorDAO implements IMedidorDAO {
         return lista;
     }
 
-
-     @Override
+    @Override
     public List<Medidor> listarDisponibles() throws Exception {
         List<Medidor> lista = new ArrayList<>();
 
         Connection conexion = Conexion.getConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP);
-            ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Medidor m = new Medidor();
                 m.setId(rs.getInt("id_medidor"));
@@ -137,13 +135,41 @@ public class MedidorDAO implements IMedidorDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Direccion direccion = new Direccion(rs.getInt("id_direccion"));
+
                     return new Medidor(
-                        rs.getInt("id_medidor"),
-                        rs.getString("codigo"),
-                        rs.getString("diametro_nominal"),
-                        rs.getString("unidad_medida"),
-                        direccion
+                            rs.getInt("id_medidor"),
+                            rs.getString("codigo"),
+                            rs.getString("diametro_nominal"),
+                            rs.getString("unidad_medida"),
+                            direccion
                     );
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Medidor buscarPorId(int id_medidor) throws Exception {
+        String sql = "Select * from contrato c join medidor m on c.id_medidor = m.id_medidor where c.id_medidor = ?";
+        
+        Connection conexion = Conexion.getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, id_medidor);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
+                    
+                    Medidor medidor = new Medidor();
+                    Contrato contrato = new Contrato();
+                    
+                    medidor.setCodigo(rs.getString("codigo"));
+                    medidor.setDiametroNomila(rs.getString("diametro_nominal"));
+                    medidor.setDireccion(direccion);
+                    medidor.setUnidadMedida(rs.getString("unidad_medida"));
+                    medidor.setContrato(contrato);
+                    
+                    return medidor;
                 }
             }
         }

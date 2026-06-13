@@ -20,6 +20,11 @@ public class Factura implements Comparable<Factura> {
     public Factura() {
     }
 
+    public Factura(int id) {
+        this.id = id;
+    }
+    
+
     public Factura(int id, LocalDate fechaLimite, BigDecimal mora, BigDecimal montoConsumo, BigDecimal montoServicio,
             BigDecimal montoNeto, BigDecimal montoTotal) {
         this.id = id;

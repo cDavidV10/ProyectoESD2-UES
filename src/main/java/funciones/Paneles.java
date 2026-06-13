@@ -5,6 +5,7 @@
 package funciones;
 
 import java.awt.BorderLayout;
+import javax.swing.GroupLayout;
 
 import javax.swing.JPanel;
 

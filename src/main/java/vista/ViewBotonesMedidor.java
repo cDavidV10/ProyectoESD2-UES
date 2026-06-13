@@ -33,6 +33,7 @@ public class ViewBotonesMedidor extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jpnViewOpcMedidor = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         txtCodMedidor = new javax.swing.JTextField();
         btnBuscarMed = new javax.swing.JButton();
@@ -68,17 +69,8 @@ public class ViewBotonesMedidor extends javax.swing.JPanel {
 
         jpnViewOpcMedidor.setBackground(new java.awt.Color(204, 204, 204));
         jpnViewOpcMedidor.setPreferredSize(new java.awt.Dimension(1058, 539));
-
-        javax.swing.GroupLayout jpnViewOpcMedidorLayout = new javax.swing.GroupLayout(jpnViewOpcMedidor);
-        jpnViewOpcMedidor.setLayout(jpnViewOpcMedidorLayout);
-        jpnViewOpcMedidorLayout.setHorizontalGroup(
-            jpnViewOpcMedidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1060, Short.MAX_VALUE)
-        );
-        jpnViewOpcMedidorLayout.setVerticalGroup(
-            jpnViewOpcMedidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
-        );
+        jpnViewOpcMedidor.setLayout(new javax.swing.BoxLayout(jpnViewOpcMedidor, javax.swing.BoxLayout.Y_AXIS));
+        jpnViewOpcMedidor.add(jScrollPane1);
 
         txtCodMedidor.setText("Codigo Medidor");
 
@@ -113,6 +105,11 @@ public class ViewBotonesMedidor extends javax.swing.JPanel {
         });
 
         btnLecturasMed.setText("Ver Lecturas");
+        btnLecturasMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLecturasMedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -165,6 +162,10 @@ public class ViewBotonesMedidor extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarMedActionPerformed
 
+    private void btnLecturasMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLecturasMedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLecturasMedActionPerformed
+
     public JButton getBtnAgregarMed() {
         return btnAgregarMed;
     }
@@ -193,6 +194,7 @@ public class ViewBotonesMedidor extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpnViewOpcMedidor;
     private javax.swing.JTextField txtCodMedidor;
     // End of variables declaration//GEN-END:variables

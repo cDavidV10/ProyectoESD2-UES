@@ -18,4 +18,5 @@ public interface IMedidorDAO {
     List<Medidor> listarDisponibles() throws Exception;
     public List<Medidor> listarMedidores() throws Exception; // para que funcione lo de factura
     Medidor buscarPorCodigo(String codigo) throws Exception;
+    public Medidor buscarPorId(int id_medidor) throws Exception;
 }

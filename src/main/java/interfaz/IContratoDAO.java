@@ -12,4 +12,5 @@ import modelo.Contrato;
  */
 public interface IContratoDAO {
     void insertar(Contrato contrato) throws Exception;
+    public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
 }
