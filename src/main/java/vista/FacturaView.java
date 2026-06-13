@@ -149,58 +149,86 @@ public class FacturaView extends javax.swing.JPanel {
 
         jLabel12.setText("jLabel12");
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        add(cbMedidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 116, 186, -1));
+
         txtNombreCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtNombreCliente.setEnabled(false);
         txtNombreCliente.setPreferredSize(new java.awt.Dimension(70, 22));
+        add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 156, 186, -1));
 
         txtCodigoMedidor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodigoMedidor.setEnabled(false);
         txtCodigoMedidor.setPreferredSize(new java.awt.Dimension(70, 22));
+        add(txtCodigoMedidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 196, 186, -1));
 
         txtDireccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtDireccion.setEnabled(false);
         txtDireccion.setPreferredSize(new java.awt.Dimension(70, 22));
+        add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 239, 186, -1));
 
         txtConsumo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtConsumo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        add(txtConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 353, 102, -1));
 
         txtMontoConsumo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtMontoConsumo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMontoConsumo.setEnabled(false);
+        add(txtMontoConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 159, 102, -1));
 
         txtMontoServicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtMontoServicio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMontoServicio.setEnabled(false);
+        add(txtMontoServicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 199, 102, -1));
 
         txtTotalPagar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotalPagar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotalPagar.setEnabled(false);
+        add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 239, 102, -1));
 
         btnCalcular.setText("Calcular");
+        add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 425, -1, -1));
 
         btnGenerarRecibo.setText("Generar Factura");
+        add(btnGenerarRecibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(349, 425, -1, -1));
 
         jLabel1.setText("Nombre del cliente:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 159, -1, -1));
 
         jLabel2.setText("Código del Medidor:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 199, -1, -1));
 
         jLabel3.setText("Dirección");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 242, -1, -1));
 
         jLabel4.setText("Fecha de Inicio: ");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 279, -1, -1));
 
         jLabel5.setText("Consumo:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 356, -1, -1));
 
         jLabel6.setText("Monto Consumo ($USD):");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 162, -1, -1));
 
         jLabel7.setText("Monto Servicio ($USD):");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 202, -1, -1));
 
         jLabel8.setText("Total ($USD):");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 242, -1, -1));
+        add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 279, 186, -1));
+        add(dateFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 313, 186, -1));
 
         jLabel9.setText("Fecha Fin:");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 319, -1, -1));
 
         jLabel10.setText("Medidores:");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 119, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1060, 105));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1060, 105));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1060, 105));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,122 +244,12 @@ public class FacturaView extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(29, 29, 29))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel9))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtNombreCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtCodigoMedidor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbMedidores, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMontoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMontoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(174, 174, 174)
-                                .addComponent(btnGenerarRecibo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCalcular)
-                                .addGap(215, 215, 215)))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbMedidores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCodigoMedidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(21, 21, 21)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtMontoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtMontoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel9))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCalcular)
-                    .addComponent(btnGenerarRecibo))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
