@@ -12,6 +12,7 @@ import funciones.Paneles;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import vista.EmpleadoView;
+import vista.FacturaView;
 import vista.Login;
 import vista.ViewBotonesMedidor;
 import vista.ViewClientes;
@@ -26,11 +27,13 @@ public class CtrlEmpleadoView {
     private ViewBotonesMedidor viewFuncMedidor;
     private Usuario usuario;
     private Login loginView;
+    private Paneles paneles;
 
     public CtrlEmpleadoView(EmpleadoView empleadoView, Usuario usuario, Login loginView) {
         this.empleadoView = empleadoView;
         this.usuario = usuario;
         this.loginView = loginView;
+        this.paneles = new Paneles();
 
         this.empleadoView.addWindowListener(new WindowAdapter() {
             @Override
@@ -44,7 +47,7 @@ public class CtrlEmpleadoView {
 
         this.empleadoView.getBtnMedidor().addActionListener(e -> {
             this.viewFuncMedidor = new ViewBotonesMedidor();
-            new Paneles().insertarPaneles(viewFuncMedidor, empleadoView.getBgPanel());
+            paneles.insertarPaneles(viewFuncMedidor, empleadoView.getBgPanel());
             new CtrlBotonesMedidor(viewFuncMedidor);
         });
 
@@ -54,6 +57,13 @@ public class CtrlEmpleadoView {
                 loginView.setVisible(true);
             }
         });
+
+        this.empleadoView.getBtnFactura().addActionListener(e->{
+            FacturaView panel = new FacturaView();
+            CtrlFactura controlador = new CtrlFactura(panel);
+
+            paneles.insertarPaneles(panel, empleadoView.getBgPanel());
+        });
     }
 
     public void onClickVerClientes() {
@@ -61,7 +71,7 @@ public class CtrlEmpleadoView {
             ViewClientes clientesView = new ViewClientes();
             CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, empleadoView.getBgPanel());
 
-            new Paneles().insertarPaneles(clientesView, this.empleadoView.getBgPanel());
+            paneles.insertarPaneles(clientesView, this.empleadoView.getBgPanel());
         });
     }
 
