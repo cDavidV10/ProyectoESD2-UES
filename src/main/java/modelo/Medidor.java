@@ -2,7 +2,8 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Medidor {
+public class Medidor implements Comparable<Medidor> {
+
     private int id;
     private String codigo;
     private String diametroNomila;
@@ -76,5 +77,19 @@ public class Medidor {
 
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;
+    }
+
+    @Override
+    public String toString() {
+        if (this.contrato == null) {
+            return "Seleccione...";
+        }
+
+        return "[" + this.codigo + "]" + " - " + this.contrato.getCliente().getNombre() + " " + this.contrato.getCliente().getApellido();
+    }
+
+    @Override
+    public int compareTo(Medidor otroMedidor) {
+        return Integer.compare(this.id, otroMedidor.getId());
     }
 }

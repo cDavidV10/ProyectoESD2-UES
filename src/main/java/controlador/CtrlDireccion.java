@@ -65,8 +65,7 @@ public class CtrlDireccion {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(),
-                    "Error BD", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los municipios.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
         }
     }
 

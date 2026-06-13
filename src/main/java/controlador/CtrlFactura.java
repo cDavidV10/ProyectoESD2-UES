@@ -1,219 +1,211 @@
 package controlador;
 
-import dao.FacturaDAO;
-import dao.LecturaDAO;
-import interfaz.IFacturaDAO;
-import interfaz.ILecturaDAO;
 import arboles.ArbolBinarioAVL;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import dao.FacturaDAO;
+import dao.MedidorDAO;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import modelo.Empleado;
 import modelo.Factura;
 import modelo.Lectura;
+import modelo.Medidor;
 import vista.FacturaView;
 
 public class CtrlFactura {
 
     private FacturaView vista;
-    private ILecturaDAO lecturaDAO;
-    private IFacturaDAO facturaDAO;
-    private ArbolBinarioAVL arbolLecturas;
-
-    private double montoConsumoCalc = 0.0;
-    private final double cargoServicioCalc = 2.50;
-    private double totalCalc = 0.0;
+    private MedidorDAO medidorDAO;
+    private ArbolBinarioAVL arbolMedidores;
 
     public CtrlFactura(FacturaView vista) {
         this.vista = vista;
-        this.lecturaDAO = new LecturaDAO();
-        this.facturaDAO = new FacturaDAO();
-
-        cargarLecturasPendientes();
+        this.medidorDAO = new MedidorDAO();
+        cargarMedidores();
         events();
     }
 
-    public void iniciar() {
-        JFrame ventana = new JFrame("Generacion de Factura");
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(650, 480);
-        ventana.setLocationRelativeTo(null);
-        ventana.add(this.vista);
-        ventana.setVisible(true);
-    }
-
-    private void cargarLecturasPendientes() {
+    private void cargarMedidores() {
         try {
-            arbolLecturas = lecturaDAO.listarLecturasPendientes();
-            vista.getCbLecturasPendientes().removeAllItems();
+            List<Medidor> lista = medidorDAO.listarMedidores();
+            arbolMedidores = new ArbolBinarioAVL();
+            for (Medidor m : lista) {
+                arbolMedidores.insertar(m);
+            }
 
-            Lectura vacio = new Lectura();
-            vacio.setId(0);
-            vista.getCbLecturasPendientes().addItem(vacio);
+            vista.getCbMedidores().removeAllItems();
+            Medidor vacio = new Medidor();
+            vacio.setCodigo("Seleccione...");
+            vista.getCbMedidores().addItem(vacio);
 
-            if (arbolLecturas != null) {
-                ArrayList lista = arbolLecturas.IND();
-
-                if (lista != null) {
-                    for (Object obj : lista) {
-                        Lectura lec = (Lectura) obj;
-                        vista.getCbLecturasPendientes().addItem(lec);
-                    }
+            ArrayList listaInd = arbolMedidores.IND();
+            if (listaInd != null) {
+                for (Object obj : listaInd) {
+                    vista.getCbMedidores().addItem((Medidor) obj);
                 }
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar las lecturas pendientes.\n" + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, "[ERROR] No se han podido cargar los medidores.\n" + e.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void events() {
-        this.vista.getCbLecturasPendientes().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarDatosLectura();
-            }
-        });
-
-        this.vista.getBtnCalcular().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ejecutarCalculos();
-            }
-        });
-
-        this.vista.getBtnGenerarRecibo().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardar();
-            }
-        });
+        this.vista.getCbMedidores().addActionListener(e -> cargarDatosMedidor());
+        this.vista.getBtnCalcular().addActionListener(e -> calcular());
+        this.vista.getBtnGenerarRecibo().addActionListener(e -> guardarFactura());
     }
 
-    private void mostrarDatosLectura() {
-        if (vista.getCbLecturasPendientes().getSelectedItem() == null) {
-            return;
-        }
-
-        Lectura lecturaSeleccionada = (Lectura) vista.getCbLecturasPendientes().getSelectedItem();
-
-        if (lecturaSeleccionada == null || lecturaSeleccionada.getId() == 0) {
-            limpiarSeccionCampos();
-            limpiarSeccionCalculos();
-            return;
-        }
-
+    private void guardarFactura() {
         try {
-            String nombreCompleto = lecturaSeleccionada.getMedidor().getContrato().getCliente().getNombre() + " "+ lecturaSeleccionada.getMedidor().getContrato().getCliente().getApellido();
-            String direccionCompleta = "Zona: " + lecturaSeleccionada.getMedidor().getDireccion().getZona() + ", Casa #"+ lecturaSeleccionada.getMedidor().getDireccion().getNumeroCasa();
-            String periodo = lecturaSeleccionada.getFechaInicial() + " al " + lecturaSeleccionada.getFechaFinal();
+            // medidor vacio
+            if (vista.getCbMedidores().getSelectedIndex() <= 0) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] Seleccione un medidor.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            vista.getTxtNombreCliente().setText(nombreCompleto);
-            vista.getTxtCodigoMedidor().setText(lecturaSeleccionada.getMedidor().getCodigo());
-            vista.getTxtDireccion().setText(direccionCompleta);
-            vista.getTxtPeriodo().setText(periodo);
+            Lectura lectura = new Lectura();
+            lectura.setConsumo(Integer.parseInt(vista.getTxtConsumo().getText()));
+            lectura.setFechaInicial(convertir(vista.getDateInicio().getDate()));
+            lectura.setFechaFinal(convertir(vista.getDateFin().getDate()));
 
-            limpiarSeccionCalculos();
+            Medidor medidor = (Medidor) vista.getCbMedidores().getSelectedItem();
+            lectura.setMedidor(medidor);
 
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(vista, "[ADVERTENCIA]: Seleccione una lectura valida para mostrar sus detalles.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+            FacturaDAO dao = new FacturaDAO();
+            if (dao.existeFactura(medidor.getId(), lectura.getFechaInicial(), lectura.getFechaFinal())) {
+                JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Ya existe una factura generada para este medidor en este periodo.", "Duplicado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-    private void ejecutarCalculos() {
-        Lectura lecturaSeleccionada = (Lectura) vista.getCbLecturasPendientes().getSelectedItem();
+            // si no existe factura en el periodo dado, continua
+            Factura factura = new Factura();
+            factura.setLectura(lectura);
+            factura.setFechaLimite(LocalDate.now().plusDays(30));
+            factura.setMora(BigDecimal.ZERO);
+            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText()));
+            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText()));
+            factura.setMontoNeto(factura.getMontoConsumo().add(factura.getMontoServicio()));
+            factura.setMontoTotal(factura.getMontoNeto());
 
-        if (lecturaSeleccionada == null || lecturaSeleccionada.getId() == 0) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione una lectura válida para realizar el calculo.", "Lectura no seleccionada", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+            Empleado emp = new Empleado();
+            emp.setId(1); // CAMBIAR POR EL EMPLEADO/USUARIO LOGUEADO EN ESE MOMENTO
+            factura.setEmpleado(emp);
 
-        double cuota = 0.86;
-        double consumoM3 = lecturaSeleccionada.getConsumo();
-
-        montoConsumoCalc = consumoM3 * cuota;
-        totalCalc = montoConsumoCalc + cargoServicioCalc;
-
-        vista.getTxtConsumo().setText(consumoM3 + " m³");
-        vista.getTxtMontoConsumo().setText("$" + String.format("%.2f", montoConsumoCalc));
-        vista.getTxtMontoServicio().setText("$" + String.format("%.2f", cargoServicioCalc));
-        vista.getTxtTotalPagar().setText("$" + String.format("%.2f", totalCalc));
-    }
-
-    private void guardar() {
-        Lectura lecturaSeleccionada = (Lectura) vista.getCbLecturasPendientes().getSelectedItem();
-
-        if (lecturaSeleccionada == null || lecturaSeleccionada.getId() == 0) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Seleccione una lectura valida de la lista.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (totalCalc == 0.0 || vista.getTxtTotalPagar().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "[ERROR]: Debe procesar los calculos antes de guardar la factura.", "Falta Calcular", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        Factura f = new Factura();
-        f.setMontoConsumo(BigDecimal.valueOf(montoConsumoCalc));
-        f.setMontoServicio(BigDecimal.valueOf(cargoServicioCalc));
-        f.setMontoNeto(BigDecimal.valueOf(montoConsumoCalc + cargoServicioCalc));
-        f.setMora(BigDecimal.ZERO);
-        f.setMontoTotal(BigDecimal.valueOf(totalCalc));
-
-        LocalDate fechaVencimiento = lecturaSeleccionada.getFechaFinal().plusDays(15);
-        f.setFechaLimite(fechaVencimiento);
-        f.setLectura(lecturaSeleccionada);
-
-        Empleado emp = new Empleado();
-        emp.setId(1);
-        f.setEmpleado(emp);
-
-        try {
-            boolean exito = facturaDAO.guardar(f);
-
-            if (exito) {
-                JOptionPane.showMessageDialog(vista, "[MENSAJE]: Factura creada y procesada exitosamente.", "Creacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                limpiarTodo();
-                cargarLecturasPendientes();
-            } else {
-                JOptionPane.showMessageDialog(vista, "[ERROR]: No se pudo crear la factura.", "Error de Guardado", JOptionPane.ERROR_MESSAGE);
+            if (dao.guardar(factura)) {
+                JOptionPane.showMessageDialog(vista, "[MENSAJE] Factura generada con exito.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarFormulario();
             }
 
         } catch (Exception e) {
-            if (e.getMessage().contains("duplicate key") || e.getMessage().contains("fk_factura_lectura")) {
-                JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Esta lectura ya ha sido facturad.", "Factura Duplicada", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(vista, "[ERROR]: Ocurrio un error inesperado.\n" + e.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(vista, "[ERROR]: Ocurrio un error inesperado.\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
-    private void limpiarSeccionCampos() {
+    private void cargarDatosMedidor() {
+        Medidor m = (Medidor) vista.getCbMedidores().getSelectedItem();
+
         vista.getTxtNombreCliente().setText("");
-        vista.getTxtCodigoMedidor().setText("");
         vista.getTxtDireccion().setText("");
-        vista.getTxtPeriodo().setText("");
+        vista.getTxtCodigoMedidor().setText("");
+
+        if (m != null && !"Seleccione...".equals(m.getCodigo())) {
+            vista.getTxtNombreCliente().setText(m.getContrato().getCliente().getNombre() + " " + m.getContrato().getCliente().getApellido());
+            vista.getTxtDireccion().setText(m.getDireccion().getZona());
+            vista.getTxtCodigoMedidor().setText(m.getCodigo());
+        }
     }
 
-    private void limpiarSeccionCalculos() {
+    private void calcular() {
+        try {
+            Medidor m = (Medidor) vista.getCbMedidores().getSelectedItem();
+
+            // medidor vacio
+            if (m == null || "Seleccione...".equals(m.getCodigo())) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] Seleccione un medidor.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String textoConsumo = vista.getTxtConsumo().getText().trim();
+            // consumo vacio
+            if (textoConsumo.isEmpty()) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] Ingrese un consumo.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int consumo = Integer.parseInt(textoConsumo);
+            // consumo negativo
+            if (consumo < 0) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] El consumo no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Date fechaInicio = vista.getDateInicio().getDate();
+            Date fechaFin = vista.getDateFin().getDate();
+
+            // fechas vacias
+            if (fechaInicio == null || fechaFin == null) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] Seleccione ambas fechas.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // orden de fechas
+            if (fechaFin.getTime() <= fechaInicio.getTime()) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] La fecha fin debe ser mayor a la inicio.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // minimo 20 dias
+            long diferencia = fechaFin.getTime() - fechaInicio.getTime();
+            long dias = diferencia / (1000 * 60 * 60 * 24);
+
+            if (dias < 20) {
+                JOptionPane.showMessageDialog(vista, "[ERROR] El periodo es muy corto (" + dias + " días).\nDebe ser de al menos 20 dias.", "Error de Periodo", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            double montoConsumo = consumo * 0.50;
+            double montoServicio = 10.00;
+            double total = montoConsumo + montoServicio;
+
+            vista.getTxtMontoConsumo().setText(String.format("%.2f", montoConsumo));
+            vista.getTxtMontoServicio().setText(String.format("%.2f", montoServicio));
+            vista.getTxtTotalPagar().setText(String.format("%.2f", total));
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(vista, "[ERROR] Ingrese numeros validos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpiarFormulario() {
+        vista.getCbMedidores().setSelectedIndex(0);
         vista.getTxtConsumo().setText("");
         vista.getTxtMontoConsumo().setText("");
         vista.getTxtMontoServicio().setText("");
         vista.getTxtTotalPagar().setText("");
-        montoConsumoCalc = 0.0;
-        totalCalc = 0.0;
+        vista.getDateInicio().setDate(null);
+        vista.getDateFin().setDate(null);
     }
 
-    private void limpiarTodo() {
-        limpiarSeccionCampos();
-        limpiarSeccionCalculos();
-        if (vista.getCbLecturasPendientes().getItemCount() > 0) {
-            vista.getCbLecturasPendientes().setSelectedIndex(0);
+    private LocalDate convertir(java.util.Date date) {
+        if (date == null) {
+            return null;
         }
+
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public void iniciar() {
+        JFrame frame = new JFrame("Factura");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(this.vista);
+        frame.setSize(700, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }

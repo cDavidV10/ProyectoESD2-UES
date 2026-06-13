@@ -6,74 +6,103 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
 import modelo.Factura;
 
 public class FacturaDAO implements IFacturaDAO {
 
+    private static final String INSERT_LECTURA = "INSERT INTO lectura (consumo, fecha_inicio, fecha_fin, id_medidor) VALUES (?, ?, ?, ?)";
+
     private static final String INSERT_FACTURA = """
-                                INSERT INTO factura(fecha_limite, mora, monto_consumo, monto_servicio, monto_neto, monto_total, id_lectura, id_empleado)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                                """;
-                                
-    private static final String INSERT_PAGO = """
-                                INSERT INTO pago (id_factura)
-                                VALUES (?)
-                                """;
-    
-    private static final String ULTIMO_ID = "SELECT MAX(id_factura) AS id FROM factura;"; // Toma el id de la ultima factura
-    
+                                                 INSERT INTO factura(fecha_limite, mora, monto_consumo, monto_servicio, monto_neto, monto_total, id_lectura, id_empleado) 
+                                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                                 """;
+
+    private static final String INSERT_PAGO = "INSERT INTO pago (id_factura) VALUES (?)";
+
+    private static final String FIND_FACTURA = """
+                                               SELECT COUNT(*) FROM factura f 
+                                               JOIN lectura l ON f.id_lectura = l.id_lectura
+                                               WHERE l.id_medidor = ?
+                                               AND l.fecha_inicio <= ?
+                                               AND l.fecha_fin >= ?
+                                               """;
 
     @Override
     public boolean guardar(Factura factura) throws Exception {
         Connection conn = Conexion.getConexion();
-        
         boolean guardado = false;
 
         try {
-            conn.setAutoCommit(false); // Evita que se manden los querys a la bd sin haberse asegurado q el segundo querys funcioone realmente
+            conn.setAutoCommit(false); // Para que solo se guarden las inserciones cuando vuelva a ser true
 
-            PreparedStatement ps = conn.prepareStatement(INSERT_FACTURA);
+            // Guardamos lectura
+            PreparedStatement psL = conn.prepareStatement(INSERT_LECTURA, Statement.RETURN_GENERATED_KEYS); // RETURN_GENERATED_KEYS retiene el id generado por este insert
+            psL.setInt(1, factura.getLectura().getConsumo());
+            psL.setDate(2, Date.valueOf(factura.getLectura().getFechaInicial()));
+            psL.setDate(3, Date.valueOf(factura.getLectura().getFechaFinal()));
+            psL.setInt(4, factura.getLectura().getMedidor().getId());
+            psL.executeUpdate();
 
-            ps.setDate(1, Date.valueOf(factura.getFechaLimite()));
-            ps.setBigDecimal(2, factura.getMora());
-            ps.setBigDecimal(3, factura.getMontoConsumo());
-            ps.setBigDecimal(4, factura.getMontoServicio());
-            ps.setBigDecimal(5, factura.getMontoNeto());
-            ps.setBigDecimal(6, factura.getMontoTotal());
-            ps.setInt(7, factura.getLectura().getId());
-            ps.setInt(8, factura.getEmpleado().getId());
-
-            int filasAfectadas = ps.executeUpdate();
-            
-            if (filasAfectadas > 0) {
-                PreparedStatement psId = conn.prepareStatement(ULTIMO_ID);
-                ResultSet rs = psId.executeQuery();
-                
-                int idGenerado = 0;
-                if (rs.next()) {
-                    idGenerado = rs.getInt("id");
-                }
-
-                PreparedStatement psPago = conn.prepareStatement(INSERT_PAGO);
-                psPago.setInt(1, idGenerado);
-                psPago.executeUpdate();
-                
-                guardado = true;
+            // Se obtiene el id de la lectura creada arriba
+            ResultSet rsL = psL.getGeneratedKeys(); // se le dice a psL que recupere la llave generada anteriormente
+            int idLectura = 0;
+            if (rsL.next()) {
+                idLectura = rsL.getInt(1);
             }
+
+            PreparedStatement psF = conn.prepareStatement(INSERT_FACTURA, Statement.RETURN_GENERATED_KEYS);
+            psF.setDate(1, Date.valueOf(factura.getFechaLimite()));
+            psF.setBigDecimal(2, factura.getMora());
+            psF.setBigDecimal(3, factura.getMontoConsumo());
+            psF.setBigDecimal(4, factura.getMontoServicio());
+            psF.setBigDecimal(5, factura.getMontoNeto());
+            psF.setBigDecimal(6, factura.getMontoTotal());
+            psF.setInt(7, idLectura);
+            psF.setInt(8, factura.getEmpleado().getId());
+            psF.executeUpdate();
+
+            // Obtiene id por factura
+            ResultSet rsF = psF.getGeneratedKeys();
+            int idFactura = 0;
+            if (rsF.next()) {
+                idFactura = rsF.getInt(1);
+            }
+
+            // Guarda el pago
+            PreparedStatement psP = conn.prepareStatement(INSERT_PAGO);
+            psP.setInt(1, idFactura);
+            psP.executeUpdate();
 
             conn.commit();
-
+            guardado = true;
         } catch (Exception ex) {
-            if (conn != null) {
-                conn.rollback();
-            }
+            conn.rollback();
             throw ex;
         } finally {
-            if (conn != null) {
-                conn.close();
-            }
+            conn.close();
         }
-
         return guardado;
+    }
+
+    @Override
+    public boolean existeFactura(int idMedidor, LocalDate inicio, LocalDate fin) throws Exception {
+        Connection conn = Conexion.getConexion();
+        try {
+            PreparedStatement ps = conn.prepareStatement(FIND_FACTURA);
+            ps.setInt(1, idMedidor);
+            ps.setDate(2, java.sql.Date.valueOf(fin)); // para comparar con el fin existente
+            ps.setDate(3, java.sql.Date.valueOf(inicio)); // para comparar con el inicio existente
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar las fechas: " + e.getMessage());
+        }
+        return false;
     }
 }
