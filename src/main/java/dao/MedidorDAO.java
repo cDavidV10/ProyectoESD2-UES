@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
+import modelo.Contrato;
 import modelo.Direccion;
 import modelo.Medidor;
 
@@ -21,9 +22,10 @@ import modelo.Medidor;
  *
  * @author danie
  */
-public class MedidorDAO implements IMedidorDAO{
-    
+public class MedidorDAO implements IMedidorDAO {
+
     private String INSERT = "";
+    private String LIST = "";
     private String BUSCAR_POR_CODIGO = "SELECT * FROM medidor WHERE codigo = ?";
     private String MEDIDORES_DISP = """
         SELECT m.id_medidor, m.codigo, m.diametro_nominal, m.unidad_medida
@@ -38,7 +40,7 @@ public class MedidorDAO implements IMedidorDAO{
     @Override
     public void crearRegistro(Medidor m) throws Exception {
         INSERT = "INSERT INTO medidor(codigo, diametro_nominal, unidad_medida, id_direccion) VALUES (?,?,?,?)";
-        
+
         Connection conexion = Conexion.getConexion();
         try {
             conexion.setAutoCommit(false);
@@ -47,7 +49,7 @@ public class MedidorDAO implements IMedidorDAO{
             ps.setString(2, m.getDiametroNomila());
             ps.setString(3, m.getUnidadMedida());
             ps.setInt(4, m.getDireccion().getId());
-            
+
             ps.executeUpdate();
             conexion.commit();
             JOptionPane.showMessageDialog(null, "Registrado Correctamente");
@@ -57,7 +59,7 @@ public class MedidorDAO implements IMedidorDAO{
         } finally {
             conexion.close();
         }
-        
+
     }
 
     @Override
@@ -66,20 +68,43 @@ public class MedidorDAO implements IMedidorDAO{
     }
 
     @Override
-    public List<Medidor> listarDisponibles() throws Exception {
+    public List<Medidor> listarMedidores() throws Exception {
         List<Medidor> lista = new ArrayList<>();
+        LIST = """
+                 SELECT m.id_medidor, m.codigo, d.zona, d.num_casa, c.nombre, c.apellido 
+                 FROM medidor m
+                 INNER JOIN direccion d ON m.id_direccion = d.id_direccion
+                 INNER JOIN contrato con ON con.id_medidor = m.id_medidor
+                 INNER JOIN cliente c ON con.id_cliente = c.id_cliente
+                 """;
 
-        Connection conexion = Conexion.getConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP);
-            ResultSet rs = ps.executeQuery()) {
+        try {
+            Connection con = Conexion.getConexion(); 
+            PreparedStatement ps = con.prepareStatement(LIST); 
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
-                Medidor m = new Medidor();
-                m.setId(rs.getInt("id_medidor"));
-                m.setCodigo(rs.getString("codigo"));
-                m.setDiametroNomila(rs.getString("diametro_nominal"));
-                m.setUnidadMedida(rs.getString("unidad_medida"));
-                lista.add(m);
+                Cliente cliente = new Cliente();
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+
+                Direccion dir = new Direccion();
+                dir.setZona(rs.getString("zona"));
+                dir.setNumeroCasa(rs.getString("num_casa"));
+
+                Contrato contrato = new Contrato();
+                contrato.setCliente(cliente);
+
+                Medidor medidor = new Medidor();
+                medidor.setId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+                medidor.setDireccion(dir);
+                medidor.setContrato(contrato);
+
+                lista.add(medidor);
             }
+        } catch (Exception ex) {
+            throw ex;
         }
         return lista;
     }

@@ -54,7 +54,7 @@ public class LecturaDAO implements ILecturaDAO {
 
                 Lectura lectura = new Lectura();
                 lectura.setId(rs.getInt("id_lectura"));
-                lectura.setConsumo(rs.getInt("consumo"));
+                lectura.setConsumo((int) rs.getDouble("consumo"));
                 lectura.setFechaInicial(rs.getDate("fecha_inicio").toLocalDate());
                 lectura.setFechaFinal(rs.getDate("fecha_fin").toLocalDate());
                 lectura.setMedidor(medidor);
