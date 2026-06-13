@@ -5,6 +5,7 @@
 package vista;
 
 import com.toedter.calendar.JDateChooser;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -22,7 +23,15 @@ public class FacturaView extends javax.swing.JPanel {
      */
     public FacturaView() {
         initComponents();
+        configurarFuenteDates(); // para negrita y 16 en fechas
     }
+    
+    private void configurarFuenteDates() {
+    Font formatoFuente = new Font("Segoe UI", java.awt.Font.BOLD, 16);
+    
+    dateInicio.getDateEditor().getUiComponent().setFont(formatoFuente);
+    dateFin.getDateEditor().getUiComponent().setFont(formatoFuente);
+}
 
     public JButton getBtnCalcular() {
         return btnCalcular;
@@ -149,81 +158,102 @@ public class FacturaView extends javax.swing.JPanel {
 
         jLabel12.setText("jLabel12");
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        add(cbMedidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 116, 186, -1));
+        cbMedidores.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        add(cbMedidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 130, 220, -1));
 
+        txtNombreCliente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtNombreCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtNombreCliente.setEnabled(false);
         txtNombreCliente.setPreferredSize(new java.awt.Dimension(70, 22));
-        add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 156, 186, -1));
+        add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 190, 30));
 
+        txtCodigoMedidor.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtCodigoMedidor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodigoMedidor.setEnabled(false);
         txtCodigoMedidor.setPreferredSize(new java.awt.Dimension(70, 22));
-        add(txtCodigoMedidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 196, 186, -1));
+        add(txtCodigoMedidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 190, 30));
 
+        txtDireccion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtDireccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtDireccion.setEnabled(false);
         txtDireccion.setPreferredSize(new java.awt.Dimension(70, 22));
-        add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 239, 186, -1));
+        add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 190, 30));
 
+        txtConsumo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtConsumo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtConsumo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        add(txtConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 353, 102, -1));
+        add(txtConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 100, 30));
 
+        txtMontoConsumo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtMontoConsumo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtMontoConsumo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMontoConsumo.setEnabled(false);
-        add(txtMontoConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 159, 102, -1));
+        add(txtMontoConsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 250, 102, -1));
 
+        txtMontoServicio.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtMontoServicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtMontoServicio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMontoServicio.setEnabled(false);
-        add(txtMontoServicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 199, 102, -1));
+        add(txtMontoServicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 290, 102, -1));
 
+        txtTotalPagar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtTotalPagar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotalPagar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotalPagar.setEnabled(false);
-        add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 239, 102, -1));
+        add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 330, 102, -1));
 
+        btnCalcular.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCalcular.setText("Calcular");
-        add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 425, -1, -1));
+        add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, -1));
 
+        btnGenerarRecibo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnGenerarRecibo.setText("Generar Factura");
-        add(btnGenerarRecibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(349, 425, -1, -1));
+        add(btnGenerarRecibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 510, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("Nombre del cliente:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 159, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setText("Código del Medidor:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 199, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
 
-        jLabel3.setText("Dirección");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 242, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setText("Dirección:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setText("Fecha de Inicio: ");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 279, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("Consumo:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 356, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel6.setText("Monto Consumo ($USD):");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 162, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel7.setText("Monto Servicio ($USD):");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 202, -1, -1));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, -1, -1));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel8.setText("Total ($USD):");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 242, -1, -1));
-        add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 279, 186, -1));
-        add(dateFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 313, 186, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, -1, -1));
+        add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 190, 30));
+        add(dateFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 190, 30));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel9.setText("Fecha Fin:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 319, -1, -1));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel10.setText("Medidores:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 119, -1, -1));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
         jPanel1.setMaximumSize(new java.awt.Dimension(1060, 105));
@@ -243,13 +273,13 @@ public class FacturaView extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addComponent(jLabel11)
-                .addGap(29, 29, 29))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 

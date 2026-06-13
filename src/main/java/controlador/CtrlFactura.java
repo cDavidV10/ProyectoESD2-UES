@@ -7,10 +7,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import modelo.Empleado;
 import modelo.Factura;
 import modelo.Lectura;
@@ -89,8 +91,8 @@ public class CtrlFactura {
             factura.setMora(BigDecimal.ZERO);
 
             //Por si al calcular automaticamente lo arroja como comas
-            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText().replace(",", ".").trim()));
-            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText().replace(",", ".").trim()));
+            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText()));
+            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText()));
 
             factura.setMontoNeto(factura.getMontoConsumo().add(factura.getMontoServicio()));
             factura.setMontoTotal(factura.getMontoNeto());
@@ -119,8 +121,17 @@ public class CtrlFactura {
 
         if (m != null && !"Seleccione...".equals(m.getCodigo())) {
             vista.getTxtNombreCliente().setText(m.getContrato().getCliente().getNombre() + " " + m.getContrato().getCliente().getApellido());
+            actualizarTooltip(vista.getTxtNombreCliente());
+
             vista.getTxtDireccion().setText(m.getDireccion().getZona());
+            actualizarTooltip(vista.getTxtDireccion());
+
             vista.getTxtCodigoMedidor().setText(m.getCodigo());
+            actualizarTooltip(vista.getTxtCodigoMedidor());
+
+            vista.getCbMedidores().setToolTipText(m.toString());
+        } else {
+            vista.getCbMedidores().setToolTipText(null); // limpia el tooltip
         }
     }
 
@@ -148,8 +159,8 @@ public class CtrlFactura {
                 return;
             }
 
-            Date fechaInicio = vista.getDateInicio().getDate();
-            Date fechaFin = vista.getDateFin().getDate();
+            Date fechaInicio = limpiarHora(vista.getDateInicio().getDate());
+            Date fechaFin = limpiarHora(vista.getDateFin().getDate());
 
             // fechas vacias
             if (fechaInicio == null || fechaFin == null) {
@@ -177,8 +188,13 @@ public class CtrlFactura {
             double total = montoConsumo + montoServicio;
 
             vista.getTxtMontoConsumo().setText(String.format("%.2f", montoConsumo));
+            actualizarTooltip(vista.getTxtMontoConsumo());
+
             vista.getTxtMontoServicio().setText(String.format("%.2f", montoServicio));
+            actualizarTooltip(vista.getTxtMontoServicio());
+
             vista.getTxtTotalPagar().setText(String.format("%.2f", total));
+            actualizarTooltip(vista.getTxtTotalPagar());
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(vista, "[ERROR] Ingrese numeros validos.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -195,12 +211,26 @@ public class CtrlFactura {
         vista.getDateFin().setDate(null);
     }
 
-    private LocalDate convertir(java.util.Date date) {
+    private LocalDate convertir(Date date) { // para convertir fechas tipo Date a LocalDate (por el JDateChooser que retorna Dates)
         if (date == null) {
             return null;
         }
 
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private void actualizarTooltip(JTextField campo) { // para el tooltip
+        campo.setToolTipText(campo.getText());
+    }
+
+    private Date limpiarHora(Date date) { // para manejar las horas dentro de la validacion de los 20 dias
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public void iniciar() {
