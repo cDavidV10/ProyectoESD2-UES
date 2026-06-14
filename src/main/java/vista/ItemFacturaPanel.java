@@ -21,7 +21,7 @@ public class ItemFacturaPanel extends javax.swing.JPanel {
         initComponents();
         lblNoFactura.setText(String.valueOf(f.getId()));
         lblFechaFactur.setText(String.valueOf(f.getFechaLimite()));
-        lblTotalFact.setText(String.valueOf(f.getMontoTotal()));
+        lblTotalFact.setText("$ " + String.valueOf(f.getMontoTotal()));
     }
 
     /**

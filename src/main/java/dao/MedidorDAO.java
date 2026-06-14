@@ -162,21 +162,26 @@ public class MedidorDAO implements IMedidorDAO {
 
     @Override
     public Medidor buscarPorId(int id_medidor) throws Exception {
-        String sql = "Select * from contrato c join medidor m on c.id_medidor = m.id_medidor where c.id_medidor = ?";
+        String sql = """
+                     Select * 
+                     from contrato c 
+                     join medidor m on c.id_medidor = m.id_medidor 
+                     where c.id_medidor = ?
+                     """;
         
         Connection conexion = Conexion.getConexion();
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id_medidor);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
                     
                     Medidor medidor = new Medidor();
                     Contrato contrato = new Contrato();
+                    contrato.setId(rs.getInt("id_contrato"));
                     
+                    medidor.setId(rs.getInt("id_medidor"));
                     medidor.setCodigo(rs.getString("codigo"));
                     medidor.setDiametroNomila(rs.getString("diametro_nominal"));
-                    medidor.setDireccion(direccion);
                     medidor.setUnidadMedida(rs.getString("unidad_medida"));
                     medidor.setContrato(contrato);
                     

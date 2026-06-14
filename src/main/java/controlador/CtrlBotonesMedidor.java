@@ -94,7 +94,7 @@ public class CtrlBotonesMedidor {
                     vista.getJpnViewOpcMedidor().repaint();
                     
                     try {
-                        new CtrlDetalleFactura(f, viewDetalle, vista);
+                        new CtrlDetalleFactura(f, viewDetalle, vista, null, ()-> mostrarFacturasMedidor());
                     } catch (Exception ex) {
                         System.getLogger(CtrlBotonesMedidor.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }

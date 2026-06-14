@@ -121,20 +121,9 @@ public class FacturaDAO implements IFacturaDAO {
     public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """
-                SELECT 
-                    f.id_factura,
-                    l.fecha_fin,
-                    f.fecha_limite,
-                    f.monto_consumo,
-                    f.monto_servicio,
-                    f.monto_total
-                FROM factura f
-                INNER JOIN lectura l ON f.id_lectura = l.id_lectura
-                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
-                INNER JOIN contrato con ON con.id_medidor = m.id_medidor
-                INNER JOIN cliente c ON con.id_cliente = c.id_cliente
-                WHERE c.id_cliente = ?
-                ORDER BY f.id_factura DESC;
+                SELECT *
+                FROM vista_factura
+                WHERE id_cliente = ?
                 """;
 
         Connection conn = Conexion.getConexion();
@@ -161,7 +150,7 @@ public class FacturaDAO implements IFacturaDAO {
             }
 
         } catch (Exception ex) {
-            System.out.println("Error general: " + ex.getMessage());
+            System.out.println("Error general: " + ex.getMessage() + "Factura");
         } finally {
             conn.close();
         }

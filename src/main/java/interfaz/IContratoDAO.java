@@ -5,6 +5,7 @@
 package interfaz;
 
 import modelo.Contrato;
+import modelo.Usuario;
 
 /**
  *
@@ -13,4 +14,5 @@ import modelo.Contrato;
 public interface IContratoDAO {
     void insertar(Contrato contrato) throws Exception;
     public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
+    public Contrato buscarContratoCliente(Usuario usuario) throws Exception;
 }
