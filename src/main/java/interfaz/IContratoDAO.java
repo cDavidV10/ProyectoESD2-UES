@@ -9,7 +9,6 @@ import modelo.Contrato;
 import modelo.Usuario;
 
 /**
- *
  * @author Yonathan
  */
 public interface IContratoDAO {
@@ -18,5 +17,4 @@ public interface IContratoDAO {
     public Contrato buscarContratoCliente(Usuario usuario) throws Exception;
     ArbolBinarioAVL listar() throws Exception;
     ArbolBinarioAVL buscarPorDui(String dui) throws Exception;
-    public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
 }
