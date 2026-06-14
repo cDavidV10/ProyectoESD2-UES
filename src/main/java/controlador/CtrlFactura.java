@@ -91,8 +91,8 @@ public class CtrlFactura {
             factura.setMora(BigDecimal.ZERO);
 
             //Por si al calcular automaticamente lo arroja como comas
-            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText()));
-            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText()));
+            factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText().replace(",", ".").trim()));
+            factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText().replace(",", ".").trim()));
 
             factura.setMontoNeto(factura.getMontoConsumo().add(factura.getMontoServicio()));
             factura.setMontoTotal(factura.getMontoNeto());
