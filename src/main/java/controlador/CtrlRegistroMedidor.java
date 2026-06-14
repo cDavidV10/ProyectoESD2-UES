@@ -173,38 +173,6 @@ public class CtrlRegistroMedidor {
         d.setDistrito(distritoSeleccionado);
 
         try {
-            direccionDAO.insertar(d);
-
-            JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creacion exitosa",
-                    JOptionPane.INFORMATION_MESSAGE);
-            limpiar();
-            guardarDatos();
-        } catch (Exception e) {
-            if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) {
-                JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.",
-                        "Dirección duplicada", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(vista,
-                        "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(),
-                        "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    private void cargarCombosMed() {
-        vista.getCmbDiametroNomnal().removeAllItems();
-        vista.getCmbDiametroNomnal().addItem("Diametro nominal");
-        vista.getCmbDiametroNomnal().addItem("1/2 Pulgada");
-        vista.getCmbDiametroNomnal().addItem("3/4 Pulgada");
-        vista.getCmbDiametroNomnal().addItem("1 Pulgada");
-
-        vista.getCmbUnidadMedida().removeAllItems();
-        vista.getCmbUnidadMedida().addItem("metro cubico");
-        vista.getCmbUnidadMedida().addItem("pie cubico");
-    }
-
-    public void guardarDatos() {
-        try {
             Medidor medidor = new Medidor();
             medidor.setCodigo(vista.getTxtCodigo().getText());
             medidor.setDiametroNomila(vista.getCmbDiametroNomnal().getSelectedItem().toString());
@@ -222,9 +190,40 @@ public class CtrlRegistroMedidor {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se guardo el registro medidor");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+
+        // try {
+        //     direccionDAO.insertar(d);
+
+        //     JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creacion exitosa",
+        //             JOptionPane.INFORMATION_MESSAGE);
+        //     limpiar();
+        //     guardarDatos();
+        // } catch (Exception e) {
+        //     if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) {
+        //         JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.",
+        //                 "Dirección duplicada", JOptionPane.WARNING_MESSAGE);
+        //     } else {
+        //         JOptionPane.showMessageDialog(vista,
+        //                 "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(),
+        //                 "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+        //     }
+        // }
     }
+
+    private void cargarCombosMed() {
+        vista.getCmbDiametroNomnal().removeAllItems();
+        vista.getCmbDiametroNomnal().addItem("Diametro nominal");
+        vista.getCmbDiametroNomnal().addItem("1/2 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("3/4 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("1 Pulgada");
+
+        vista.getCmbUnidadMedida().removeAllItems();
+        vista.getCmbUnidadMedida().addItem("metro cubico");
+        vista.getCmbUnidadMedida().addItem("pie cubico");
+    }
+
 
     private void limpiar() {
         vista.getTxtZona().setText("");

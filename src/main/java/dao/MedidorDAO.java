@@ -7,7 +7,6 @@ package dao;
 import conexion.Conexion;
 import interfaz.IMedidorDAO;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -39,16 +38,28 @@ public class MedidorDAO implements IMedidorDAO {
 
     @Override
     public void crearRegistro(Medidor m) throws Exception {
-        INSERT = "INSERT INTO medidor(codigo, diametro_nominal, unidad_medida, id_direccion) VALUES (?,?,?,?)";
+        INSERT = """
+                
+                WITH nueva_direccion AS (
+                    INSERT INTO direccion (zona, num_casa, id_distrito)
+                    VALUES (?, ? , ?)
+                    RETURNING id_direccion
+                )
+                INSERT INTO medidor (codigo, diametro_nominal, unidad_medida, id_direccion)
+                SELECT ?, ?, ?, id_direccion
+                FROM nueva_direccion;
 
+                """;
         Connection conexion = Conexion.getConexion();
         try {
             conexion.setAutoCommit(false);
             PreparedStatement ps = conexion.prepareStatement(INSERT);
-            ps.setString(1, m.getCodigo());
-            ps.setString(2, m.getDiametroNomila());
-            ps.setString(3, m.getUnidadMedida());
-            ps.setInt(4, m.getDireccion().getId());
+            ps.setString(1, m.getDireccion().getZona());
+            ps.setString(2, m.getDireccion().getNumeroCasa());
+            ps.setInt(3, m.getDireccion().getDistrito().getId());
+            ps.setString(4, m.getCodigo());
+            ps.setString(5, m.getDiametroNomila());
+            ps.setString(6, m.getUnidadMedida());
 
             ps.executeUpdate();
             conexion.commit();
