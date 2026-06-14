@@ -168,13 +168,13 @@ public class FacturaView extends javax.swing.JPanel {
         txtNombreCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtNombreCliente.setEnabled(false);
         txtNombreCliente.setPreferredSize(new java.awt.Dimension(70, 22));
-        add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 190, 30));
+        add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 340, 30));
 
         txtCodigoMedidor.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtCodigoMedidor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodigoMedidor.setEnabled(false);
         txtCodigoMedidor.setPreferredSize(new java.awt.Dimension(70, 22));
-        add(txtCodigoMedidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 190, 30));
+        add(txtCodigoMedidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 340, 30));
 
         txtDireccion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtDireccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
