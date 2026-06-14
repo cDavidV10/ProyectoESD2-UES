@@ -13,3 +13,4 @@ import modelo.Pago;
 public interface IPagoDAO {
     public boolean modificarPago(Pago pago) throws Exception;
 }
+    

@@ -14,30 +14,25 @@ import javax.swing.JPanel;
  * @author cdavi
  */
 public class Paneles {
-    public void insertarPaneles(JPanel panel, JPanel contenedor) {
+
+    public static void insertarPaneles(JPanel panel, JPanel contenedor) {
+
         panel.setSize(1060, 720);
 
         contenedor.removeAll();
+        contenedor.setLayout(new BorderLayout());
         contenedor.add(panel, BorderLayout.CENTER);
         contenedor.revalidate();
         contenedor.repaint();
     }
-    
-    public void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h) {
+
+    public static void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h) {
+
         panel.setSize(w, h);
 
         contenedor.removeAll();
+        contenedor.setLayout(new BorderLayout());
         contenedor.add(panel, BorderLayout.CENTER);
-        contenedor.revalidate();
-        contenedor.repaint();
-    }
-    
-    public void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h, boolean remove) {
-        panel.setSize(w, h);
-
-        contenedor.removeAll();
-        contenedor.add(panel);
-        panel.setLocation(100, 0);
         contenedor.revalidate();
         contenedor.repaint();
     }

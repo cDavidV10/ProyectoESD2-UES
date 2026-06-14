@@ -169,6 +169,75 @@ public class FacturaDAO implements IFacturaDAO {
         return aBusqueda;
     }
 
+    public ArbolBinarioBusqueda obtenerHistorialPagosCliente(Usuario usuario) throws Exception {
+
+        String sql = """
+            SELECT
+                f.id_factura,
+                l.fecha_fin,
+                f.fecha_limite,
+                f.monto_total,
+                p.fecha_pago,
+                p.estado
+            FROM factura f
+            INNER JOIN pago p ON p.id_factura = f.id_factura
+            INNER JOIN lectura l ON f.id_lectura = l.id_lectura
+            INNER JOIN medidor m ON l.id_medidor = m.id_medidor
+            INNER JOIN contrato con ON con.id_medidor = m.id_medidor
+            INNER JOIN cliente c ON con.id_cliente = c.id_cliente
+            WHERE c.id_cliente = ?
+            AND p.estado = 'Pagado'
+            ORDER BY p.fecha_pago DESC;
+            """;
+
+        Connection conn = Conexion.getConexion();
+        ArbolBinarioBusqueda aBusqueda = new ArbolBinarioBusqueda();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, usuario.getCliente().getId());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Factura factura = new Factura();
+                Lectura lectura = new Lectura();
+                Pago pago = new Pago();
+
+                factura.setId(rs.getInt("id_factura"));
+
+                lectura.setFechaFinal(
+                        rs.getObject("fecha_fin", LocalDate.class));
+
+                factura.setFechaLimite(
+                        rs.getObject("fecha_limite", LocalDate.class));
+
+                factura.setMontoTotal(
+                        rs.getBigDecimal("monto_total"));
+
+                pago.setFechaPago(
+                        rs.getObject("fecha_pago", LocalDate.class));
+
+                pago.setEstado(
+                        rs.getString("estado"));
+
+                factura.setLectura(lectura);
+                factura.setPago(pago);
+
+                aBusqueda.insertar(factura);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+
+        return aBusqueda;
+    }
+
     @Override
     public ArbolB obtenerFacturasMedidor(Medidor medidor) throws Exception {
         String sql = """
@@ -268,7 +337,7 @@ public class FacturaDAO implements IFacturaDAO {
 
     @Override
     public void realizarPago(Factura factura) throws Exception {
-       String consulta = """
+        String consulta = """
                 update pago p
                 set fecha_pago = ?,
                     estado = ?::estado_pago
@@ -289,9 +358,8 @@ public class FacturaDAO implements IFacturaDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             conexion.rollback();
-        } finally{
+        } finally {
             conexion.close();
         }
     }
 }
-

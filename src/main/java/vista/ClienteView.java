@@ -4,6 +4,7 @@
  */
 package vista;
 
+import arboles.ArbolBinarioBusqueda;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
@@ -12,7 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controlador.CtrlAgregarEmpleado;
+import dao.FacturaDAO;
 import funciones.Paneles;
+import java.util.ArrayList;
+import java.util.List;
+import modelo.Factura;
+import modelo.Usuario;
 
 /**
  *
@@ -20,13 +26,15 @@ import funciones.Paneles;
  */
 public class ClienteView extends javax.swing.JFrame {
 
+    private Usuario usuario;
+
     /**
      * Creates new form AdminView
      */
-    public ClienteView() {
+    public ClienteView(Usuario usuario) {
 
         initComponents();
-
+        this.usuario = usuario;
         this.setLocationRelativeTo(null);
 
     }
@@ -212,10 +220,27 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    protected void btnHistorialActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnHistorialActionPerformed'");
+    protected void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {
+
+    try {
+
+        FacturaDAO dao = new FacturaDAO();
+
+        ArbolBinarioBusqueda arbol =
+                dao.obtenerHistorialPagosCliente(usuario);
+
+        ArrayList<Factura> lista = arbol.IND();
+
+        HistorialFacturasPanel panel = new HistorialFacturasPanel();
+
+        panel.cargarHistorial(lista);
+
+        Paneles.insertarPaneles(panel, bgPanel, 1060, 720);
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     protected void btnCredencialesActionPerformed(ActionEvent evt) {
 

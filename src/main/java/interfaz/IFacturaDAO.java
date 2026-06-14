@@ -12,6 +12,7 @@ public interface IFacturaDAO {
     public boolean guardar(Factura factura) throws Exception;
     public boolean existeFactura(int idMedidor, LocalDate inicio, LocalDate fin) throws Exception;
     public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception;
+    public ArbolBinarioBusqueda obtenerHistorialPagosCliente(Usuario usuario) throws Exception;
     public ArbolB obtenerFacturasMedidor(Medidor medidor) throws Exception;
     public void realizarPago(Factura factura) throws Exception;
 }
