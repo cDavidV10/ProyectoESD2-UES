@@ -9,7 +9,6 @@ import modelo.Contrato;
 import modelo.Usuario;
 
 /**
- *
  * @author Yonathan
  */
 public interface IContratoDAO {
