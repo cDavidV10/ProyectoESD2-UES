@@ -4,8 +4,9 @@
 
 package com.mycompany.proyectoestd;
 
-import conexion.Conexion;
-
+import controlador.CtrlLogin;
+import vista.Login;
+    
 /**
  *
  * @author cdavi
@@ -13,6 +14,8 @@ import conexion.Conexion;
 public class ProyectoESTD {
 
     public static void main(String[] args) {
-        new Conexion().getConexion();
+        Login login = new Login();
+        CtrlLogin ctrlLogin = new CtrlLogin(login);
+        login.setVisible(true);
     }
 }

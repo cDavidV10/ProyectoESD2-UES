@@ -1,0 +1,174 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+
+import arboles.ArbolBinarioAVL;
+import conexion.Conexion;
+import modelo.Cliente;
+import interfaz.IClienteDAO;
+import java.sql.Statement;
+import modelo.Contrato;
+import modelo.Medidor;
+
+public class ClienteDAO implements IClienteDAO {
+    private static final String SELECT_CLIENTE = "select * from cliente";
+    private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
+    private static final String BUSCAR_POR_DUI =  "SELECT * FROM cliente WHERE dui=?";
+    private static final String UPDATE = "UPDATE cliente SET nombre=?, apellido=?, fecha_nacimiento=?, correo=?, telefono=? WHERE dui = ?";
+
+    @Override
+    public ArbolBinarioAVL listar() throws Exception {
+        ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
+        Connection conexion = new Conexion().getConexion();
+        conexion.setAutoCommit(false);
+        PreparedStatement ps = conexion.prepareStatement(SELECT_CLIENTE);
+        ResultSet rs = ps.executeQuery();
+
+        try {
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
+                cliente.setCorreo(rs.getString("correo"));
+                cliente.setTelefono(rs.getString("telefono"));
+
+                aBinarioAVL.insertar(cliente);
+            }
+
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
+        }
+
+        return aBinarioAVL;
+    }
+
+    @Override
+    public void insertar(Cliente cliente) throws Exception {
+        Connection conn = Conexion.getConexion();
+        try {
+            conn.setAutoCommit(false);
+            PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, cliente.getDui());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getApellido());
+            ps.setDate(4, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
+            ps.setString(5, cliente.getCorreo());
+            ps.setString(6, cliente.getTelefono());
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    cliente.setId(rs.getInt(1));//asigna el id al objeto
+                }
+            }
+
+            conn.commit();
+        } catch (Exception ex) {
+            conn.rollback();
+            throw ex;
+        } finally {
+            conn.close();
+        }
+    }
+
+    @Override
+    public void eliminar(String dui) throws Exception {
+        Connection conn = Conexion.getConexion();
+        PreparedStatement ps = conn.prepareStatement(DELETE_REGISTRO);
+        ps.setString(1, dui);
+        ps.executeUpdate(); // Para ejecutar importante
+        conn.close();
+    }
+
+    // Compruebando si dui ya existe un docente con ese DUI
+    public boolean existeDui(String dui) throws Exception {
+        Connection conn = Conexion.getConexion();
+        String sql = "SELECT COUNT(*) FROM Cliente WHERE dui = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, dui);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        boolean existe = rs.getInt(1) > 0;
+        conn.close();
+        return existe;
+    }
+
+    @Override
+    public ArbolBinarioAVL buscarPorDui(String dui) throws Exception {
+        ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
+        Connection conn = Conexion.getConexion();
+        
+        try (PreparedStatement ps = conn.prepareStatement(BUSCAR_POR_DUI)) {
+            ps.setString(1, dui);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Cliente c = new Cliente();
+                    c.setId(rs.getInt("id_cliente"));
+                    c.setDui(rs.getString("dui"));
+                    c.setNombre(rs.getString("nombre"));
+                    c.setApellido(rs.getString("apellido"));
+                    c.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                    c.setCorreo(rs.getString("correo"));
+                    c.setTelefono(rs.getString("telefono"));
+                    aBinarioAVL.insertar(c);
+                    return aBinarioAVL;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void actualizar(Cliente cliente) throws Exception { 
+        Connection conn = Conexion.getConexion();
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setDate(3, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
+            ps.setString(4, cliente.getCorreo());
+            ps.setString(5, cliente.getTelefono());
+            ps.setString(6, cliente.getDui());
+
+            ps.executeUpdate();
+        }
+    }
+    
+    public Cliente buscarClienteId(int id_cliente) throws Exception {
+        String sql = """
+                     select * from cliente where id_cliente = ?
+                     """;
+        
+        Cliente cliente = null;
+        Connection conn = Conexion.getConexion();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, id_cliente);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+        
+        return cliente;
+    }
+}
