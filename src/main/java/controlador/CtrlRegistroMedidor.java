@@ -12,8 +12,6 @@ import arboles.ArbolBinarioAVL;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import modelo.Direccion;
@@ -188,28 +186,12 @@ public class CtrlRegistroMedidor {
 
             new MedidorDAO().crearRegistro(medidor);
 
+            limpiar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se guardo el registro medidor");
             System.out.println(e.getMessage());
         }
 
-        // try {
-        //     direccionDAO.insertar(d);
-
-        //     JOptionPane.showMessageDialog(vista, "[MENSAJE]: Direccion creada exitosamente.", "Creacion exitosa",
-        //             JOptionPane.INFORMATION_MESSAGE);
-        //     limpiar();
-        //     guardarDatos();
-        // } catch (Exception e) {
-        //     if (e.getMessage().contains("uk_direccion_unica") || e.getMessage().contains("duplicate key")) {
-        //         JOptionPane.showMessageDialog(vista, "[ADVERTENCIA] Dirección ya ingresada en el sistema.",
-        //                 "Dirección duplicada", JOptionPane.WARNING_MESSAGE);
-        //     } else {
-        //         JOptionPane.showMessageDialog(vista,
-        //                 "[ERROR]: Ocurrió un error inesperado al guardar la dirección.\n" + e.getMessage(),
-        //                 "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
-        //     }
-        // }
     }
 
     private void cargarCombosMed() {
