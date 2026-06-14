@@ -40,7 +40,7 @@ public class CtrlRegistroMedidor {
         this.municipioDAO = new MunicipioDAO();
         this.distritoDAO = new DistritoDAO();
         this.direccionDAO = new DireccionDAO();
-        cargarCombosMed();
+        //cargarCombosMed();
         cargarMunicipios();
         events();
     }

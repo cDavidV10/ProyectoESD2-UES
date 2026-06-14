@@ -109,12 +109,12 @@ public class CtrlBotonesMedidor {
     private void buscarMedidor() throws Exception {
         String codigo = vista.getTxtCodMedidor().getText();
 
-        resultContrato = new ContratoDAO().buscarContratoMedidor(codigo);
+        //resultContrato = new ContratoDAO().buscarContratoMedidor(codigo);
         if (resultContrato != null) {
 //        boolean valido = new Validaciones().validarNombres(codigo);
 //        if (valido) {   
             try {
-                resultMedidor = new MedidorDAO().buscarPorCodigo(codigo);
+                //resultMedidor = new MedidorDAO().buscarPorCodigo(codigo);
                 if (resultMedidor != null) {
                     buscarFacturasMedidor();
                 } else {

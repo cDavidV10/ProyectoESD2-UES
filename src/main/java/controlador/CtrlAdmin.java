@@ -29,7 +29,7 @@ import vista.Login;
 import vista.MedidorView;
 import vista.ViewClientes;
 import vista.ViewEmpleados;
-import vista.Vista;
+
 
 /**
  *
@@ -87,9 +87,9 @@ public class CtrlAdmin {
         });
 
         this.adminView.getBtnMedidores().addActionListener(e -> {
-            Vista viewDirec = new Vista();
+            /*Vista viewDirec = new Vista(); 
             new Paneles().insertarPaneles(viewDirec, adminView.getBgPanel());
-            new CtrlDireccion(viewDirec);
+            new CtrlDireccion(viewDirec);*/
         });
 
         onClickVerClientes();
