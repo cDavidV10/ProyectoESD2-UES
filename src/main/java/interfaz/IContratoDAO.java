@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import arboles.ArbolBinarioAVL;
 import modelo.Contrato;
 
 /**
@@ -12,5 +13,7 @@ import modelo.Contrato;
  */
 public interface IContratoDAO {
     void insertar(Contrato contrato) throws Exception;
-    public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
+    ArbolBinarioAVL listar() throws Exception;
+    ArbolBinarioAVL buscarPorDui(String dui) throws Exception;
+    //public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
 }
