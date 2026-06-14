@@ -1,7 +1,9 @@
 package controlador;
 
 import java.awt.Panel;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +31,7 @@ public class CtrlClienteFactura {
 
         DefaultTableModel modelo = new DefaultTableModel();
 
-        String[] titulos = { "Fecha Límite", "Monto Consumo", "Monto Servicio", "Total a Pagar" };
+        String[] titulos = { "Mes de lectura", "Fecha Límite", "Monto Consumo", "Monto Servicio", "Total a Pagar" };
 
         modelo.setColumnIdentifiers(titulos);
 
@@ -42,6 +44,9 @@ public class CtrlClienteFactura {
 
             datos.forEach(dato -> {
                 Object[] obj = {
+                        dato.getLectura().getFechaFinal().getMonth().
+                        getDisplayName(TextStyle.FULL, 
+                            Locale.of("es", "Es")).toUpperCase(),
                         dato.getFechaLimite(),
                         String.format("$%.2f", dato.getMontoConsumo()),
                         String.format("$%.2f", dato.getMontoServicio()),

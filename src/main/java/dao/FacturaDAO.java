@@ -119,7 +119,13 @@ public class FacturaDAO implements IFacturaDAO {
     public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """
-                SELECT f.id_factura, f.fecha_limite, f.monto_consumo, f.monto_servicio, f.monto_total
+                SELECT 
+                    f.id_factura,
+                    l.fecha_fin,
+                    f.fecha_limite,
+                    f.monto_consumo,
+                    f.monto_servicio,
+                    f.monto_total
                 FROM factura f
                 INNER JOIN lectura l ON f.id_lectura = l.id_lectura
                 INNER JOIN medidor m ON l.id_medidor = m.id_medidor
@@ -140,12 +146,15 @@ public class FacturaDAO implements IFacturaDAO {
 
             while (rs.next()) {
                 Factura factura = new Factura();
+                Lectura lectura = new Lectura();
                 factura.setId(rs.getInt("id_factura"));
+                lectura.setFechaFinal(rs.getObject("fecha_fin", LocalDate.class));
                 factura.setFechaLimite(rs.getObject("fecha_limite", LocalDate.class));
                 factura.setMontoConsumo(rs.getBigDecimal("monto_consumo"));
                 factura.setMontoServicio(rs.getBigDecimal("monto_servicio"));
                 factura.setMontoTotal(rs.getBigDecimal("monto_total"));
 
+                factura.setLectura(lectura);
                 aBusqueda.insertar(factura);
             }
 
