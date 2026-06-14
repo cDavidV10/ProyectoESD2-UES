@@ -8,13 +8,13 @@ import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IMedidorDAO;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
+import modelo.Contrato;
 import modelo.Direccion;
 import modelo.Medidor;
 
@@ -22,9 +22,10 @@ import modelo.Medidor;
  *
  * @author danie
  */
-public class MedidorDAO implements IMedidorDAO{
-    
+public class MedidorDAO implements IMedidorDAO {
+
     private String INSERT = "";
+    private String LIST = "";
     private String BUSCAR_POR_CODIGO = "SELECT * FROM medidor WHERE codigo = ?";
     private String MEDIDORES_DISP = """
         SELECT m.id_medidor, m.codigo, m.diametro_nominal, m.unidad_medida
@@ -38,17 +39,29 @@ public class MedidorDAO implements IMedidorDAO{
 
     @Override
     public void crearRegistro(Medidor m) throws Exception {
-        INSERT = "INSERT INTO medidor(codigo, diametro_nominal, unidad_medida, id_direccion) VALUES (?,?,?,?)";
-        
+        INSERT = """
+                
+                WITH nueva_direccion AS (
+                    INSERT INTO direccion (zona, num_casa, id_distrito)
+                    VALUES (?, ? , ?)
+                    RETURNING id_direccion
+                )
+                INSERT INTO medidor (codigo, diametro_nominal, unidad_medida, id_direccion)
+                SELECT ?, ?, ?, id_direccion
+                FROM nueva_direccion;
+
+                """;
         Connection conexion = Conexion.getConexion();
         try {
             conexion.setAutoCommit(false);
             PreparedStatement ps = conexion.prepareStatement(INSERT);
-            ps.setString(1, m.getCodigo());
-            ps.setString(2, m.getDiametroNomila());
-            ps.setString(3, m.getUnidadMedida());
-            ps.setInt(4, m.getDireccion().getId());
-            
+            ps.setString(1, m.getDireccion().getZona());
+            ps.setString(2, m.getDireccion().getNumeroCasa());
+            ps.setInt(3, m.getDireccion().getDistrito().getId());
+            ps.setString(4, m.getCodigo());
+            ps.setString(5, m.getDiametroNomila());
+            ps.setString(6, m.getUnidadMedida());
+
             ps.executeUpdate();
             conexion.commit();
             JOptionPane.showMessageDialog(null, "Registrado Correctamente");
@@ -58,7 +71,7 @@ public class MedidorDAO implements IMedidorDAO{
         } finally {
             conexion.close();
         }
-        
+
     }
 
     @Override
@@ -71,8 +84,7 @@ public class MedidorDAO implements IMedidorDAO{
         ArbolBinarioAVL abinario = new ArbolBinarioAVL();
 
         Connection conexion = Conexion.getConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP);
-            ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Medidor m = new Medidor();
                 m.setId(rs.getInt("id_medidor"));
@@ -109,5 +121,37 @@ public class MedidorDAO implements IMedidorDAO{
     }
 
     return abinario;
+    }
+
+    @Override
+    public Medidor buscarPorId(int id_medidor) throws Exception {
+        String sql = "Select * from contrato c join medidor m on c.id_medidor = m.id_medidor where c.id_medidor = ?";
+        
+        Connection conexion = Conexion.getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, id_medidor);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
+                    
+                    Medidor medidor = new Medidor();
+                    Contrato contrato = new Contrato();
+                    
+                    medidor.setCodigo(rs.getString("codigo"));
+                    medidor.setDiametroNomila(rs.getString("diametro_nominal"));
+                    medidor.setDireccion(direccion);
+                    medidor.setUnidadMedida(rs.getString("unidad_medida"));
+                    medidor.setContrato(contrato);
+                    
+                    return medidor;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Medidor> listarMedidores() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

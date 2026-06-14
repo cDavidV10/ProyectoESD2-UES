@@ -12,6 +12,10 @@ public class Pago {
     public Pago() {
     }
 
+    public Pago(int id) {
+        this.id = id;
+    }
+
     public Pago(int id, LocalDate fechaPago, String estado) {
         this.id = id;
         this.fechaPago = fechaPago;

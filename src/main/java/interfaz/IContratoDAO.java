@@ -15,4 +15,5 @@ public interface IContratoDAO {
     void insertar(Contrato contrato) throws Exception;
     ArbolBinarioAVL listar() throws Exception;
     ArbolBinarioAVL buscarPorDui(String dui) throws Exception;
+    //public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
 }

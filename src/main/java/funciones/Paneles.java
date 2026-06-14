@@ -5,6 +5,7 @@
 package funciones;
 
 import java.awt.BorderLayout;
+import javax.swing.GroupLayout;
 
 import javax.swing.JPanel;
 
@@ -27,6 +28,16 @@ public class Paneles {
 
         contenedor.removeAll();
         contenedor.add(panel, BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
+    }
+    
+    public void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h, boolean remove) {
+        panel.setSize(w, h);
+
+        contenedor.removeAll();
+        contenedor.add(panel);
+        panel.setLocation(100, 0);
         contenedor.revalidate();
         contenedor.repaint();
     }

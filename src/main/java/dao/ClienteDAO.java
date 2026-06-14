@@ -10,6 +10,8 @@ import conexion.Conexion;
 import modelo.Cliente;
 import interfaz.IClienteDAO;
 import java.sql.Statement;
+import modelo.Contrato;
+import modelo.Medidor;
 
 public class ClienteDAO implements IClienteDAO {
     private static final String SELECT_CLIENTE = "select * from cliente";
@@ -136,5 +138,35 @@ public class ClienteDAO implements IClienteDAO {
             ps.setString(5, cliente.getTelefono());
             ps.executeUpdate();
         }
+    }
+    
+    public Cliente buscarClienteId(int id_cliente) throws Exception {
+        String sql = """
+                     select * from cliente where id_cliente = ?
+                     """;
+        
+        Cliente cliente = null;
+        Connection conn = Conexion.getConexion();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, id_cliente);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+        
+        return cliente;
     }
 }

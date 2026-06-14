@@ -17,6 +17,7 @@ import funciones.Paneles;
 import funciones.Validaciones;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import modelo.Empleado;
 import vista.AgregarEmpleadoView;
 import vista.ViewEmpleados;
@@ -25,6 +26,7 @@ public class CtrlAgregarEmpleado {
     private AgregarEmpleadoView agregarEmpleadoView;
     private ViewEmpleados viewEmpleados;
     private JPanel bgContent;
+    private Empleado empleadoEdit = null; // para el modo edicion
 
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
@@ -260,6 +262,49 @@ public class CtrlAgregarEmpleado {
         });
 
     }
+    
+    // para editar
+    public CtrlAgregarEmpleado(AgregarEmpleadoView agregarEmpleadoView, ViewEmpleados viewEmpleados, JPanel bgContent, Empleado empEdit) {
+        this(agregarEmpleadoView, viewEmpleados, bgContent); // llamada al constructor de arriba
+        
+        this.empleadoEdit = empEdit;
+        cargarDatosEdicion();
+    }
+
+    private void cargarDatosEdicion() {
+        agregarEmpleadoView.getTxtDui().setText(empleadoEdit.getDui());
+        agregarEmpleadoView.getTxtDui().setEnabled(false); // deshabilitar sui porque es llave primaria, no puede ser editable
+        agregarEmpleadoView.getTxtDui().setForeground(Color.BLACK);
+
+        agregarEmpleadoView.getTxtNombre().setText(empleadoEdit.getNombre());
+        agregarEmpleadoView.getTxtNombre().setForeground(Color.BLACK);
+
+        agregarEmpleadoView.getTxtApellido().setText(empleadoEdit.getApellido());
+        agregarEmpleadoView.getTxtApellido().setForeground(Color.BLACK);
+
+        agregarEmpleadoView.getTxtCorreo().setText(empleadoEdit.getCorreo());
+        agregarEmpleadoView.getTxtCorreo().setForeground(Color.BLACK);
+
+        agregarEmpleadoView.getTxtTelefono().setText(empleadoEdit.getTelefono());
+        agregarEmpleadoView.getTxtTelefono().setForeground(Color.BLACK);
+
+        agregarEmpleadoView.getTxtSueldo().setText(empleadoEdit.getSueldo().toString());
+        agregarEmpleadoView.getTxtSueldo().setForeground(Color.BLACK);
+
+        if (empleadoEdit.getGenero().equals("Masculino")) {
+            agregarEmpleadoView.getRbMasculino().setSelected(true);
+        } else {
+            agregarEmpleadoView.getRbFemenino().setSelected(true);
+        }
+
+        Date dateNac = java.util.Date.from(empleadoEdit.getFechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        agregarEmpleadoView.getJcNacimiento().setDate(dateNac);
+
+        Date dateCont = java.util.Date.from(empleadoEdit.getFechaContrato().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        agregarEmpleadoView.getJcContrato().setDate(dateCont);
+
+        agregarEmpleadoView.getBtnEnviar().setText("Actualizar");
+    }
 
     private void enviarDatos() {
         String dui = this.agregarEmpleadoView.getTxtDui().getText();
@@ -401,22 +446,26 @@ public class CtrlAgregarEmpleado {
         }
 
         try {
-            if (empleadoDAO.buscar(empleado.getDui())) {
-                System.out.println("entra aqui");
+            if (this.empleadoEdit == null) { // guardar 
+                if (empleadoDAO.buscar(empleado.getDui())) {
+                    JOptionPane.showMessageDialog(null, "Empleado ya se encuentra almacenado");
+                    return;
+                }
+                empleadoDAO.insertar(empleado);
+                new Credenciales().registrarCredenciales(empleado.getNombre(), empleado.getApellido(),
+                        empleado.getDui(), empleado.getCorreo());
+                JOptionPane.showMessageDialog(null, "Empleado guardado Correctamente");
 
-                JOptionPane.showMessageDialog(null, "Empleado ya se encuentra almacenado");
-                return;
+            } else { // actualizar
+                empleadoDAO.actualizar(empleado);
+                JOptionPane.showMessageDialog(null, "Empleado actualizado Correctamente");
             }
-
-            empleadoDAO.insertar(empleado);
-            JOptionPane.showMessageDialog(null, "Empleado guardado Correctamente");
-            new Credenciales().registrarCredenciales(empleado.getNombre(), empleado.getApellido(),
-                    empleado.getDui(), empleado.getCorreo());
+            
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, bgContent); // para recargar
+            new Paneles().insertarPaneles(viewEmpleados, bgContent);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "[ERROR]: Ocurrio un error inesperado.\n" + e.getMessage());
         }
-
     }
-
 }

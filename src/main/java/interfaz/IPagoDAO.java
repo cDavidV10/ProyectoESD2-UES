@@ -4,11 +4,12 @@
  */
 package interfaz;
 
-import modelo.Usuario;
+import modelo.Pago;
 
-public interface IRegistroDAO {
-
-    boolean validarClienteExistente(String medidor) throws Exception;
-
-    boolean registrarNuevoUsuario(Usuario usr) throws Exception;
+/**
+ *
+ * @author danie
+ */
+public interface IPagoDAO {
+    public boolean modificarPago(Pago pago) throws Exception;
 }

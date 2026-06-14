@@ -18,4 +18,6 @@ public interface IMedidorDAO {
     public boolean modificarRegistro(Medidor m) throws Exception;
     ArbolBinarioAVL listarDisponibles() throws Exception;
     ArbolBinarioAVL buscarPorCodigo(String codigo) throws Exception;
+    public List<Medidor> listarMedidores() throws Exception; // para que funcione lo de factura
+    public Medidor buscarPorId(int id_medidor) throws Exception;
 }

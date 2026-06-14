@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Contrato implements Comparable<Contrato>{
+
     private int id;
     private BigDecimal tarifa;
     private String tipo;
@@ -17,6 +18,11 @@ public class Contrato implements Comparable<Contrato>{
     public Contrato() {
     }
 
+    public Contrato(int id) {
+        this.id = id;
+    }
+
+    
     public Contrato(int id, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
         this.id = id;
         this.tarifa = tarifa;
@@ -25,7 +31,7 @@ public class Contrato implements Comparable<Contrato>{
         this.estado = estado;
     }
 
-    public Contrato(int id,  String tipo, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin,
+    public Contrato(int id, String tipo, BigDecimal tarifa, LocalDate fechaInicio, LocalDate fechaFin,
             Cliente cliente, Medidor medidor) {
         this.id = id;
         this.tipo = tipo;
@@ -116,5 +122,5 @@ public class Contrato implements Comparable<Contrato>{
         return Integer.compare(this.getId(), otro.getId());
     }
 
-    
+   
 }

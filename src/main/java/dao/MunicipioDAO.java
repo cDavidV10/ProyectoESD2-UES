@@ -10,7 +10,7 @@ import modelo.Municipio;
 
 public class MunicipioDAO implements IMunicipioDAO {
 
-    private static final String SELECT_ALL = "SELECT id_municipio, nombre FROM public.municipio;";
+    private static final String SELECT_ALL = "SELECT id_municipio, nombre FROM municipio;"; // mas clean
 
     @Override
     public ArbolBinarioAVL listar() throws Exception {

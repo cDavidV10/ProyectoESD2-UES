@@ -6,39 +6,47 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import modelo.Direccion;
+import modelo.Distrito;
+import modelo.Municipio;
 
 public class DireccionDAO implements IDireccionDAO {
 
-    private static final String INSERT = "INSERT INTO direccion(zona, num_casa, id_distrito) VALUES (?, ?, ?);";
-
     @Override
-    public void insertar(Direccion direccion) throws Exception {
+    public Direccion buscarDireccionId(int id_direccion) throws Exception {
+        String sql = """
+                     Select d.zona, d.num_casa, di.nombre, m.nombre
+                     from medidor me
+                     join direccion d on me.id_direccion = d.id_direccion
+                     join distrito di on d.id_distrito = di.id_distrito
+                     join municipio m on di.id_municipio = m.id_municipio
+                     where d.id_direccion = ?
+                     """;
+        Direccion direccion = null;
         Connection conn = Conexion.getConexion();
-        ResultSet rs = null;
+
         try {
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setString(1, direccion.getZona());
-            ps.setString(2, direccion.getNumeroCasa());
-            ps.setInt(3, direccion.getDistrito().getId());
+            ps.setInt(1, id_direccion);
+            ResultSet rs = ps.executeQuery();
 
-            ps.executeUpdate();
-            
-            rs = ps.getGeneratedKeys();
-            if (rs.next()){
-                int idGenerado = rs.getInt(1);
-                direccion.setId(idGenerado);
+            while (rs.next()) {
+                direccion = new Direccion();
+                Distrito distrito = new Distrito();
+                distrito.setNombre("nombre");
+                Municipio municipio = new Municipio();
+                municipio.setNombre("nombre");
+                distrito.setMunicipio(municipio);
+                direccion.setZona(rs.getString("zona"));
+                direccion.setNumeroCasa(rs.getString("num_casa"));
+                direccion.setDistrito(distrito);
             }
-            conn.commit();
-            
-            
 
         } catch (Exception ex) {
-            conn.rollback();
-            throw ex;
+            System.out.println("Error general: " + ex.getMessage() + "Direccion");
         } finally {
             conn.close();
         }
+        return direccion;
     }
 }
