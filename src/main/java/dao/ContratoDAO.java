@@ -84,29 +84,85 @@ public class ContratoDAO implements IContratoDAO {
             while (rs.next()) {
                 Contrato contrato = new Contrato();
                 contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTipo(rs.getString("tipo"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+                contrato.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+                contrato.setEstado(rs.getString("estado"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setNombre(rs.getString("nombre"));
+
+                Medidor medidor = new Medidor();
+                medidor.setId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+
+                //Asignando los objetos al contrato
+                contrato.setCliente(cliente);
+                contrato.setMedidor(medidor);
+
                 abinario.insertar(contrato);
             }
-        } finally {
+            conexion.commit();
             conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
         }
+
         return abinario;
     }
 
     @Override
     public Contrato buscarContratoCliente(Usuario usuario) throws Exception {
-        String sql = "SELECT * FROM contrato c JOIN medidor m ON c.id_medidor = m.id_medidor JOIN cliente cl ON c.id_cliente = cl.id_cliente JOIN usuario u ON cl.id_cliente = u.id_cliente WHERE u.username = ?";
-        Contrato contrato = null;
-        Connection conexion = new Conexion().getConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, usuario.getUsername());
+       String sql = """
+                     Select * from contrato c
+                     join medidor m on c.id_medidor = m.id_medidor
+                     join cliente cl on c.id_cliente = cl.id_cliente
+                     join usuario u on cl.id_cliente = u.id_cliente
+                     where u.username = ?
+                     """;
+        
+        Contrato contrato = new Contrato();
+        Connection conn = Conexion.getConexion();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, usuario.getUsername().toUpperCase());
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                contrato = new Contrato();
+
+            while (rs.next()) {
                 contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setTipo(rs.getString("tipo"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                System.out.println(cliente.toString());
+                contrato.setCliente(cliente);
+                
+                Medidor medidor = new Medidor();
+                
+                medidor.setCodigo(rs.getString("codigo"));
+                medidor.setDiametroNomila(rs.getString("diametro_nominal"));
+                
+                medidor.setUnidadMedida(rs.getString("unidad_medida"));
+                medidor.setContrato(contrato);
+                medidor.setId(rs.getInt("id_medidor"));
+                
+                contrato.setMedidor(medidor);
+
             }
-        } finally {
-            conexion.close();
+            conn.commit();
+            conn.close();
+        } catch (Exception e) {
+            conn.rollback();
         }
+
         return contrato;
     }
 }
