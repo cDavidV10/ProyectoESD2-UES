@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import modelo.Cliente;
 import modelo.Contrato;
+import modelo.Direccion;
 import modelo.Medidor;
 import modelo.Usuario;
 
@@ -100,6 +101,55 @@ public class ContratoDAO implements IContratoDAO {
         }
 
         return abinario;
+    }
+
+    @Override
+    public Contrato buscarContratoMedidor(String cod_medidor) throws Exception {
+        String sql = """
+                     Select * from contrato c
+                     join medidor m on c.id_medidor = m.id_medidor
+                     join cliente cl on c.id_cliente = cl.id_cliente
+                     where c.id_medidor = (select id_medidor from medidor where codigo = ?)
+                     """;
+        Contrato contrato = null;
+        Connection conn = Conexion.getConexion();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, cod_medidor);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setTipo(rs.getString("tipo"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                System.out.println(cliente.toString());
+                contrato.setCliente(cliente);
+                
+                Medidor medidor = new Medidor();
+                Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+                medidor.setDiametroNomila(rs.getString("diametro_nominal"));
+                medidor.setDireccion(direccion);
+                medidor.setUnidadMedida(rs.getString("unidad_medida"));
+                medidor.setContrato(contrato);
+                contrato.setMedidor(medidor);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        } finally {
+            conn.close();
+        }
+
+        return contrato;
     }
 
     @Override

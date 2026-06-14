@@ -18,5 +18,5 @@ public interface IContratoDAO {
     public Contrato buscarContratoCliente(Usuario usuario) throws Exception;
     ArbolBinarioAVL listar() throws Exception;
     ArbolBinarioAVL buscarPorDui(String dui) throws Exception;
-    //public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
+    public Contrato buscarContratoMedidor(String cod_medidor) throws Exception; 
 }

@@ -98,29 +98,25 @@ public class MedidorDAO implements IMedidorDAO {
     }
 
     @Override
-    public ArbolBinarioAVL buscarPorCodigo(String codigo) throws Exception {
-        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
+    public Medidor buscarPorCodigo(String codigo) throws Exception {
         Connection conexion = Conexion.getConexion();
-        
         try (PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_CODIGO)) {
-        ps.setString(1, codigo);
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Direccion direccion = new Direccion(rs.getInt("id_direccion"));
+            ps.setString(1, codigo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Direccion direccion = new Direccion(rs.getInt("id_direccion"));
 
-                Medidor medidor = new Medidor(
-                    rs.getInt("id_medidor"),
-                    rs.getString("codigo"),
-                    rs.getString("diametro_nominal"),
-                    rs.getString("unidad_medida"),
-                    direccion
-                );
-                abinario.insertar(medidor); 
+                    return new Medidor(
+                            rs.getInt("id_medidor"),
+                            rs.getString("codigo"),
+                            rs.getString("diametro_nominal"),
+                            rs.getString("unidad_medida"),
+                            direccion
+                    );
+                }
             }
         }
-    }
-
-    return abinario;
+        return null;
     }
 
     @Override

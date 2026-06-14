@@ -194,6 +194,19 @@ public class CtrlRegistroMedidor {
         }
     }
 
+    
+    private void cargarCombosMed() {
+        vista.getCmbDiametroNomnal().removeAllItems();
+        vista.getCmbDiametroNomnal().addItem("Diametro nominal");
+        vista.getCmbDiametroNomnal().addItem("1/2 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("3/4 Pulgada");
+        vista.getCmbDiametroNomnal().addItem("1 Pulgada");
+
+        vista.getCmbUnidadMedida().removeAllItems();
+        vista.getCmbUnidadMedida().addItem("metro cubico");
+        vista.getCmbUnidadMedida().addItem("pie cubico");
+    }
+
     private void limpiar() {
         vista.getTxtZona().setText("");
         vista.getTxtNumCasa().setText("");
