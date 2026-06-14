@@ -8,10 +8,12 @@ package controlador;
 
 import modelo.Pago;
 import vista.ViewBotonesMedidor;
+
+import java.time.LocalDate;
+
 import javax.swing.JOptionPane;
 import dao.FacturaDAO;
 import modelo.Factura;
-import modelo.Pago;
 import vista.ViewDetalleFactura;
 
 /**
@@ -41,7 +43,6 @@ public class CtrlDetalleFactura {
             viewBtnes.repaint();
         });
   
-        System.out.println("Factura id " + factura.getId());
 
         vista.getBtnRealizarPago().addActionListener(e-> {
             int respuesta = JOptionPane.showConfirmDialog(vista, "Esta seguro de realizar el pago",
@@ -60,7 +61,7 @@ public class CtrlDetalleFactura {
 
                     JOptionPane.showMessageDialog(null, "Pago realizado correctamente",
                         "Exito",
-                        JOptionPane.OK_OPTION
+                        JOptionPane.INFORMATION_MESSAGE
                     );
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
@@ -72,7 +73,6 @@ public class CtrlDetalleFactura {
             }
 
         });
-        // mostrarDatos();
     }
     
     
