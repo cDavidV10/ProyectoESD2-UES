@@ -4,6 +4,7 @@
  */
 package dao;
 
+import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IMedidorDAO;
 import java.sql.Connection;
@@ -79,50 +80,8 @@ public class MedidorDAO implements IMedidorDAO {
     }
 
     @Override
-    public List<Medidor> listarMedidores() throws Exception {
-        List<Medidor> lista = new ArrayList<>();
-        LIST = """
-                 SELECT m.id_medidor, m.codigo, d.zona, d.num_casa, c.nombre, c.apellido 
-                 FROM medidor m
-                 INNER JOIN direccion d ON m.id_direccion = d.id_direccion
-                 INNER JOIN contrato con ON con.id_medidor = m.id_medidor
-                 INNER JOIN cliente c ON con.id_cliente = c.id_cliente
-                 """;
-
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(LIST);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Cliente cliente = new Cliente();
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("apellido"));
-
-                Direccion dir = new Direccion();
-                dir.setZona(rs.getString("zona"));
-                dir.setNumeroCasa(rs.getString("num_casa"));
-
-                Contrato contrato = new Contrato();
-                contrato.setCliente(cliente);
-
-                Medidor medidor = new Medidor();
-                medidor.setId(rs.getInt("id_medidor"));
-                medidor.setCodigo(rs.getString("codigo"));
-                medidor.setDireccion(dir);
-                medidor.setContrato(contrato);
-
-                lista.add(medidor);
-            }
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return lista;
-    }
-
-    @Override
-    public List<Medidor> listarDisponibles() throws Exception {
-        List<Medidor> lista = new ArrayList<>();
+    public ArbolBinarioAVL listarDisponibles() throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
 
         Connection conexion = Conexion.getConexion();
         try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP); ResultSet rs = ps.executeQuery()) {
@@ -132,32 +91,36 @@ public class MedidorDAO implements IMedidorDAO {
                 m.setCodigo(rs.getString("codigo"));
                 m.setDiametroNomila(rs.getString("diametro_nominal"));
                 m.setUnidadMedida(rs.getString("unidad_medida"));
-                lista.add(m);
+                abinario.insertar(m);
             }
         }
-        return lista;
+        return abinario;
     }
 
     @Override
-    public Medidor buscarPorCodigo(String codigo) throws Exception {
+    public ArbolBinarioAVL buscarPorCodigo(String codigo) throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
         Connection conexion = Conexion.getConexion();
+        
         try (PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_CODIGO)) {
-            ps.setString(1, codigo);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Direccion direccion = new Direccion(rs.getInt("id_direccion"));
+        ps.setString(1, codigo);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Direccion direccion = new Direccion(rs.getInt("id_direccion"));
 
-                    return new Medidor(
-                            rs.getInt("id_medidor"),
-                            rs.getString("codigo"),
-                            rs.getString("diametro_nominal"),
-                            rs.getString("unidad_medida"),
-                            direccion
-                    );
-                }
+                Medidor medidor = new Medidor(
+                    rs.getInt("id_medidor"),
+                    rs.getString("codigo"),
+                    rs.getString("diametro_nominal"),
+                    rs.getString("unidad_medida"),
+                    direccion
+                );
+                abinario.insertar(medidor); 
             }
         }
-        return null;
+    }
+
+    return abinario;
     }
 
     @Override
@@ -190,5 +153,10 @@ public class MedidorDAO implements IMedidorDAO {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Medidor> listarMedidores() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

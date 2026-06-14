@@ -6,6 +6,9 @@ package controlador;
 
 import modelo.Pago;
 import vista.ViewBotonesMedidor;
+
+import java.time.LocalDate;
+
 import javax.swing.JOptionPane;
 import dao.FacturaDAO;
 import java.time.LocalDate;
@@ -50,8 +53,7 @@ public class CtrlDetalleFactura {
                 viewClient.getBgPanel().repaint();
             }
             vista.setVisible(false);
-
-            // ✅ Ejecutar callback para recargar facturas
+          
             if (onRegresar != null) {
                 onRegresar.run();
             }
@@ -90,7 +92,6 @@ public class CtrlDetalleFactura {
             }
 
         });
-        // mostrarDatos();
     }
 
     private void mostrarDatos() throws Exception {

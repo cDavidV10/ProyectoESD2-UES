@@ -12,7 +12,7 @@ public class Cliente implements Comparable<Cliente> {
     private LocalDate fechaNacimiento;
     private String correo;
     private String telefono;
-    // ? Clases relacionadas
+    //Clases relacionadas
     private Usuario usuario;
     private ArrayList<Contrato> contratos;
 

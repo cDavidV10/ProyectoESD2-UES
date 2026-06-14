@@ -24,9 +24,12 @@ import java.awt.event.WindowEvent;
 import modelo.Usuario;
 import vista.AdminView;
 import vista.AgregarEmpleadoView;
+import vista.ContratosView;
 import vista.Login;
+import vista.MedidorView;
 import vista.ViewClientes;
 import vista.ViewEmpleados;
+import vista.Vista;
 
 /**
  *
@@ -77,6 +80,35 @@ public class CtrlAdmin {
             }
         });
 
+        this.adminView.getBtnVerEmpleado().addActionListener(e -> {
+            ViewEmpleados viewEmpleados = new ViewEmpleados();
+            CtrlVerEmpleados ctrlVerEmpleados = new CtrlVerEmpleados(viewEmpleados, adminView.getBgPanel());
+            paneles.insertarPaneles(viewEmpleados, adminView.getBgPanel());
+        });
+
+        this.adminView.getBtnMedidores().addActionListener(e -> {
+            Vista viewDirec = new Vista();
+            new Paneles().insertarPaneles(viewDirec, adminView.getBgPanel());
+            new CtrlDireccion(viewDirec);
+        });
+
+        onClickVerClientes();
+        onClickVerContratos();
+    }
+    
+    private void onClickVerClientes() {
+        adminView.getBtnVerCliente().addActionListener(e -> {
+            ViewClientes verClientesView = new ViewClientes();
+            CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(verClientesView, adminView.getBgPanel());
+            paneles.insertarPaneles(verClientesView, adminView.getBgPanel());
+        });
     }
 
+    private void onClickVerContratos() {
+        adminView.getBtnContratos().addActionListener(e -> {
+            ContratosView contratosView = new ContratosView();
+            CtrlContratosView ctrlContratos = new CtrlContratosView(contratosView);
+            paneles.insertarPaneles(contratosView, adminView.getBgPanel());
+        });
+    }
 }

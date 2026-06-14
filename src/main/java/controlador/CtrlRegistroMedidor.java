@@ -12,6 +12,8 @@ import arboles.ArbolBinarioAVL;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import modelo.Direccion;
@@ -186,26 +188,11 @@ public class CtrlRegistroMedidor {
 
             new MedidorDAO().crearRegistro(medidor);
 
-            limpiar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se guardo el registro medidor");
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-
     }
-
-    private void cargarCombosMed() {
-        vista.getCmbDiametroNomnal().removeAllItems();
-        vista.getCmbDiametroNomnal().addItem("Diametro nominal");
-        vista.getCmbDiametroNomnal().addItem("1/2 Pulgada");
-        vista.getCmbDiametroNomnal().addItem("3/4 Pulgada");
-        vista.getCmbDiametroNomnal().addItem("1 Pulgada");
-
-        vista.getCmbUnidadMedida().removeAllItems();
-        vista.getCmbUnidadMedida().addItem("metro cubico");
-        vista.getCmbUnidadMedida().addItem("pie cubico");
-    }
-
 
     private void limpiar() {
         vista.getTxtZona().setText("");
