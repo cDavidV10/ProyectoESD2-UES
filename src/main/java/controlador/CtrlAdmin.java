@@ -25,12 +25,11 @@ import modelo.Usuario;
 import vista.AdminView;
 import vista.AgregarEmpleadoView;
 import vista.ContratosView;
-import vista.DireccionView;
+import vista.ViewRegistroMedidor;
 import vista.Login;
 import vista.MedidorView;
 import vista.ViewClientes;
 import vista.ViewEmpleados;
-import vista.Vista;
 
 /**
  *
@@ -87,10 +86,10 @@ public class CtrlAdmin {
             paneles.insertarPaneles(viewEmpleados, adminView.getBgPanel());
         });
 
-         this.adminView.getBtnMedidores().addActionListener(e -> {
-            Vista viewDirec = new Vista();
+        this.adminView.getBtnMedidores().addActionListener(e -> {
+            ViewRegistroMedidor viewDirec = new ViewRegistroMedidor();
             new Paneles().insertarPaneles(viewDirec, adminView.getBgPanel());
-            new CtrlDireccion(viewDirec);
+            new CtrlRegistroMedidor(viewDirec);
         });
 
         onClickVerClientes();
