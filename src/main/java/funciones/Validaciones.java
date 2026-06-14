@@ -1,5 +1,6 @@
 package funciones;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,5 +48,39 @@ public class Validaciones {
         }
 
         return true;
+    }
+    
+    public boolean validarFechaInicio(LocalDate fechaInicio) {
+        if (fechaInicio == null) {
+            return false;
+        }
+        return !fechaInicio.isBefore(LocalDate.now());
+    }
+
+    public boolean validarFechaFin(LocalDate fechaInicio, LocalDate fechaFin) {
+        if (fechaFin == null || fechaInicio == null) {
+            return false;
+        }
+        if (fechaFin.isBefore(fechaInicio)) {
+            return false;
+        }
+        LocalDate maxFin = fechaInicio.plusYears(2);
+        return !fechaFin.isAfter(maxFin);
+    }
+    
+    public boolean validarTarifa(String tarifa) {   
+        if (tarifa == null || tarifa.trim().isEmpty()) {
+            return false; 
+        }
+
+        String regex = "^[0-9]+(\\.[0-9]{1,2})?$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(tarifa);
+
+        if (!matcher.matches()) {
+            return false;
+        }
+        BigDecimal valor = new BigDecimal(tarifa);
+        return valor.compareTo(BigDecimal.ZERO) > 0;
     }
 }

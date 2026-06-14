@@ -4,7 +4,7 @@
  */
 package dao;
 
-import arboles.ArbolB;
+import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IContratoDAO;
 import java.sql.Connection;
@@ -13,21 +13,14 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import modelo.Cliente;
 import modelo.Contrato;
-import modelo.Direccion;
-import modelo.Factura;
-import modelo.Lectura;
 import modelo.Medidor;
+import modelo.Usuario;
 
-/**
- *
- * @author Yonathan
- */
 public class ContratoDAO implements IContratoDAO {
 
-    private String INSERT = """
-        INSERT INTO contrato (tipo, tarifa, fecha_inicio, fecha_fin, id_cliente, id_medidor)
-        VALUES (?, ?, ?, ?, ?, ?)
-    """;
+    private String INSERT = "INSERT INTO contrato (tipo, tarifa, fecha_inicio, fecha_fin, id_cliente, id_medidor) VALUES (?, ?, ?, ?, ?, ?)";
+    private String SELECT_TODO = "SELECT cn.id_contrato, cn.tipo, cn.tarifa, cn.fecha_inicio, cn.fecha_fin, cn.estado, cl.nombre, cl.id_cliente, m.codigo, m.id_medidor FROM contrato cn INNER JOIN cliente cl ON cn.id_cliente = cl.id_cliente INNER JOIN medidor m ON m.id_medidor = cn.id_medidor";
+    private String BUSCAR_POR_DUI = "SELECT cn.id_contrato, cn.tipo, cn.tarifa, cn.fecha_inicio, cn.fecha_fin, cn.estado, cl.dui, cl.nombre, cl.id_cliente, m.codigo, m.id_medidor FROM contrato cn INNER JOIN cliente cl ON cn.id_cliente = cl.id_cliente INNER JOIN medidor m ON m.id_medidor = cn.id_medidor WHERE cl.dui = ?";
 
     @Override
     public void insertar(Contrato contrato) throws Exception {
@@ -39,30 +32,108 @@ public class ContratoDAO implements IContratoDAO {
             ps.setDate(4, java.sql.Date.valueOf(contrato.getFechaFin()));
             ps.setInt(5, contrato.getCliente().getId());
             ps.setInt(6, contrato.getMedidor().getId());
-
             ps.executeUpdate();
+        } finally {
+            if (conexion != null) conexion.close();
         }
     }
 
     @Override
+    public ArbolBinarioAVL listar() throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
+        Connection conexion = new Conexion().getConexion();
+        try {
+            PreparedStatement ps = conexion.prepareStatement(SELECT_TODO);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Contrato contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                abinario.insertar(contrato);
+            }
+        } finally {
+            conexion.close();
+        }
+        return abinario;
+    }
+
+    @Override
     public Contrato buscarContratoMedidor(String cod_medidor) throws Exception {
-        String sql = """
+        String sql = "SELECT * FROM contrato c JOIN medidor m ON c.id_medidor = m.id_medidor JOIN cliente cl ON c.id_cliente = cl.id_cliente WHERE m.codigo = ?";
+        Contrato contrato = null;
+        Connection conexion = new Conexion().getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, cod_medidor);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+            }
+        } finally {
+            conexion.close();
+        }
+        return contrato;
+    }
+
+    @Override
+    public ArbolBinarioAVL buscarPorDui(String dui) throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
+        Connection conexion = new Conexion().getConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_DUI)) {
+            ps.setString(1, dui);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Contrato contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTipo(rs.getString("tipo"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+                contrato.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+                contrato.setEstado(rs.getString("estado"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setNombre(rs.getString("nombre"));
+
+                Medidor medidor = new Medidor();
+                medidor.setId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+
+                //Asignando los objetos al contrato
+                contrato.setCliente(cliente);
+                contrato.setMedidor(medidor);
+
+                abinario.insertar(contrato);
+            }
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
+        }
+
+        return abinario;
+    }
+
+    @Override
+    public Contrato buscarContratoCliente(Usuario usuario) throws Exception {
+       String sql = """
                      Select * from contrato c
                      join medidor m on c.id_medidor = m.id_medidor
                      join cliente cl on c.id_cliente = cl.id_cliente
-                     where c.id_medidor = (select id_medidor from medidor where codigo = ?)
+                     join usuario u on cl.id_cliente = u.id_cliente
+                     where u.username = ?
                      """;
-        Contrato contrato = null;
+        
+        Contrato contrato = new Contrato();
         Connection conn = Conexion.getConexion();
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setString(1, cod_medidor);
+            ps.setString(1, usuario.getUsername().toUpperCase());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                contrato = new Contrato();
                 contrato.setId(rs.getInt("id_contrato"));
                 contrato.setTarifa(rs.getBigDecimal("tarifa"));
                 contrato.setTipo(rs.getString("tipo"));
@@ -75,22 +146,23 @@ public class ContratoDAO implements IContratoDAO {
                 contrato.setCliente(cliente);
                 
                 Medidor medidor = new Medidor();
-                Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
+                
                 medidor.setCodigo(rs.getString("codigo"));
                 medidor.setDiametroNomila(rs.getString("diametro_nominal"));
-                medidor.setDireccion(direccion);
+                
                 medidor.setUnidadMedida(rs.getString("unidad_medida"));
                 medidor.setContrato(contrato);
+                medidor.setId(rs.getInt("id_medidor"));
+                
                 contrato.setMedidor(medidor);
-            }
 
-        } catch (Exception ex) {
-            System.out.println("Error general: " + ex.getMessage());
-        } finally {
+            }
+            conn.commit();
             conn.close();
+        } catch (Exception e) {
+            conn.rollback();
         }
 
         return contrato;
     }
-
 }

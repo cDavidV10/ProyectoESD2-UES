@@ -61,129 +61,162 @@ public class ViewDetalleFactura extends javax.swing.JPanel {
         btnRegresar = new javax.swing.JButton();
         btnRealizarPago = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 153, 153)));
+        setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel1.setText("Detalle lectura______________________________________________________________________________________________________________");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        add(jLabel1);
+        jLabel1.setBounds(10, 50, 800, 18);
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel2.setText("Consumo:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 86, -1, -1));
+        add(jLabel2);
+        jLabel2.setBounds(107, 86, 62, 18);
 
         lblConsumoDiam.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblConsumoDiam.setText("jLabel3");
-        add(lblConsumoDiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 86, -1, -1));
+        add(lblConsumoDiam);
+        lblConsumoDiam.setBounds(190, 86, 45, 18);
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel4.setText("Fecha:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 86, -1, -1));
+        add(jLabel4);
+        jLabel4.setBounds(390, 90, 42, 18);
 
         lblFcehaInic.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblFcehaInic.setText("jLabel5");
-        add(lblFcehaInic, new org.netbeans.lib.awtextra.AbsoluteConstraints(401, 86, -1, -1));
+        add(lblFcehaInic);
+        lblFcehaInic.setBounds(440, 90, 80, 18);
 
         jLabel6.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel6.setText("---");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 86, -1, -1));
+        add(jLabel6);
+        jLabel6.setBounds(530, 90, 15, 18);
 
         lblFechaFin.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblFechaFin.setText("jLabel7");
-        add(lblFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 86, -1, -1));
+        add(lblFechaFin);
+        lblFechaFin.setBounds(560, 90, 100, 18);
 
         jLabel8.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel8.setText("SITEMA DE COBRO DE AGUA");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 18, -1, -1));
+        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(jLabel8);
+        jLabel8.setBounds(350, 20, 175, 18);
 
         jLabel9.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel9.setText("Detalle Medidor____________________________________________________________________________________________________________");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        add(jLabel9);
+        jLabel9.setBounds(10, 130, 810, 18);
 
         jLabel10.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel10.setText("Codigo:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
+        add(jLabel10);
+        jLabel10.setBounds(110, 170, 48, 18);
 
         lblCodigoMedi.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblCodigoMedi.setText("jLabel11");
-        add(lblCodigoMedi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
+        add(lblCodigoMedi);
+        lblCodigoMedi.setBounds(170, 170, 150, 18);
 
         jLabel12.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel12.setText("Propietario:");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+        add(jLabel12);
+        jLabel12.setBounds(380, 170, 76, 18);
 
         lblPropietario.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblPropietario.setText("jLabel13");
-        add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
+        add(lblPropietario);
+        lblPropietario.setBounds(470, 170, 290, 18);
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel3.setText("Direccion: ");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
+        add(jLabel3);
+        jLabel3.setBounds(110, 200, 69, 18);
 
         lblDireccion.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblDireccion.setText("jLabel5");
-        add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+        add(lblDireccion);
+        lblDireccion.setBounds(180, 200, 620, 18);
 
         jLabel7.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel7.setText("Detalle Factura_____________________________________________________________________________________________________________");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
+        add(jLabel7);
+        jLabel7.setBounds(10, 220, 810, 18);
 
         jLabel11.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel11.setText("Fecha limite pago:");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, -1, -1));
+        add(jLabel11);
+        jLabel11.setBounds(520, 340, 116, 18);
 
         jLabel13.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel13.setText("Mora:");
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 292, -1, -1));
+        add(jLabel13);
+        jLabel13.setBounds(74, 292, 36, 18);
 
         jLabel14.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel14.setText("Consumo:");
-        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 292, -1, -1));
+        add(jLabel14);
+        jLabel14.setBounds(250, 290, 62, 18);
 
         jLabel15.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel15.setText("Montos");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 264, -1, -1));
+        add(jLabel15);
+        jLabel15.setBounds(33, 264, 47, 18);
 
         jLabel16.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel16.setText("Servicio:");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(366, 292, -1, -1));
+        add(jLabel16);
+        jLabel16.setBounds(470, 290, 55, 18);
 
         jLabel17.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel17.setText("Neto:");
-        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 292, -1, -1));
+        add(jLabel17);
+        jLabel17.setBounds(620, 290, 36, 18);
 
         jLabel18.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jLabel18.setText("TOTAL:");
-        add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
+        add(jLabel18);
+        jLabel18.setBounds(60, 340, 46, 18);
 
         lblLimitePago.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblLimitePago.setText("jLabel19");
-        add(lblLimitePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, -1, -1));
+        add(lblLimitePago);
+        lblLimitePago.setBounds(650, 340, 100, 18);
 
         lblMora.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblMora.setText("jLabel20");
-        add(lblMora, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 292, -1, -1));
+        add(lblMora);
+        lblMora.setBounds(117, 292, 70, 18);
 
         lblConsumoDin.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblConsumoDin.setText("jLabel21");
-        add(lblConsumoDin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 292, -1, -1));
+        add(lblConsumoDin);
+        lblConsumoDin.setBounds(320, 290, 90, 18);
 
         lblMontoServ.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblMontoServ.setText("jLabel22");
-        add(lblMontoServ, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 292, -1, -1));
+        add(lblMontoServ);
+        lblMontoServ.setBounds(540, 290, 70, 18);
 
         lblMontoNeto.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblMontoNeto.setText("jLabel23");
-        add(lblMontoNeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(557, 292, -1, -1));
+        add(lblMontoNeto);
+        lblMontoNeto.setBounds(660, 290, 80, 18);
 
         lblTotal.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         lblTotal.setText("jLabel24");
-        add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
+        add(lblTotal);
+        lblTotal.setBounds(130, 340, 100, 18);
 
         btnRegresar.setText("Regresar");
-        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 407, 165, 35));
+        add(btnRegresar);
+        btnRegresar.setBounds(270, 380, 165, 35);
 
         btnRealizarPago.setText("Realizar Pago");
-        add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(366, 407, 146, 35));
+        add(btnRealizarPago);
+        btnRealizarPago.setBounds(490, 380, 146, 35);
     }// </editor-fold>//GEN-END:initComponents
 
     public JLabel getLblCodigoMedi() {

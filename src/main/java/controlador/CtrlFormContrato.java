@@ -4,12 +4,15 @@
  */
 package controlador;
 
+import arboles.ArbolBinarioAVL;
 import dao.ContratoDAO;
 import dao.MedidorDAO;
 import funciones.Paneles;
+import funciones.Validaciones;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -31,6 +34,7 @@ public class CtrlFormContrato {
     private MedidorDAO medidorDAO = new MedidorDAO();
     private JPanel bgContent;
     private Cliente cliente; // viene del CtrlFormCliente
+    private ArbolBinarioAVL arbol;
 
     public CtrlFormContrato(FormContrato formContrato, JPanel bgContent, Cliente cliente) throws Exception {
         this.formContrato = formContrato;
@@ -48,7 +52,8 @@ public class CtrlFormContrato {
     }
 
     private void cargarMedidoresDisponibles() throws Exception {
-        List<Medidor> medidores = medidorDAO.listarDisponibles();
+        arbol = medidorDAO.listarDisponibles();
+        ArrayList<Medidor> medidores = arbol.IND();
         for (Medidor m : medidores) {
             formContrato.getCbMedidoresDisponibles().addItem(m.getCodigo());
         }
@@ -58,27 +63,50 @@ public class CtrlFormContrato {
         formContrato.getBtnFinalizarContrato().addActionListener(e -> {
             try {
                 String tipo = (String) formContrato.getCbTipoContrato().getSelectedItem();
-                BigDecimal tarifa = new BigDecimal(formContrato.getTxtTarifaContrato().getText().trim());
+                String tarifa = (String) formContrato.getTxtTarifaContrato().getText().trim();
     
                 Date fechaInicioDate = formContrato.getJdcFechaInicioContrato().getDate();
                 Date fechaFinDate = formContrato.getJdcFechaFinalizacionContrato().getDate();
-
-                if (fechaInicioDate == null || fechaFinDate == null) {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar ambas fechas");
-                    return;
-                }
                 
                 //a Localdate
                 LocalDate fechaInicio = fechaInicioDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate fechaFin = fechaFinDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
-                // Obtener medidor seleccionado
                 String codigoMedidor = (String) formContrato.getCbMedidoresDisponibles().getSelectedItem();
-
-                Medidor medidor = medidorDAO.buscarPorCodigo(codigoMedidor);
                 
-                Contrato contrato = new Contrato(0, tipo, tarifa, fechaInicio, fechaFin, cliente, medidor);
-
+                Medidor medidor = medidorDAO.buscarPorCodigo(codigoMedidor);
+               
+                //Validaciones
+                
+                if (!new Validaciones().validarTarifa(tarifa)) {
+                    String mensaje = """
+                        La tarifa debe ser un número positivo
+                        Hasta 2 decimales y no puede estar vacía
+                        """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+                BigDecimal tarif = new BigDecimal(tarifa);
+                
+                if (!new Validaciones().validarFechaInicio(fechaInicio)) {
+                    String mensaje = """
+                        La fecha de inicio debe ser actual y/o futura
+                        """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+                
+                if (new Validaciones().validarFechaFin(fechaInicio, fechaFin)) {
+                    String mensaje = """
+                            La fecha de finalización debe ser posterior a la fecha de inicio
+                            Ademas, no superar los 2 años de plazo
+                        """;
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    return;
+                }
+                
+                Contrato contrato = new Contrato(0, tipo, tarif, fechaInicio, fechaFin, cliente, medidor);
+                
                 contratoDAO.insertar(contrato);
                 JOptionPane.showMessageDialog(null, "Contrato guardado correctamente");
                 

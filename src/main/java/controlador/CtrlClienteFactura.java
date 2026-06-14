@@ -10,21 +10,31 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dao.FacturaDAO;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.Box;
+import javax.swing.JPanel;
 import modelo.Factura;
 import modelo.Usuario;
+import vista.ClienteView;
+import vista.ItemFacturaPanel;
 import vista.PanelFacturasCliente;
+import vista.ViewDetalleFactura;
 
 public class CtrlClienteFactura {
-    private PanelFacturasCliente pFacturasCliente;
+    private ItemFacturaPanel pFacturasCliente;
+    private ViewDetalleFactura viewDetalle;
     private FacturaDAO facturaDAO;
     private Usuario usuario;
+    private ArbolBinarioBusqueda ab;
+    private ArrayList<Factura> datos;
 
-    public CtrlClienteFactura(PanelFacturasCliente pFacturasCliente, Usuario usuario) {
+    public CtrlClienteFactura(ItemFacturaPanel pFacturasCliente, Usuario usuario) {
         this.pFacturasCliente = pFacturasCliente;
         this.usuario = usuario;
         this.facturaDAO = new FacturaDAO();
 
-        cargarDatosCliente();
+//        cargarDatosCliente();
     }
 
     private void cargarDatosCliente() {

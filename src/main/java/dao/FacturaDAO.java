@@ -12,9 +12,11 @@ import java.sql.Statement;
 import modelo.Cliente;
 import modelo.Contrato;
 import modelo.Direccion;
+import modelo.Distrito;
 import modelo.Factura;
 import modelo.Lectura;
 import modelo.Medidor;
+import modelo.Municipio;
 import modelo.Pago;
 import modelo.Usuario;
 
@@ -120,20 +122,9 @@ public class FacturaDAO implements IFacturaDAO {
     public ArbolBinarioAVL obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """
-                SELECT 
-                    f.id_factura,
-                    l.fecha_fin,
-                    f.fecha_limite,
-                    f.monto_consumo,
-                    f.monto_servicio,
-                    f.monto_total
-                FROM factura f
-                INNER JOIN lectura l ON f.id_lectura = l.id_lectura
-                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
-                INNER JOIN contrato con ON con.id_medidor = m.id_medidor
-                INNER JOIN cliente c ON con.id_cliente = c.id_cliente
-                WHERE c.id_cliente = ?
-                ORDER BY f.id_factura DESC;
+                SELECT *
+                FROM vista_factura
+                WHERE id_cliente = ?
                 """;
 
         Connection conn = Conexion.getConexion();
@@ -160,7 +151,7 @@ public class FacturaDAO implements IFacturaDAO {
             }
 
         } catch (Exception ex) {
-            System.out.println("Error general: " + ex.getMessage());
+            System.out.println("Error general: " + ex.getMessage() + "Factura");
         } finally {
             conn.close();
         }
@@ -171,14 +162,7 @@ public class FacturaDAO implements IFacturaDAO {
     @Override
     public ArbolBinarioAVL obtenerFacturasMedidor(Medidor medidor) throws Exception {
         String sql = """
-                SELECT *
-                FROM factura f
-                INNER JOIN lectura l ON f.id_lectura = l.id_lectura
-                INNER JOIN medidor m ON l.id_medidor = m.id_medidor
-                JOIN contrato c on c.id_medidor = m.id_medidor
-                JOIN cliente cl on cl.id_cliente = c.id_cliente
-                WHERE m.id_medidor = ?
-                ORDER BY f.id_factura DESC;
+                SELECT * FROM vista_factura WHERE id_medidor = ?
                 """;
 
         Connection conn = Conexion.getConexion();
@@ -194,12 +178,19 @@ public class FacturaDAO implements IFacturaDAO {
                 Contrato contrato = new Contrato();
                 contrato.setId(rs.getInt("id_contrato"));
                 contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setFechaInicio(rs.getDate("fecha_inicio_contrato").toLocalDate());
+                contrato.setFechaFin(rs.getDate("fecha_fin_contrato").toLocalDate());
+                contrato.setEstado(rs.getString("estado_contrato"));
                 contrato.setTipo(rs.getString("tipo"));
 
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id_cliente"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("apellido"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setCorreo(rs.getString("correo"));
+                cliente.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                cliente.setTelefono(rs.getString("telefono"));
                 contrato.setCliente(cliente);
                 Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
 
@@ -212,18 +203,32 @@ public class FacturaDAO implements IFacturaDAO {
 
                 Lectura lectura = new Lectura();
                 lectura.setId(rs.getInt("id_lectura"));
-                lectura.setConsumo((int) rs.getDouble("consumo"));
-                lectura.setFechaInicial(rs.getDate("fecha_inicio").toLocalDate());
-                lectura.setFechaFinal(rs.getDate("fecha_fin").toLocalDate());
+                lectura.setConsumo(rs.getInt("consumo"));
+                lectura.setFechaInicial(rs.getDate("fecha_inicio_lectura").toLocalDate());
+                lectura.setFechaFinal(rs.getDate("fecha_fin_lectura").toLocalDate());
                 lectura.setMedidor(medid);
 
                 Factura factura = new Factura();
                 factura.setId(rs.getInt("id_factura"));
-                factura.setFechaLimite(rs.getObject("fecha_limite", LocalDate.class));
+                factura.setFechaLimite(rs.getDate("fecha_limite").toLocalDate());
+                factura.setMora(rs.getBigDecimal("mora"));
                 factura.setMontoConsumo(rs.getBigDecimal("monto_consumo"));
+                factura.setMontoNeto(rs.getBigDecimal("monto_neto"));
                 factura.setMontoServicio(rs.getBigDecimal("monto_servicio"));
                 factura.setMontoTotal(rs.getBigDecimal("monto_total"));
                 factura.setLectura(lectura);
+
+                Pago pago = new Pago();
+                pago.setId(rs.getInt("id_pago"));
+                pago.setEstado(rs.getString("estado_pago"));
+                pago.setFactura(factura);
+                Date fechaPago = rs.getDate("fecha_pago");
+                if (fechaPago != null) {
+                    pago.setFechaPago(fechaPago.toLocalDate());
+                } else {
+                    pago.setFechaPago(null);
+                }
+                factura.setPago(pago);
 
                 aBusqueda.insertar(factura);
             }
