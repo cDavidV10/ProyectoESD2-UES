@@ -178,8 +178,8 @@ public class CtrlFactura {
             long diferencia = fechaFin.getTime() - fechaInicio.getTime();
             long dias = diferencia / (1000 * 60 * 60 * 24);
 
-            if (dias < 20) {
-                JOptionPane.showMessageDialog(vista, "[ERROR] El periodo es muy corto (" + dias + " dias).\nDebe ser de al menos 20 dias.", "Error de Periodo", JOptionPane.ERROR_MESSAGE);
+            if (dias < 20 || dias > 29) { // validacion de minimo y maximo de dias para facturar
+                JOptionPane.showMessageDialog(vista, "[ERROR] El periodo no es valido (" + dias + " dias).\nDebe estar entre 20 y 29 dias..", "Error de Periodo", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
