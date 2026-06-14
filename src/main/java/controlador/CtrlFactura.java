@@ -25,6 +25,9 @@ public class CtrlFactura {
     private MedidorDAO medidorDAO;
     private ArbolBinarioAVL arbolMedidores;
 
+    // para la mora
+    private static final BigDecimal VALOR_MORA = new BigDecimal("5.00");
+
     public CtrlFactura(FacturaView vista) {
         this.vista = vista;
         this.medidorDAO = new MedidorDAO();
@@ -88,14 +91,22 @@ public class CtrlFactura {
             Factura factura = new Factura();
             factura.setLectura(lectura);
             factura.setFechaLimite(LocalDate.now().plusDays(30));
-            factura.setMora(BigDecimal.ZERO);
 
-            //Por si al calcular automaticamente lo arroja como comas
+            // verifica si el cliente tiene facturas vencidas
+            if (dao.isFacturasVencidas(medidor.getId())) {
+                factura.setMora(VALOR_MORA);
+            } else {
+                factura.setMora(BigDecimal.ZERO);
+            }
+
+            // por si al calcular automaticamente lo arroja como comas
             factura.setMontoConsumo(new BigDecimal(vista.getTxtMontoConsumo().getText().replace(",", ".").trim()));
             factura.setMontoServicio(new BigDecimal(vista.getTxtMontoServicio().getText().replace(",", ".").trim()));
 
             factura.setMontoNeto(factura.getMontoConsumo().add(factura.getMontoServicio()));
-            factura.setMontoTotal(factura.getMontoNeto());
+
+            // suma mora
+            factura.setMontoTotal(factura.getMontoNeto().add(factura.getMora()));
 
             Empleado emp = new Empleado();
             emp.setId(1); // CAMBIAR POR EL EMPLEADO/USUARIO LOGUEADO EN ESE MOMENTO
@@ -183,9 +194,17 @@ public class CtrlFactura {
                 return;
             }
 
+            // verifica si hay mora activa para sumarla
+            FacturaDAO dao = new FacturaDAO();
+            double mora = 0.0;
+            if (dao.isFacturasVencidas(m.getId())) {
+                mora = VALOR_MORA.doubleValue();
+            }
+
             double montoConsumo = consumo * 0.50;
             double montoServicio = 10.00;
-            double total = montoConsumo + montoServicio;
+
+            double total = montoConsumo + montoServicio + mora;
 
             vista.getTxtMontoConsumo().setText(String.format("%.2f", montoConsumo));
             actualizarTooltip(vista.getTxtMontoConsumo());
@@ -198,6 +217,8 @@ public class CtrlFactura {
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(vista, "[ERROR] Ingrese numeros validos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) { // otra "validacion" de excepciones
+            JOptionPane.showMessageDialog(vista, "[ERROR] Error al consultar deudas del medidor: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

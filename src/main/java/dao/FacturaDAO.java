@@ -1,6 +1,6 @@
 package dao;
 
-import arboles.ArbolB;
+import arboles.ArbolBinarioAVL; // Importación corregida a tu clase exacta
 import conexion.Conexion;
 import interfaz.IFacturaDAO;
 import java.sql.Connection;
@@ -8,8 +8,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-
-import arboles.ArbolBinarioBusqueda;
 import java.sql.Statement;
 import modelo.Cliente;
 import modelo.Contrato;
@@ -45,10 +43,10 @@ public class FacturaDAO implements IFacturaDAO {
         boolean guardado = false;
 
         try {
-            conn.setAutoCommit(false); // Para que solo se guarden las inserciones cuando vuelva a ser true
+            conn.setAutoCommit(false); 
 
             // Guardamos lectura
-            PreparedStatement psL = conn.prepareStatement(INSERT_LECTURA, Statement.RETURN_GENERATED_KEYS); // RETURN_GENERATED_KEYS retiene el id generado por este insert
+            PreparedStatement psL = conn.prepareStatement(INSERT_LECTURA, Statement.RETURN_GENERATED_KEYS); // generated_keys guarda la llave que ejecute el sql si sale bien
             psL.setInt(1, factura.getLectura().getConsumo());
             psL.setDate(2, Date.valueOf(factura.getLectura().getFechaInicial()));
             psL.setDate(3, Date.valueOf(factura.getLectura().getFechaFinal()));
@@ -56,7 +54,7 @@ public class FacturaDAO implements IFacturaDAO {
             psL.executeUpdate();
 
             // Se obtiene el id de la lectura creada arriba
-            ResultSet rsL = psL.getGeneratedKeys(); // se le dice a psL que recupere la llave generada anteriormente
+            ResultSet rsL = psL.getGeneratedKeys(); // obtiene la llave guardada arriba
             int idLectura = 0;
             if (rsL.next()) {
                 idLectura = rsL.getInt(1);
@@ -102,8 +100,8 @@ public class FacturaDAO implements IFacturaDAO {
         try {
             PreparedStatement ps = conn.prepareStatement(FIND_FACTURA);
             ps.setInt(1, idMedidor);
-            ps.setDate(2, java.sql.Date.valueOf(fin)); // para comparar con el fin existente
-            ps.setDate(3, java.sql.Date.valueOf(inicio)); // para comparar con el inicio existente
+            ps.setDate(2, java.sql.Date.valueOf(fin)); 
+            ps.setDate(3, java.sql.Date.valueOf(inicio)); 
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -112,11 +110,14 @@ public class FacturaDAO implements IFacturaDAO {
             }
         } catch (Exception e) {
             throw new Exception("Error al verificar las fechas: " + e.getMessage());
+        } finally {
+            conn.close();
         }
         return false;
     }
 
-    public ArbolBinarioBusqueda obtnerFacturasCliente(Usuario usuario) throws Exception {
+    @Override
+    public ArbolBinarioAVL obtnerFacturasCliente(Usuario usuario) throws Exception {
 
         String sql = """
                 SELECT 
@@ -136,7 +137,7 @@ public class FacturaDAO implements IFacturaDAO {
                 """;
 
         Connection conn = Conexion.getConexion();
-        ArbolBinarioBusqueda aBusqueda = new ArbolBinarioBusqueda();
+        ArbolBinarioAVL aBusqueda = new ArbolBinarioAVL(); // Instancia exacta de tu clase
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -168,7 +169,7 @@ public class FacturaDAO implements IFacturaDAO {
     }
 
     @Override
-    public ArbolB obtenerFacturasMedidor(Medidor medidor) throws Exception {
+    public ArbolBinarioAVL obtenerFacturasMedidor(Medidor medidor) throws Exception {
         String sql = """
                 SELECT *
                 FROM factura f
@@ -181,7 +182,7 @@ public class FacturaDAO implements IFacturaDAO {
                 """;
 
         Connection conn = Conexion.getConexion();
-        ArbolB aBusqueda = new ArbolB(2);
+        ArbolBinarioAVL aBusqueda = new ArbolBinarioAVL();
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -201,7 +202,7 @@ public class FacturaDAO implements IFacturaDAO {
                 cliente.setApellido(rs.getString("apellido"));
                 contrato.setCliente(cliente);
                 Direccion direccion = new DireccionDAO().buscarDireccionId(rs.getInt("id_medidor"));
-                
+
                 Medidor medid = new Medidor();
                 medid.setCodigo(rs.getString("codigo"));
                 medid.setDiametroNomila(rs.getString("diametro_nominal"));
@@ -228,7 +229,7 @@ public class FacturaDAO implements IFacturaDAO {
             }
 
         } catch (Exception ex) {
-            System.out.println("Error general: " + ex.getMessage() + "Factura");
+            System.out.println("[Error]: Ocurrio un error inesperado: " + ex.getMessage() + "Factura");
         } finally {
             conn.close();
         }
@@ -238,7 +239,7 @@ public class FacturaDAO implements IFacturaDAO {
 
     @Override
     public void realizarPago(Factura factura) throws Exception {
-       String consulta = """
+        String consulta = """
                 update pago p
                 set fecha_pago = ?,
                     estado = ?::estado_pago
@@ -259,8 +260,37 @@ public class FacturaDAO implements IFacturaDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             conexion.rollback();
-        } finally{
+        } finally {
             conexion.close();
         }
+    }
+
+    @Override
+    public boolean isFacturasVencidas(int idMedidor) throws Exception { // para la mora
+        String sql = """
+                 SELECT COUNT(*) FROM factura f
+                 JOIN lectura l ON f.id_lectura = l.id_lectura
+                 JOIN pago p ON p.id_factura = f.id_factura
+                 WHERE l.id_medidor = ? 
+                 AND (p.estado = 'Pendiente'::estado_pago OR p.estado IS NULL)
+                 AND f.fecha_limite < CURRENT_DATE
+                 """;
+
+        Connection conn = Conexion.getConexion();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idMedidor);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("[ERROR} Error al verificar facturas vencidas: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return false;
     }
 }

@@ -148,13 +148,15 @@ public class FacturaView extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         dateInicio = new com.toedter.calendar.JDateChooser();
         dateFin = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtMora = new javax.swing.JTextField();
 
         jLabel12.setText("jLabel12");
 
@@ -203,7 +205,7 @@ public class FacturaView extends javax.swing.JPanel {
         txtTotalPagar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotalPagar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotalPagar.setEnabled(false);
-        add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 330, 102, -1));
+        add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 370, 102, -1));
 
         btnCalcular.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCalcular.setText("Calcular");
@@ -240,10 +242,6 @@ public class FacturaView extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel7.setText("Monto Servicio ($USD):");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel8.setText("Total ($USD):");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, -1, -1));
         add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 190, 30));
         add(dateFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 190, 30));
 
@@ -280,6 +278,18 @@ public class FacturaView extends javax.swing.JPanel {
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel13.setText("Mora ($USD):");
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel14.setText("Total ($USD):");
+        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, -1, -1));
+
+        txtMora.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        txtMora.setEnabled(false);
+        add(txtMora, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 330, 102, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -293,13 +303,14 @@ public class FacturaView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JTextField txtCodigoMedidor;
@@ -307,6 +318,7 @@ public class FacturaView extends javax.swing.JPanel {
     public javax.swing.JTextField txtDireccion;
     public javax.swing.JTextField txtMontoConsumo;
     public javax.swing.JTextField txtMontoServicio;
+    public javax.swing.JTextField txtMora;
     public javax.swing.JTextField txtNombreCliente;
     public javax.swing.JTextField txtTotalPagar;
     // End of variables declaration//GEN-END:variables

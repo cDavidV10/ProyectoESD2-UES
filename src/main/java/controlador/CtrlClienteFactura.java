@@ -1,5 +1,6 @@
 package controlador;
 
+import arboles.ArbolBinarioAVL;
 import java.awt.Panel;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import arboles.ArbolBinarioBusqueda;
 import dao.FacturaDAO;
 import modelo.Factura;
 import modelo.Usuario;
@@ -38,9 +38,9 @@ public class CtrlClienteFactura {
 
         try {
 
-            ArbolBinarioBusqueda ab = facturaDAO.obtnerFacturasCliente(usuario);
+            ArbolBinarioAVL abl = facturaDAO.obtnerFacturasCliente(usuario);
 
-            ArrayList<Factura> datos = ab.IND();
+            ArrayList<Factura> datos = abl.IND();
 
             datos.forEach(dato -> {
                 Object[] obj = {
