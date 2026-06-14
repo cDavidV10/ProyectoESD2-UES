@@ -5,12 +5,13 @@
 package controlador;
 
 
-import dao.PagoDAO;
-import java.time.LocalDate;
-import javax.swing.JOptionPane;
-import modelo.Factura;
+
 import modelo.Pago;
 import vista.ViewBotonesMedidor;
+import javax.swing.JOptionPane;
+import dao.FacturaDAO;
+import modelo.Factura;
+import modelo.Pago;
 import vista.ViewDetalleFactura;
 
 /**
@@ -20,10 +21,12 @@ import vista.ViewDetalleFactura;
 public class CtrlDetalleFactura {
     private Factura factura;
     private ViewDetalleFactura vista;
+    private FacturaDAO facturaDAO;
 
     public CtrlDetalleFactura(Factura facturaa, ViewDetalleFactura vista, ViewBotonesMedidor viewBtnes) throws Exception {
         this.factura = facturaa;
         this.vista = vista;
+        this.facturaDAO = new FacturaDAO();
         
         vista.setLocation(100, 0);
         mostrarDatos();
@@ -37,26 +40,39 @@ public class CtrlDetalleFactura {
             new CtrlBotonesMedidor(viewBtnes);
             viewBtnes.repaint();
         });
-        
-        this.vista.getBtnRealizarPago().addActionListener(e ->{
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de realizar el pago?", "¿Confirmar pago?", JOptionPane.YES_NO_OPTION);
-            boolean pagoRealizado;
-            if (respuesta == JOptionPane.YES_OPTION){
-                Pago pago = factura.getPago();
-                pago.setEstado("Pagado");
+  
+        System.out.println("Factura id " + factura.getId());
+
+        vista.getBtnRealizarPago().addActionListener(e-> {
+            int respuesta = JOptionPane.showConfirmDialog(vista, "Esta seguro de realizar el pago",
+            "Confirmar Pago",
+            JOptionPane.YES_NO_OPTION);
+
+            if(respuesta == JOptionPane.YES_OPTION){
+                Pago pago = new Pago();
                 pago.setFechaPago(LocalDate.now());
-                pago.getFactura().setId(facturaa.getId());
+                pago.setEstado("Pagado");
+
+                factura.setPago(pago);
+
                 try {
-                    pagoRealizado = new PagoDAO().modificarPago(pago);
-                    if (pagoRealizado){
-                        JOptionPane.showMessageDialog(null, "Pago Realizado!");
-                    }
-                    vista.setVisible(false);
+                    facturaDAO.realizarPago(factura);
+
+                    JOptionPane.showMessageDialog(null, "Pago realizado correctamente",
+                        "Exito",
+                        JOptionPane.OK_OPTION
+                    );
                 } catch (Exception ex) {
-                    System.getLogger(CtrlDetalleFactura.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "No se pudo realizar el pago",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
+
         });
+        // mostrarDatos();
     }
     
     

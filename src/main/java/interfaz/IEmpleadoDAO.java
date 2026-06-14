@@ -11,6 +11,8 @@ public interface IEmpleadoDAO {
     public String buscarUsuarioEmpleado(String nombre, String apellido) throws Exception;
 
     public void insertarUsuario(String user, String password, String dui) throws Exception;
+    
+    public void actualizar(Empleado empleado) throws Exception;
 
     public ArbolBinarioAVL listar() throws Exception;
 }
