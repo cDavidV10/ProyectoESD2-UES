@@ -74,13 +74,8 @@ public class CtrlFormContrato {
                 
                 String codigoMedidor = (String) formContrato.getCbMedidoresDisponibles().getSelectedItem();
                 
-                ArbolBinarioAVL arbolMedidor = medidorDAO.buscarPorCodigo(codigoMedidor);
-                
-                Medidor medidor = null;
-                if (arbolMedidor.getRaiz() != null) {
-                    medidor = (Medidor) arbolMedidor.getRaiz().getDato();
-                }
-                
+                Medidor medidor = medidorDAO.buscarPorCodigo(codigoMedidor);
+               
                 //Validaciones
                 
                 if (!new Validaciones().validarTarifa(tarifa)) {
