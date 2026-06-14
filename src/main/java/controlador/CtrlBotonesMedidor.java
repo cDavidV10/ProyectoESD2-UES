@@ -5,6 +5,7 @@
 package controlador;
 
 import arboles.ArbolB;
+import arboles.ArbolBinarioAVL;
 import dao.ContratoDAO;
 import dao.FacturaDAO;
 import dao.MedidorDAO;
@@ -34,7 +35,7 @@ public class CtrlBotonesMedidor {
     private ViewBotonesMedidor vista;
     private ViewRegistroMedidor regMedidor;
     private ViewDetalleFactura viewDetalle;
-    private ArbolB resultFact;
+    private ArbolBinarioAVL resultFact;
     private Medidor resultMedidor;
     private Contrato resultContrato;
     private List<Factura> facturas;
@@ -43,7 +44,7 @@ public class CtrlBotonesMedidor {
         this.vista = vista_;
 
         resultMedidor = new Medidor();
-        resultFact = new ArbolB(2);
+        resultFact = new ArbolBinarioAVL();
         facturas = new ArrayList<>();
 
         vista.getBtnAgregarMed().addActionListener(e -> {
@@ -72,7 +73,7 @@ public class CtrlBotonesMedidor {
     }
 
     private void mostrarFacturasMedidor() {
-        facturas = resultFact.obtenerDatosArbolB();
+        facturas = resultFact.IND();
 
         JPanel panelFacturas = new JPanel();
         panelFacturas = vista.getJpnViewOpcMedidor();
