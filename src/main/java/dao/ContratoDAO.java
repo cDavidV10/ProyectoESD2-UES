@@ -178,27 +178,27 @@ public class ContratoDAO implements IContratoDAO {
                 cliente.setNombre(rs.getString("nombre"));
 
                 Medidor medidor = new Medidor();
-                
+                medidor.setId(rs.getInt("id_medidor"));
                 medidor.setCodigo(rs.getString("codigo"));
-                medidor.setDiametroNomila(rs.getString("diametro_nominal"));
-                
-                medidor.setUnidadMedida(rs.getString("unidad_medida"));
-                medidor.setContrato(contrato);
-                contrato.setMedidor(medidor);
-            }
 
-        } catch (Exception ex) {
-            System.out.println("Error general: " + ex.getMessage());
-        } finally {
-            conn.close();
+                //Asignando los objetos al contrato
+                contrato.setCliente(cliente);
+                contrato.setMedidor(medidor);
+
+                abinario.insertar(contrato);
+            }
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
         }
 
-        return contrato;
+        return abinario;
     }
 
     @Override
     public Contrato buscarContratoCliente(Usuario usuario) throws Exception {
-        String sql = """
+       String sql = """
                      Select * from contrato c
                      join medidor m on c.id_medidor = m.id_medidor
                      join cliente cl on c.id_cliente = cl.id_cliente
@@ -206,7 +206,7 @@ public class ContratoDAO implements IContratoDAO {
                      where u.username = ?
                      """;
         
-        Contrato contrato = null;
+        Contrato contrato = new Contrato();
         Connection conn = Conexion.getConexion();
 
         try {
@@ -216,7 +216,6 @@ public class ContratoDAO implements IContratoDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                contrato = new Contrato();
                 contrato.setId(rs.getInt("id_contrato"));
                 contrato.setTarifa(rs.getBigDecimal("tarifa"));
                 contrato.setTipo(rs.getString("tipo"));
@@ -239,14 +238,13 @@ public class ContratoDAO implements IContratoDAO {
                 
                 contrato.setMedidor(medidor);
 
-                abinario.insertar(contrato);
             }
-            conexion.commit();
-            conexion.close();
+            conn.commit();
+            conn.close();
         } catch (Exception e) {
-            conexion.rollback();
+            conn.rollback();
         }
 
-        return abinario;
+        return contrato;
     }
 }
