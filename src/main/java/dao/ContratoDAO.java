@@ -124,43 +124,35 @@ public class ContratoDAO implements IContratoDAO {
                      where u.username = ?
                      """;
         
-        Contrato contrato = new Contrato();
-        Connection conn = Conexion.getConexion();
+        Contrato contrato = null;
 
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, usuario.getUsername().toUpperCase());
-            ResultSet rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    contrato = new Contrato();
+                    contrato.setId(rs.getInt("id_contrato"));
+                    contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                    contrato.setTipo(rs.getString("tipo"));
 
-            while (rs.next()) {
-                contrato.setId(rs.getInt("id_contrato"));
-                contrato.setTarifa(rs.getBigDecimal("tarifa"));
-                contrato.setTipo(rs.getString("tipo"));
-                
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("id_cliente"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("apellido"));
-                System.out.println(cliente.toString());
-                contrato.setCliente(cliente);
-                
-                Medidor medidor = new Medidor();
-                
-                medidor.setCodigo(rs.getString("codigo"));
-                medidor.setDiametroNomila(rs.getString("diametro_nominal"));
-                
-                medidor.setUnidadMedida(rs.getString("unidad_medida"));
-                medidor.setContrato(contrato);
-                medidor.setId(rs.getInt("id_medidor"));
-                
-                contrato.setMedidor(medidor);
+                    Cliente cliente = new Cliente();
+                    cliente.setId(rs.getInt("id_cliente"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    cliente.setApellido(rs.getString("apellido"));
+                    contrato.setCliente(cliente);
 
+                    Medidor medidor = new Medidor();
+                    medidor.setCodigo(rs.getString("codigo"));
+                    medidor.setDiametroNomila(rs.getString("diametro_nominal"));
+                    medidor.setUnidadMedida(rs.getString("unidad_medida"));
+                    medidor.setContrato(contrato);
+                    medidor.setId(rs.getInt("id_medidor"));
+
+                    contrato.setMedidor(medidor);
+                }
             }
-            conn.commit();
-            conn.close();
-        } catch (Exception e) {
-            conn.rollback();
         }
 
         return contrato;

@@ -18,7 +18,7 @@ public class ClienteDAO implements IClienteDAO {
     private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
     private static final String BUSCAR_POR_DUI =  "SELECT * FROM cliente WHERE dui=?";
-    private static final String UPDATE = "UPDATE cliente SET nombree=?, apellido=?, fecha_nacimiento=?, correo=?, telefono=? WHERE dui = ?";
+    private static final String UPDATE = "UPDATE cliente SET nombre=?, apellido=?, fecha_nacimiento=?, correo=?, telefono=? WHERE dui = ?";
 
     @Override
     public ArbolBinarioAVL listar() throws Exception {
@@ -136,6 +136,8 @@ public class ClienteDAO implements IClienteDAO {
             ps.setDate(3, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
             ps.setString(4, cliente.getCorreo());
             ps.setString(5, cliente.getTelefono());
+            ps.setString(6, cliente.getDui());
+
             ps.executeUpdate();
         }
     }
