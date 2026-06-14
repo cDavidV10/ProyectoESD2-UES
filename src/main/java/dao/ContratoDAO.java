@@ -4,11 +4,16 @@
  */
 package dao;
 
+import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IContratoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import modelo.Cliente;
 import modelo.Contrato;
+import modelo.Medidor;
 
 /**
  *
@@ -21,7 +26,23 @@ public class ContratoDAO implements IContratoDAO {
         VALUES (?, ?, ?, ?, ?, ?)
     """;
 
+    private String SELECT_TODO = """
+        SELECT cn.id_contrato, cn.tipo, cn.tarifa, cn.fecha_inicio, cn.fecha_fin, cn.estado, 
+               cl.nombre, cl.id_cliente, m.codigo, m.id_medidor 
+        FROM contrato cn
+        INNER JOIN cliente cl ON cn.id_cliente = cl.id_cliente
+        INNER JOIN medidor m ON m.id_medidor = cn.id_medidor 
+    """;
     
+    private String BUSCAR_POR_DUI = """
+        SELECT cn.id_contrato, cn.tipo, cn.tarifa, cn.fecha_inicio, cn.fecha_fin, cn.estado, 
+               cl.dui, cl.nombre, cl.id_cliente, m.codigo, m.id_medidor 
+        FROM contrato cn
+        INNER JOIN cliente cl ON cn.id_cliente = cl.id_cliente
+        INNER JOIN medidor m ON m.id_medidor = cn.id_medidor 
+        WHERE dui = ?   
+    """;
+
     @Override
     public void insertar(Contrato contrato) throws Exception {
         Connection conexion = new Conexion().getConexion();
@@ -35,6 +56,92 @@ public class ContratoDAO implements IContratoDAO {
 
             ps.executeUpdate();
         }
-    }    
+    }
 
+    //OCUPARE OTRO ARBOL CUANDO LO SUBAN
+    @Override
+    public ArbolBinarioAVL listar() throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
+        Connection conexion = new Conexion().getConexion();
+
+        conexion.setAutoCommit(false);
+        PreparedStatement ps = conexion.prepareStatement(SELECT_TODO);
+        ResultSet rs = ps.executeQuery();
+
+        try {
+            while (rs.next()) {
+                Contrato contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTipo(rs.getString("tipo"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+                contrato.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+                contrato.setEstado(rs.getString("estado"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+
+                Medidor medidor = new Medidor();
+                medidor.setId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+
+                //Asignando los objetos al contrato
+                contrato.setCliente(cliente);
+                contrato.setMedidor(medidor);
+
+                abinario.insertar(contrato);
+            }
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
+        }
+
+        return abinario;
+    }
+
+    @Override
+    public ArbolBinarioAVL buscarPorDui(String dui) throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
+        Connection conexion = new Conexion().getConexion();
+
+        conexion.setAutoCommit(false);
+        PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_DUI);
+        
+        ps.setString(1, dui);//parametro de busqueda
+        ResultSet rs = ps.executeQuery();
+        try {
+            while (rs.next()) {
+                Contrato contrato = new Contrato();
+                contrato.setId(rs.getInt("id_contrato"));
+                contrato.setTipo(rs.getString("tipo"));
+                contrato.setTarifa(rs.getBigDecimal("tarifa"));
+                contrato.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+                contrato.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+                contrato.setEstado(rs.getString("estado"));
+                
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setDui(rs.getString("dui"));
+                cliente.setNombre(rs.getString("nombre"));
+
+                Medidor medidor = new Medidor();
+                medidor.setId(rs.getInt("id_medidor"));
+                medidor.setCodigo(rs.getString("codigo"));
+
+                //Asignando los objetos al contrato
+                contrato.setCliente(cliente);
+                contrato.setMedidor(medidor);
+
+                abinario.insertar(contrato);
+            }
+            conexion.commit();
+            conexion.close();
+        } catch (Exception e) {
+            conexion.rollback();
+        }
+
+        return abinario;
+    }
 }

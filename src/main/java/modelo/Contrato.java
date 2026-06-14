@@ -3,14 +3,14 @@ package modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Contrato {
+public class Contrato implements Comparable<Contrato>{
     private int id;
     private BigDecimal tarifa;
     private String tipo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
-    // ? Clases Relacionadas
+    //Clases relacionadas
     private Cliente cliente;
     private Medidor medidor;
 
@@ -32,6 +32,17 @@ public class Contrato {
         this.tarifa = tarifa;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.cliente = cliente;
+        this.medidor = medidor;
+    }
+
+    public Contrato(int id, BigDecimal tarifa, String tipo, LocalDate fechaInicio, LocalDate fechaFin, String estado, Cliente cliente, Medidor medidor) {
+        this.id = id;
+        this.tarifa = tarifa;
+        this.tipo = tipo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
         this.cliente = cliente;
         this.medidor = medidor;
     }
@@ -98,6 +109,11 @@ public class Contrato {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public int compareTo(Contrato otro) {
+        return Integer.compare(this.getId(), otro.getId());
     }
 
     

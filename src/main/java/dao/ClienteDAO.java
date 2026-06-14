@@ -16,6 +16,7 @@ public class ClienteDAO implements IClienteDAO {
     private static final String INSERT = "INSERT INTO cliente (dui, nombre, apellido, fecha_nacimiento, correo, telefono) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_REGISTRO = "DELETE FROM cliente WHERE dui = ?";
     private static final String BUSCAR_POR_DUI =  "SELECT * FROM cliente WHERE dui=?";
+    private static final String UPDATE = "UPDATE cliente SET nombree=?, apellido=?, fecha_nacimiento=?, correo=?, telefono=? WHERE dui = ?";
 
     @Override
     public ArbolBinarioAVL listar() throws Exception {
@@ -62,9 +63,9 @@ public class ClienteDAO implements IClienteDAO {
             ps.setString(6, cliente.getTelefono());
             ps.executeUpdate();
 
-            try (ResultSet rs = ps.getGeneratedKeys()) {//Recuperando el ID generado
+            try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    cliente.setId(rs.getInt(1)); // asigna el ID al objeto
+                    cliente.setId(rs.getInt(1));//asigna el id al objeto
                 }
             }
 
@@ -100,8 +101,8 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public Cliente buscarPorDui(String dui) throws Exception {
-      
+    public ArbolBinarioAVL buscarPorDui(String dui) throws Exception {
+        ArbolBinarioAVL aBinarioAVL = new ArbolBinarioAVL();
         Connection conn = Conexion.getConexion();
         
         try (PreparedStatement ps = conn.prepareStatement(BUSCAR_POR_DUI)) {
@@ -116,10 +117,24 @@ public class ClienteDAO implements IClienteDAO {
                     c.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
                     c.setCorreo(rs.getString("correo"));
                     c.setTelefono(rs.getString("telefono"));
-                    return c;
+                    aBinarioAVL.insertar(c);
+                    return aBinarioAVL;
                 }
             }
         }
         return null;
+    }
+
+    @Override
+    public void actualizar(Cliente cliente) throws Exception { 
+        Connection conn = Conexion.getConexion();
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setDate(3, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
+            ps.setString(4, cliente.getCorreo());
+            ps.setString(5, cliente.getTelefono());
+            ps.executeUpdate();
+        }
     }
 }

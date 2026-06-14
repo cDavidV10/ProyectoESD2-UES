@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import arboles.ArbolBinarioAVL;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Medidor;
@@ -15,7 +16,6 @@ import modelo.Medidor;
 public interface IMedidorDAO {
     public void crearRegistro(Medidor m) throws Exception;
     public boolean modificarRegistro(Medidor m) throws Exception;
-    List<Medidor> listarDisponibles() throws Exception;
-    Medidor buscarPorCodigo(String codigo) throws Exception;
-    
+    ArbolBinarioAVL listarDisponibles() throws Exception;
+    ArbolBinarioAVL buscarPorCodigo(String codigo) throws Exception;
 }

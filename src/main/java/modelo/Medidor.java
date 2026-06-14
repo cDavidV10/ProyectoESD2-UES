@@ -2,15 +2,14 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Medidor {
+public class Medidor implements Comparable<Medidor> {
     private int id;
     private String codigo;
     private String diametroNomila;
     private String unidadMedida;
-    // ? Clases Relacionadas
+    //Clases Relacionadas
     private Direccion direccion;
     private ArrayList<Lectura> lecturas;
-    // Correcciones
     private Contrato contrato;
 
     public Medidor() {
@@ -84,5 +83,10 @@ public class Medidor {
 
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;
+    }
+
+    @Override
+    public int compareTo(Medidor o) {
+        return Integer.compare(this.id, o.id);
     }
 }

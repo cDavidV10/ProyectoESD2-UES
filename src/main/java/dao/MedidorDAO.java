@@ -4,6 +4,7 @@
  */
 package dao;
 
+import arboles.ArbolBinarioAVL;
 import conexion.Conexion;
 import interfaz.IMedidorDAO;
 import java.sql.Connection;
@@ -66,8 +67,8 @@ public class MedidorDAO implements IMedidorDAO{
     }
 
     @Override
-    public List<Medidor> listarDisponibles() throws Exception {
-        List<Medidor> lista = new ArrayList<>();
+    public ArbolBinarioAVL listarDisponibles() throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
 
         Connection conexion = Conexion.getConexion();
         try (PreparedStatement ps = conexion.prepareStatement(MEDIDORES_DISP);
@@ -78,30 +79,35 @@ public class MedidorDAO implements IMedidorDAO{
                 m.setCodigo(rs.getString("codigo"));
                 m.setDiametroNomila(rs.getString("diametro_nominal"));
                 m.setUnidadMedida(rs.getString("unidad_medida"));
-                lista.add(m);
+                abinario.insertar(m);
             }
         }
-        return lista;
+        return abinario;
     }
 
     @Override
-    public Medidor buscarPorCodigo(String codigo) throws Exception {
+    public ArbolBinarioAVL buscarPorCodigo(String codigo) throws Exception {
+        ArbolBinarioAVL abinario = new ArbolBinarioAVL();
         Connection conexion = Conexion.getConexion();
+        
         try (PreparedStatement ps = conexion.prepareStatement(BUSCAR_POR_CODIGO)) {
-            ps.setString(1, codigo);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Direccion direccion = new Direccion(rs.getInt("id_direccion"));
-                    return new Medidor(
-                        rs.getInt("id_medidor"),
-                        rs.getString("codigo"),
-                        rs.getString("diametro_nominal"),
-                        rs.getString("unidad_medida"),
-                        direccion
-                    );
-                }
+        ps.setString(1, codigo);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Direccion direccion = new Direccion(rs.getInt("id_direccion"));
+
+                Medidor medidor = new Medidor(
+                    rs.getInt("id_medidor"),
+                    rs.getString("codigo"),
+                    rs.getString("diametro_nominal"),
+                    rs.getString("unidad_medida"),
+                    direccion
+                );
+                abinario.insertar(medidor); 
             }
         }
-        return null;
+    }
+
+    return abinario;
     }
 }
