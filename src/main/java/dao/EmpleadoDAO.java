@@ -146,5 +146,39 @@ public class EmpleadoDAO implements IEmpleadoDAO {
 
         return aBinarioAVL;
     }
+    
+    @Override
+    public void actualizar(Empleado empleado) throws Exception {
+        String actualizar = """
+                UPDATE empleado 
+                SET nombre = ?, apellido = ?, fecha_nacimiento = ?, fecha_contrato = ?, 
+                    sueldo = ?, genero = ?, correo = ?, telefono = ?
+                WHERE dui = ?
+                """;
 
+        Connection conexion = Conexion.getConexion();
+        PreparedStatement ps = conexion.prepareStatement(actualizar);
+
+        try {
+            conexion.setAutoCommit(false);
+
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getApellido());
+            ps.setObject(3, empleado.getFechaNacimiento());
+            ps.setObject(4, empleado.getFechaContrato());
+            ps.setBigDecimal(5, empleado.getSueldo());
+            ps.setString(6, empleado.getGenero());
+            ps.setString(7, empleado.getCorreo());
+            ps.setString(8, empleado.getTelefono());
+            ps.setString(9, empleado.getDui());
+
+            ps.executeUpdate();
+            conexion.commit();
+        } catch (Exception e) {
+            conexion.rollback();
+            throw e;
+        } finally {
+            conexion.close();
+        }
+    }
 }

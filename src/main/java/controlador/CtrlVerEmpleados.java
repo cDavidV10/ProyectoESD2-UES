@@ -25,13 +25,46 @@ public class CtrlVerEmpleados {
 
         verDatos();
 
-        this.verClientesView.getBtnAgregarEmpleado().addActionListener(e -> {
-            AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
-            CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView, verClientesView,
-                    bgContent);
-            new Paneles().insertarPaneles(agregarEmpleadoView, bgContent);
-        });
+        if (this.verClientesView.getBtnAgregarEmpleado().getActionListeners().length == 0) { // verifica si ya fue accionado este boton. si ya lo fue, ignora dicha accion
+            
+            this.verClientesView.getBtnAgregarEmpleado().addActionListener(e -> {
+                AgregarEmpleadoView agregarEmpleadoView = new AgregarEmpleadoView();
+                CtrlAgregarEmpleado ctrlAgregarEmpleado = new CtrlAgregarEmpleado(agregarEmpleadoView, verClientesView, bgContent);
+                
+                new Paneles().insertarPaneles(agregarEmpleadoView, bgContent);
+            });
+        }
 
+        if (this.verClientesView.getBtnEditarEmpleado().getActionListeners().length == 0) { // la misma funcionalidad que el de arriba
+            
+            this.verClientesView.getBtnEditarEmpleado().addActionListener(e -> {
+                int filaSeleccionada = this.verClientesView.getJtClientes().getSelectedRow();
+                
+                if (filaSeleccionada == -1) {
+                    JOptionPane.showMessageDialog(null, "[ERROR] Seleccione un empleado de la tabla para editar.", "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String dui = this.verClientesView.getJtClientes().getValueAt(filaSeleccionada, 0).toString();
+                
+                ArrayList<Empleado> lista = datos.IND();
+                Empleado empEdit = null;
+                
+                for (Empleado emp : lista) { // para encontrar el empleado a editar
+                    if (emp.getDui().equals(dui)) {
+                        empEdit = emp;
+                        break;
+                    }
+                }
+
+                if (empEdit != null) {
+                    AgregarEmpleadoView editarView = new AgregarEmpleadoView();
+                    CtrlAgregarEmpleado ctrlNuevo = new CtrlAgregarEmpleado(editarView, verClientesView, bgContent, empEdit);
+                    
+                    new Paneles().insertarPaneles(editarView, bgContent);
+                }
+            });
+        }
     }
 
     private void verDatos() {
