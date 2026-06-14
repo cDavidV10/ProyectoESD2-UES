@@ -7,14 +7,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-
-import javax.swing.table.DefaultTableModel;
 
 import arboles.ArbolBinarioBusqueda;
 import java.sql.Statement;
-import java.util.ArrayList;
 import modelo.Cliente;
 import modelo.Contrato;
 import modelo.Direccion;
@@ -229,5 +225,33 @@ public class FacturaDAO implements IFacturaDAO {
         }
 
         return aBusqueda;
+    }
+
+    @Override
+    public void realizarPago(Factura factura) throws Exception {
+       String consulta = """
+                update pago p
+                set fecha_pago = ?,
+                    estado = ?::estado_pago
+                where p.id_factura = ?;
+               """;
+
+        Connection conexion = Conexion.getConexion();
+
+        try {
+            conexion.setAutoCommit(false);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setObject(1, factura.getPago().getFechaPago());
+            ps.setString(2, factura.getPago().getEstado());
+            ps.setInt(3, factura.getId());
+
+            ps.executeUpdate();
+            conexion.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            conexion.rollback();
+        } finally{
+            conexion.close();
+        }
     }
 }
