@@ -32,7 +32,6 @@ public class ItemFacturaPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -43,72 +42,69 @@ public class ItemFacturaPanel extends javax.swing.JPanel {
         btnDetalleFact = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 3));
         setForeground(new java.awt.Color(255, 255, 255));
-        setLayout(new java.awt.GridBagLayout());
+        setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel1.setText("Factura #");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 54, 0, 0);
-        add(jLabel1, gridBagConstraints);
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel2.setText("Fecha ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 187, 0, 0);
-        add(jLabel2, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel3.setText("Monto");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 191, 0, 0);
-        add(jLabel3, gridBagConstraints);
 
+        lblNoFactura.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         lblNoFactura.setText("jLabel4");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 54, 0, 0);
-        add(lblNoFactura, gridBagConstraints);
 
+        lblFechaFactur.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         lblFechaFactur.setText("jLabel4");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 187, 0, 0);
-        add(lblFechaFactur, gridBagConstraints);
 
+        lblTotalFact.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         lblTotalFact.setText("jLabel4");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 190, 0, 0);
-        add(lblTotalFact, gridBagConstraints);
 
-        btnDetalleFact.setBackground(new java.awt.Color(204, 204, 255));
+        btnDetalleFact.setBackground(new java.awt.Color(102, 102, 102));
+        btnDetalleFact.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        btnDetalleFact.setForeground(new java.awt.Color(255, 255, 255));
         btnDetalleFact.setText("Detalle");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 78, 0, 36);
-        add(btnDetalleFact, gridBagConstraints);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(lblNoFactura)
+                .addGap(77, 77, 77)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(lblFechaFactur)
+                .addGap(92, 92, 92)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblTotalFact)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDetalleFact)
+                .addGap(24, 24, 24))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(lblNoFactura)
+                    .addComponent(jLabel2)
+                    .addComponent(lblFechaFactur)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(lblTotalFact))
+                    .addComponent(btnDetalleFact))
+                .addGap(6, 6, 6))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     public JLabel getLblFechaFactur() {

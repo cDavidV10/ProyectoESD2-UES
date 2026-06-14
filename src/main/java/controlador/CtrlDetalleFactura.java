@@ -5,10 +5,10 @@
 package controlador;
 
 
-import java.time.LocalDate;
 
+import modelo.Pago;
+import vista.ViewBotonesMedidor;
 import javax.swing.JOptionPane;
-
 import dao.FacturaDAO;
 import modelo.Factura;
 import modelo.Pago;
@@ -23,11 +23,24 @@ public class CtrlDetalleFactura {
     private ViewDetalleFactura vista;
     private FacturaDAO facturaDAO;
 
-    public CtrlDetalleFactura(Factura factura, ViewDetalleFactura vista) throws Exception {
-        this.factura = factura;
+    public CtrlDetalleFactura(Factura facturaa, ViewDetalleFactura vista, ViewBotonesMedidor viewBtnes) throws Exception {
+        this.factura = facturaa;
         this.vista = vista;
         this.facturaDAO = new FacturaDAO();
         
+        vista.setLocation(100, 0);
+        mostrarDatos();
+        
+        if (!factura.getPago().getEstado().equalsIgnoreCase("Pendiente")){
+            vista.getBtnRealizarPago().setEnabled(false);
+        }
+        
+        this.vista.getBtnRegresar().addActionListener(e ->{
+            vista.setVisible(false);
+            new CtrlBotonesMedidor(viewBtnes);
+            viewBtnes.repaint();
+        });
+  
         System.out.println("Factura id " + factura.getId());
 
         vista.getBtnRealizarPago().addActionListener(e-> {
@@ -65,22 +78,21 @@ public class CtrlDetalleFactura {
     
     private void mostrarDatos() throws Exception{
         //Detalle lectura
-        vista.getLblConsumo().setText(String.valueOf(factura.getLectura().getConsumo()));
+        vista.getLblConsumoDiam().setText(factura.getLectura().getConsumo() + "");
         vista.getLblFcehaInic().setText(factura.getLectura().getFechaInicial().toString());
         vista.getLblFechaFin().setText(factura.getLectura().getFechaFinal().toString());
         vista.getLblCodigoMedi().setText(factura.getLectura().getMedidor().getCodigo());
         vista.getLblDireccion().setText(factura.getLectura().getMedidor().getDireccion().getZona() 
-        + " Casa #" + factura.getLectura().getMedidor().getDireccion().getNumeroCasa() + ", " 
-                + factura.getLectura().getMedidor().getDireccion().getDistrito().getNombre() + ", "
+        + ", Casa #" + factura.getLectura().getMedidor().getDireccion().getNumeroCasa() + ", " 
+        + factura.getLectura().getMedidor().getDireccion().getDistrito().getNombre() + ", "
         + factura.getLectura().getMedidor().getDireccion().getDistrito().getMunicipio().getNombre());
         vista.getLblPropietario().setText(factura.getLectura().getMedidor().getContrato().getCliente().getNombre() + " "
         + factura.getLectura().getMedidor().getContrato().getCliente().getApellido());
-        vista.getLblMora().setText(factura.getMora().toString());
-        vista.getLblConsumo().setText(String.valueOf(factura.getMontoConsumo()));
-        vista.getLblMontoServ().setText(String.valueOf(factura.getMontoServicio()));
-        vista.getLblMontoNeto().setText(String.valueOf(factura.getMontoNeto()));
-        vista.getLblLimitePago().setText(String.valueOf(factura.getFechaLimite()));
-        vista.getLblTotal().setText(factura.getMontoTotal().toString());
-//        vista.getLblPropietario().setText(contrato.getCliente().getNombre());
+        vista.getLblMora().setText("$" + factura.getMora());
+        vista.getLblConsumoDin().setText("$" + factura.getMontoConsumo());
+        vista.getLblMontoServ().setText("$" + factura.getMontoServicio());
+        vista.getLblMontoNeto().setText("$" + factura.getMontoNeto());
+        vista.getLblLimitePago().setText(factura.getFechaLimite().toString());
+        vista.getLblTotal().setText("$" + factura.getMontoTotal());
     }
 }
