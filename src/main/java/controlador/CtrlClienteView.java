@@ -88,26 +88,22 @@ public class CtrlClienteView {
         clienteView.getBgPanel().add(lblMensaje);
         lblMensaje.setLocation(100, 80);
         resultContrato = new ContratoDAO().buscarContratoCliente(usuario);
-        if (resultContrato != null) {
-//        boolean valido = new Validaciones().validarNombres(codigo);
-//        if (valido) {   
+        if (resultContrato != null && resultContrato.getMedidor() != null) {
             try {
                 resultMedidor = new MedidorDAO().buscarPorCodigo(resultContrato.getMedidor().getCodigo());
                 if (resultMedidor != null) {
                     buscarFacturasMedidor();
                 } else {
+                    clienteView.getBtnFactura().setEnabled(true);
                     JOptionPane.showMessageDialog(null, "No hay resultado");
                 }
             } catch (Exception ex) {
                 clienteView.getBtnFactura().setEnabled(true);
                 System.getLogger(CtrlBotonesMedidor.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Codigo no valido");
-//        }
         } else {
             clienteView.getBtnFactura().setEnabled(true);
-            JOptionPane.showMessageDialog(null, "No existe un contrato con el medidor");
+            JOptionPane.showMessageDialog(null, "No existe un contrato válido con medidor asociado.");
         }
 
     }

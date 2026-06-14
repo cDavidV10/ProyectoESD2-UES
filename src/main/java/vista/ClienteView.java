@@ -212,8 +212,7 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     protected void btnHistorialActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'btnHistorialActionPerformed'");
+        javax.swing.JOptionPane.showMessageDialog(this, "Función de historial aún no implementada.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

@@ -65,7 +65,8 @@ public class CtrlEmpleadoVerClientes {
     public void onClickAgregarCliente() {
         verClientesView.getBtnAgregarCliente().addActionListener(e -> {
             FormCliente formCliente = new FormCliente();
-            CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, new Cliente());
+            CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, new Cliente(),
+             "Agregar");
             new Paneles().insertarPaneles(formCliente, bgContent);
         });
     }
@@ -113,7 +114,8 @@ public class CtrlEmpleadoVerClientes {
                 Cliente cliente = (Cliente) arbolCliente.getRaiz().getDato();
                 
                 FormCliente formCliente = new FormCliente();
-                CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, cliente);
+                CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, cliente, 
+                    "Actualizar");
                 new Paneles().insertarPaneles(formCliente, bgContent);
 
             } catch (Exception ex) {
