@@ -10,6 +10,7 @@ import dao.FacturaDAO;
 import dao.MedidorDAO;
 import funciones.Paneles;
 import funciones.Validaciones;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,12 +82,19 @@ public class CtrlBotonesMedidor {
             for (Factura f : facturas) {
                 ItemFacturaPanel fila = new ItemFacturaPanel(f);
                 panelFacturas.add(fila);
-//                panelFacturas.add(Box.createRigidArea(new Dimension(0, 5)));
+                panelFacturas.add(Box.createRigidArea(new Dimension(0, 5)));
+                if (f.getPago().getEstado().equalsIgnoreCase("Pendiente")){
+                    fila.setBackground(Color.pink);
+                }
                 fila.getBtnDetalleFact().addActionListener(e -> {
                     viewDetalle = new ViewDetalleFactura();
-                    new Paneles().insertarPaneles(viewDetalle, vista.getJpnViewOpcMedidor(), 720, 480);
+                    vista.getJpnViewOpcMedidor().removeAll();
+                    vista.getJpnViewOpcMedidor().add(viewDetalle);
+                    vista.getJpnViewOpcMedidor().revalidate();
+                    vista.getJpnViewOpcMedidor().repaint();
+                    
                     try {
-                        new CtrlDetalleFactura(f, viewDetalle);
+                        new CtrlDetalleFactura(f, viewDetalle, vista);
                     } catch (Exception ex) {
                         System.getLogger(CtrlBotonesMedidor.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }

@@ -31,4 +31,14 @@ public class Paneles {
         contenedor.revalidate();
         contenedor.repaint();
     }
+    
+    public void insertarPaneles(JPanel panel, JPanel contenedor, int w, int h, boolean remove) {
+        panel.setSize(w, h);
+
+        contenedor.removeAll();
+        contenedor.add(panel);
+        panel.setLocation(100, 0);
+        contenedor.revalidate();
+        contenedor.repaint();
+    }
 }
