@@ -29,13 +29,15 @@ public class CtrlFormCliente {
     private ClienteDAO dao = new ClienteDAO();
     private JPanel bgContent;
     private ViewClientes viewClientes;
+    private Cliente cliente;
     private EmpleadoView empleadoView;
 
-    public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, ViewClientes viewClientes) {
+    public CtrlFormCliente(FormCliente formCliente, JPanel bgContent, ViewClientes viewClientes, Cliente cliente) {
         this.formCliente = formCliente;
         this.dao = dao;
         this.bgContent = bgContent;
         this.viewClientes = viewClientes;
+        this.cliente = cliente;
 
         aplicarPlaceholder(formCliente.getTxtDuiCliente(), "00000000-0");
         aplicarPlaceholder(formCliente.getTxtNombreCliente(), "Ej. Carlos Bladimir");
@@ -44,7 +46,8 @@ public class CtrlFormCliente {
         aplicarPlaceholder(formCliente.getTxtTelefonoCliente(), "0000-0000");
 
         onClickGuardar();
-
+        cargarDatosEdicion();
+        
         this.formCliente.getBtnCancelarCliente().addActionListener(e -> {
             new Paneles().insertarPaneles(viewClientes, bgContent);
         });
@@ -72,7 +75,7 @@ public class CtrlFormCliente {
                 if (!new Validaciones().validarDui(cliente.getDui())) {
                     String mensaje = """
                             DUI Invalido
-                            Ingrese un Dui valido
+                            Ingrese un DUI válido
                             """;
                     JOptionPane.showMessageDialog(null, mensaje);
                     return;
@@ -128,9 +131,19 @@ public class CtrlFormCliente {
                     return;
                 }
 
-                dao.insertar(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente guardado correctamente");
-                
+                if (cliente.getId() == 0) {
+                    // Solo validar DUI en inserción
+                    if (dao.existeDui(cliente.getDui())) {
+                        JOptionPane.showMessageDialog(null, "El DUI ya está registrado.");
+                        return;
+                    }
+                    dao.insertar(cliente);
+                    JOptionPane.showMessageDialog(null, "Cliente insertado correctamente");
+                } else {
+                    dao.actualizar(cliente);
+                    JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
+                }
+
                 ViewClientes clientesView = new ViewClientes();
                 CtrlEmpleadoVerClientes ctrlVerClientes = new CtrlEmpleadoVerClientes(clientesView, bgContent);
                 new Paneles().insertarPaneles(clientesView, bgContent);
@@ -139,6 +152,19 @@ public class CtrlFormCliente {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         });
+    }
+    
+    private void cargarDatosEdicion() {
+        if (cliente != null && cliente.getId() != 0) {
+            formCliente.getTxtDuiCliente().setText(cliente.getDui());
+            formCliente.getTxtDuiCliente().setEditable(false);
+
+            formCliente.getTxtNombreCliente().setText(cliente.getNombre());
+            formCliente.getTxtApellidoCliente().setText(cliente.getApellido());
+            formCliente.getTxtCorreoCliente().setText(cliente.getCorreo());
+            formCliente.getTxtTelefonoCliente().setText(cliente.getTelefono());
+            formCliente.getJdcFechaNacimientoCliente().setDate(java.sql.Date.valueOf(cliente.getFechaNacimiento()));
+        }
     }
 
     private void aplicarPlaceholder(JTextField campo, String placeholder) {

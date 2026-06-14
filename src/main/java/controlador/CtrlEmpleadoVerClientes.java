@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import arboles.ArbolBinarioAVL;
 import dao.ClienteDAO;
 import funciones.Paneles;
+import funciones.Validaciones;
 import modelo.Cliente;
 import vista.FormCliente;
 import vista.FormContrato;
@@ -27,6 +28,8 @@ public class CtrlEmpleadoVerClientes {
         verDatos();
         onClickAgregarCliente();
         onClickAgregarContrato();
+        onClickModificarCliente();
+        onClickBuscarCliente();
     }
 
     private void verDatos() {
@@ -61,9 +64,8 @@ public class CtrlEmpleadoVerClientes {
 
     public void onClickAgregarCliente() {
         verClientesView.getBtnAgregarCliente().addActionListener(e -> {
-
             FormCliente formCliente = new FormCliente();
-            CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView);
+            CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, new Cliente());
             new Paneles().insertarPaneles(formCliente, bgContent);
         });
     }
@@ -74,7 +76,8 @@ public class CtrlEmpleadoVerClientes {
             if (fila >= 0) {            
                 String dui = verClientesView.getJtClientes().getValueAt(fila, 0).toString();
                 try {
-                    Cliente clienteSeleccionado = dao.buscarPorDui(dui);
+                    ArbolBinarioAVL arbolCliente = dao.buscarPorDui(dui);
+                    Cliente clienteSeleccionado = (Cliente) arbolCliente.getRaiz().getDato();
 
                     FormContrato formContrato = new FormContrato();
                     CtrlFormContrato ctrlContrato = new CtrlFormContrato(formContrato, bgContent, clienteSeleccionado);
@@ -88,5 +91,81 @@ public class CtrlEmpleadoVerClientes {
         });
     }
     
+    public void onClickModificarCliente() {
+        verClientesView.getBtnModificarCliente().addActionListener(e -> {
+   
+            int fila = verClientesView.getJtClientes().getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(null, "Seleccione un cliente de la tabla");
+                return;
+            }
 
+            String dui = verClientesView.getJtClientes().getValueAt(fila, 0).toString();
+            try {        
+                ArbolBinarioAVL arbolCliente = dao.buscarPorDui(dui);
+
+                if (arbolCliente == null || arbolCliente.getRaiz() == null) {
+                    JOptionPane.showMessageDialog(null, "No se encontró el cliente con DUI: " + dui);
+                    return;
+                }
+
+                // Extraer el objeto Cliente desde el árbol
+                Cliente cliente = (Cliente) arbolCliente.getRaiz().getDato();
+                
+                FormCliente formCliente = new FormCliente();
+                CtrlFormCliente ctrlFormCliente = new CtrlFormCliente(formCliente, bgContent, verClientesView, cliente);
+                new Paneles().insertarPaneles(formCliente, bgContent);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al modificar cliente: " + ex.getMessage());
+            }
+        });
+    }
+    
+    public void onClickBuscarCliente() {
+        verClientesView.getBtnBuscarCliente().addActionListener(e -> {
+            String dui = verClientesView.getTxtDuiBuscarCliente().getText().trim();
+
+            if (!new Validaciones().validarDui(dui)) {
+                String mensaje = "DUI invalido o vacío, ingrese un DUI válido";
+                JOptionPane.showMessageDialog(null, mensaje);
+                return;
+            }
+            
+            
+            if (dui.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese un DUI para buscar");
+                return;
+            }
+
+            try {
+                ArbolBinarioAVL arbolCliente = dao.buscarPorDui(dui);
+
+                if (arbolCliente == null || arbolCliente.getRaiz() == null) {
+                    JOptionPane.showMessageDialog(null, "No se encontró el cliente con DUI: " + dui);
+                    return;
+                }
+
+                Cliente cliente = (Cliente) arbolCliente.getRaiz().getDato();
+
+                // Mostrar solo ese cliente en la tabla
+                DefaultTableModel modelo = new DefaultTableModel();
+                modelo.setColumnIdentifiers(new String[]{"DUI", "Nombre", "Apellido", "Edad", "Teléfono", "Correo"});
+
+                modelo.addRow(new Object[]{
+                    cliente.getDui(),
+                    cliente.getNombre(),
+                    cliente.getApellido(),
+                    cliente.CalcularEdad(),
+                    cliente.getTelefono(),
+                    cliente.getCorreo()
+                });
+
+                verClientesView.getJtClientes().setModel(modelo);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al buscar cliente: " + ex.getMessage());
+            }
+        });
+    }
 }

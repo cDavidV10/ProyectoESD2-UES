@@ -11,6 +11,7 @@ import dao.ClienteDAO;
 import funciones.Paneles;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import vista.ContratosView;
 import vista.EmpleadoView;
 import vista.FacturaView;
 import vista.Login;
@@ -44,6 +45,7 @@ public class CtrlEmpleadoView {
         });
 
         onClickVerClientes();
+        onClickVerContratos();
 
         this.empleadoView.getBtnMedidor().addActionListener(e -> {
             this.viewFuncMedidor = new ViewBotonesMedidor();
@@ -74,5 +76,15 @@ public class CtrlEmpleadoView {
             paneles.insertarPaneles(clientesView, this.empleadoView.getBgPanel());
         });
     }
+    
 
+    public void onClickVerContratos() {
+        empleadoView.getBtnContrato().addActionListener(e -> {
+            ContratosView contratosView = new ContratosView();
+
+            CtrlContratosView ctrlContratos = new CtrlContratosView(contratosView);
+            
+            new Paneles().insertarPaneles(contratosView, empleadoView.getBgPanel());
+        });
+    }
 }
